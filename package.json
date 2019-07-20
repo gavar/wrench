@@ -1,0 +1,10 @@
+{
+  "name": "wrench",
+  "version": "1.0.0-beta",
+  "description": ":wrench: Wrench - toolset that provides various build tools for NodeJS, NPM and related libraries",
+  "main": "index.js",
+  "repository": "https://github.com/gavar/wrench",
+  "author": "Max Stankevich <max.stankevich.me@gmail.com>",
+  "license": "MIT",
+  "private": true
+}

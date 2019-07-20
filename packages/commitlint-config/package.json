@@ -1,7 +1,8 @@
 {
   "name": "@wrench/commitlint-config",
   "version": "1.0.0-beta",
-  "description": ":wrench: conventional configuration for linting commits",
+  "private": false,
+  "description": "conventional configuration for linting commits",
   "keywords": [
     "changelog",
     "check",
@@ -17,14 +18,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gavar/wrench.git",
+    "url": "git+https://github.com/gavar/wrench.git",
     "directory": "packages/commitlint-config"
   },
   "license": "MIT",
-  "author": {
-    "name": "Max Stankevich",
-    "email": "max.stankevich.me@gmail.com"
-  },
+  "author": "Max Stankevich <max.stankevich.me@gmail.com>",
   "files": [
     "index.js"
   ],

@@ -6,5 +6,11 @@
   "repository": "https://github.com/gavar/wrench",
   "author": "Max Stankevich <max.stankevich.me@gmail.com>",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*",
+      "packages/@types/*"
+    ]
+  }
 }

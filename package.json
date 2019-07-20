@@ -12,5 +12,18 @@
       "packages/*",
       "packages/@types/*"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@wrench/commitlint-config"
+    ]
+  },
+  "devDependencies": {
+    "husky": "^3.0.0"
   }
 }

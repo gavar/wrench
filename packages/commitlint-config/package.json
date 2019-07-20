@@ -1,0 +1,36 @@
+{
+  "name": "@wrench/commitlint-config",
+  "version": "1.0.0-beta",
+  "description": ":wrench: conventional configuration for linting commits",
+  "keywords": [
+    "changelog",
+    "check",
+    "commitlint",
+    "conventional",
+    "conventional-changelog",
+    "lint",
+    "log"
+  ],
+  "homepage": "https://github.com/gavar/wrench/tree/master/packages/commitlint-config#readme",
+  "bugs": {
+    "url": "https://github.com/gavar/wrench/labels/commitlint-config"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gavar/wrench.git",
+    "directory": "packages/commitlint-config"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Max Stankevich",
+    "email": "max.stankevich.me@gmail.com"
+  },
+  "files": [
+    "index.js"
+  ],
+  "main": "index.js",
+  "dependencies": {
+    "@commitlint/cli": "^8.1.0",
+    "@commitlint/config-conventional": "^8.1.0"
+  }
+}

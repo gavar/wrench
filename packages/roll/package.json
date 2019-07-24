@@ -33,6 +33,7 @@
     "clean": "rimraf lib",
     "format": "yarn lint --fix",
     "lint": "echo no linting yet",
+    "prepack": "yarn build",
     "prepublishOnly": "yarn test && yarn run lint",
     "test": "echo no tests yet"
   },

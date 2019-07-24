@@ -7,6 +7,7 @@ import ts2 from "rollup-plugin-typescript2";
 import { CompilerOptions } from "typescript";
 import { collectBinFiles, createBinFileConfig } from "./bin";
 import { merge } from "./merge";
+import { dtsBundleGenerator, dtsPretty } from "./plugins";
 import { Context, Package, RollupConfig } from "./types";
 import { defaultDirectories, isUnderWorkingDirectory, resolveThrow, scriptFileTypes } from "./util";
 
@@ -84,7 +85,10 @@ export function nodejs(pack: Package, base?: RollupConfig): RollupConfig[] {
   /** Generates `.d.ts` bundle from the the previous output. */
   const dtsConfig: RollupConfig = {
     input: path.join(declarationDir, basename + ".d.ts"),
-    plugins: [dts()],
+    plugins: [
+      dts(),
+      dtsPretty(),
+    ],
     output: {file: pack.types || `${output}.d.ts`, format: "esm"},
     external: context.external,
   };

@@ -1,12 +1,12 @@
 {
   "name": "wrench",
   "version": "1.0.0-beta",
-  "description": ":wrench: Wrench - toolset that provides various build tools for NodeJS, NPM and related libraries",
-  "main": "index.js",
-  "repository": "https://github.com/gavar/wrench",
-  "author": "Max Stankevich <max.stankevich.me@gmail.com>",
-  "license": "MIT",
   "private": true,
+  "description": ":wrench: Wrench is a toolset that provides various build tools for NodeJS, NPM and related libraries",
+  "repository": "https://github.com/gavar/wrench",
+  "license": "MIT",
+  "author": "Max Stankevich <max.stankevich.me@gmail.com>",
+  "main": "",
   "workspaces": {
     "packages": [
       "packages/*",

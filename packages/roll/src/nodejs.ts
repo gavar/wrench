@@ -7,7 +7,7 @@ import ts2 from "rollup-plugin-typescript2";
 import { CompilerOptions } from "typescript";
 import { collectBinFiles, createBinFileConfig } from "./bin";
 import { merge } from "./merge";
-import { dtsBundleGenerator, dtsPretty } from "./plugins";
+import { dtsPretty } from "./plugins";
 import { Context, Package, RollupConfig } from "./types";
 import { defaultDirectories, isUnderWorkingDirectory, resolveThrow, scriptFileTypes } from "./util";
 

@@ -1,0 +1,47 @@
+{
+  "name": "@wrench/roll",
+  "version": "1.0.0-beta",
+  "description": "conventional rule for building via `rollup` by analyzing package.json contents",
+  "keywords": [
+    "bundler",
+    "conventional",
+    "dts",
+    "es6",
+    "modules",
+    "optimizer",
+    "rollup",
+    "typescript"
+  ],
+  "homepage": "https://github.com/gavar/wrench/tree/master/packages/roll#readme",
+  "bugs": {
+    "url": "https://github.com/gavar/wrench/labels/roll"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gavar/wrench.git",
+    "directory": "packages/roll"
+  },
+  "license": "ISC",
+  "author": "Max Stankevich <max.stankevich.me@gmail.com>",
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "rimraf lib && tsc -p self.tsconfig.json && rollup -c",
+    "clean": "rimraf lib",
+    "format": "yarn lint --fix",
+    "lint": "echo no linting yet",
+    "prepublishOnly": "yarn test && yarn run lint",
+    "test": "echo no tests yet"
+  },
+  "dependencies": {
+    "rollup": "^1.17.0",
+    "rollup-plugin-cleanup": "^3.1.1",
+    "rollup-plugin-clear": "^2.0.7",
+    "rollup-plugin-dts": "^1.1.5",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-typescript2": "^0.22.0"
+  }
+}

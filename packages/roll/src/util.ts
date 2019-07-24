@@ -36,7 +36,7 @@ export function resolveThrow(directory: string, basename: string, suffixes: stri
 }
 
 /**
- * Check whether {@link process#cwd} is parent of the given filename.
+ * Check whether {@link NodeJS.Process.cwd} is parent of the given filename.
  * @param filename - path to a file or directory to check.
  */
 export function isUnderWorkingDirectory(filename: string): boolean {

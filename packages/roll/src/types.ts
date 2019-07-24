@@ -1,5 +1,4 @@
-import { InputOptions, OutputOptions } from "rollup";
-import { Options as ResolveOptions } from "rollup-plugin-node-resolve";
+import { InputOptions, OutputOptions, RollupOptions } from "rollup";
 
 /** Package fields which may be referenced for conventional build. */
 export interface Package {
@@ -12,8 +11,8 @@ export interface Package {
    * - outputs in a root directory: `index.(js|mjs)`.
    *
    * Affects on:
-   * - {@link Package#directories.src}
-   * - {@link Package#directories.lib}
+   * - {@link Package.directories.src}
+   * - {@link Package.directories.lib}
    */
   main: string;
 
@@ -32,7 +31,7 @@ export interface Package {
 
   /**
    * Set of executable scripts to bundle along the package.
-   * @see @link Package#directories.lib
+   * @see {@link Package.directories.lib}
    */
   bin?: Record<string, string>;
 
@@ -55,19 +54,19 @@ export interface Package {
 export interface PackageDirectories {
   /**
    * Directory where to search for input file.
-   * The input entry will be in form of: "{@link src}/`basename(`{@link Package.main}`)`"
-   * @default "./src",
+   * The input entry will be in form of: `[src]/basename(package.main)`.
+   * @default "./src"
    */
   src: string;
 
   /**
    * Directory where to look for executables sources.
    *
-   * When {@link Package#bin} is empty:
-   * - scans for all files in the {@link cli} when {@link bin} is explicitly defined by the package properties.
+   * When {@link Package.bin} is empty:
+   * - scans for all files in the {@link PackageDirectories.cli cli} when {@link PackageDirectories.bin bin} is explicitly defined by the package properties.
    *
-   * When {@link Package#bin} defines key-value pair:
-   * - looks up for a executable source to build in form of: "{@link cli}/[executable-name].(ts|js)`"
+   * When {@link Package.bin} defines key-value pair:
+   * - looks up for a executable source to build in form of: `[cli]/[executable-name].(ts|js)`
    *
    * @default "./cli"
    */
@@ -76,7 +75,7 @@ export interface PackageDirectories {
   /**
    * Directory for output files that should be published to `npm`.
    * Cleared on every execution of the `rollup`.
-   * @default `dirname(`{@link Package#main}`)` || "./lib"
+   * @default `dirname(package.main}` || "./lib"
    */
   lib: string;
 
@@ -99,7 +98,7 @@ export interface PackageDirectories {
 export interface RollupConfig extends InputOptions {
   /**
    * Allows to define multiple outputs.
-   * @see {@link RollupOptions#output}
+   * @see RollupOptions.output
    */
   output?: OutputOptions | OutputOptions[]
 }
@@ -116,5 +115,5 @@ export interface Context {
   rts2Cache: string;
 
   /** Shared options for `rollup-plugin-node-resolve`. */
-  resolve: ResolveOptions;
+  resolve: import("rollup-plugin-node-resolve").Options;
 }

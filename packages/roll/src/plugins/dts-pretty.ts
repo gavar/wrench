@@ -1,5 +1,12 @@
 import { Plugin, PluginContext, RenderedChunk } from "rollup";
-import { CompilerOptions, FormatCodeSettings, IScriptSnapshot, LanguageServiceHost, TextChange } from "typescript";
+import {
+  CompilerOptions,
+  FormatCodeSettings,
+  IScriptSnapshot,
+  LanguageService,
+  LanguageServiceHost,
+  TextChange,
+} from "typescript";
 
 type TypeScript = typeof import("typescript");
 
@@ -27,14 +34,12 @@ export interface DtsPrettyOptions {
  */
 export function dtsPretty(options?: DtsPrettyOptions): Plugin {
   // defaults
-  options = {
-    settings: defaultFormatCodeSettings,
-    ...options,
-  };
+  options = Object.assign({}, options);
+  options.settings = Object.assign({}, defaultFormatCodeSettings, options.settings);
 
-  const ts = options.typescript || require("typescript");
+  const ts: TypeScript = options.typescript || require("typescript");
   const host = new Host(ts);
-  const service = ts.createLanguageService(host);
+  const service: LanguageService = ts.createLanguageService(host);
 
   return {
     name: "dts-pretty",
@@ -48,7 +53,7 @@ export function dtsPretty(options?: DtsPrettyOptions): Plugin {
 
       // format via typescript service rules
       host.files[fileName] = ts.ScriptSnapshot.fromString(code);
-      const edits = service.getFormattingEditsForDocument(fileName, options)
+      const edits = service.getFormattingEditsForDocument(fileName, options.settings)
         .sort((a: TextChange, b: TextChange) => b.span.start - a.span.start);
 
       // apply changes
@@ -64,7 +69,6 @@ export function dtsPretty(options?: DtsPrettyOptions): Plugin {
 }
 
 class Host implements LanguageServiceHost {
-
   readonly ts: TypeScript;
   readonly options: CompilerOptions;
   readonly files: Record<string, IScriptSnapshot>;

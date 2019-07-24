@@ -213,3 +213,5 @@ typings/
 ### Project ###
 # all files name starting with '#'
 \#*
+lib/
+tmp/

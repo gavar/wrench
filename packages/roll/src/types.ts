@@ -1,31 +1,36 @@
-import { InputOptions, OutputOptions, RollupOptions } from "rollup";
+import { InputOptions, ModuleFormat, OutputOptions, RollupOptions } from "rollup";
+
+/** TypeScript library type definitions. */
+export type TypeScript = typeof import("typescript");
 
 /** Package fields which may be referenced for conventional build. */
 export interface Package {
   /**
-   * Path to an entry point of the library.
-   * For best results should without extension in form of `lib/index`,
-   * so NodeJS could automatically pick `lib/index.mjs` when `--experimental-modules`.
-   *
-   * When not provided:
-   * - outputs in a root directory: `index.(js|mjs)`.
-   *
-   * Affects on:
-   * - {@link Package.directories.src}
-   * - {@link Package.directories.lib}
-   */
-  main: string;
-
-  /**
    * Name of the library, primarily required by `npm` in order to publish.
-   * Imports by the name are considered external, so it makes possible to import itself from anywhere.
-   * @see https://rollupjs.org/guide/en/#external
    */
   name: string;
 
   /**
-   * Path to the output type definitions (.d.ts).
-   * Type definition bundle will be turned off when value omitted.
+   * Primary entry point of the package.
+   * Defines the output path for {@link ModuleFormat cjs} bundle.
+   * @see https://docs.npmjs.com/files/package.json#main
+   */
+  main: string;
+
+  /**
+   * Entry point for ECMA script modules.
+   * Defines the output path for {@link ModuleFormat es} bundle.
+   * {@link ModuleFormat ES} bundle won't be generated if this field is empty.
+   * NodeJS automatically picks this entry point when `--experimental-modules`.
+   * @see https://github.com/rollup/rollup/wiki/pkg.module
+   */
+  module?: string;
+
+  /**
+   * Entry point for type declarations file.
+   * Defines the output path for declarations bundle.
+   * Declarations bundle won't be generated if this field is empty.
+   * @see https://www.typescriptlang.org/docs/handbook/declaration-files/publishing.html#including-declarations-in-your-npm-package
    */
   types?: string;
 

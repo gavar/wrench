@@ -42,10 +42,7 @@ export function nodejs(pack: Package, base?: RollupConfig): RollupConfig[] {
     external,
   };
 
-  /** Temporary cache for the declarations output, to avoid output pollution. */
-  const declarationDir = path.join(dir.tmp, "./.dts");
-
-  // CommonJS
+  /** CommonJS bundle output options. */
   const cjs: OutputOptions = {
     file: pack.main,
     format: "cjs",
@@ -55,12 +52,24 @@ export function nodejs(pack: Package, base?: RollupConfig): RollupConfig[] {
     strict: false, // NodeJS modules are strict by default
   };
 
-  // ECMAScript
+  /** ECMAScript bundle output options. */
   const esm: OutputOptions = pack.module && {
     file: pack.module,
     format: "esm",
     sourcemap: true,
   };
+
+  /** TypeScript compiler options.  */
+  const compilerOptions: CompilerOptions = {
+    outDir: dir.lib,
+  };
+
+  // configure staging directory for type definitions if required
+  if (pack.types) {
+    compilerOptions.declaration = true;
+    compilerOptions.declarationDir = path.join(dir.tmp, "./.dts");
+    compilerOptions.declarationMap = false;
+  }
 
   /** Generate bundles from input. */
   const tsConfig = merge(base, {
@@ -76,11 +85,7 @@ export function nodejs(pack: Package, base?: RollupConfig): RollupConfig[] {
         useTsconfigDeclarationDir: true,
         tsconfigOverride: {
           files: [input],
-          compilerOptions: {
-            outDir: dir.lib,
-            declarationDir,
-            declarationMap: false,
-          } as CompilerOptions,
+          compilerOptions,
         },
       }),
       cleanup({
@@ -92,7 +97,7 @@ export function nodejs(pack: Package, base?: RollupConfig): RollupConfig[] {
 
   /** Generates `.d.ts` bundle from the the previous output. */
   const dtsConfig: RollupConfig = pack.types && {
-    input: path.join(declarationDir, basename + ".d.ts"),
+    input: path.join(compilerOptions.declarationDir, basename + ".d.ts"),
     plugins: [
       dtsBundleGenerator({external}),
       dtsPretty(),
@@ -105,6 +110,7 @@ export function nodejs(pack: Package, base?: RollupConfig): RollupConfig[] {
   const binConfigs = collectBinFiles(pack, context)
     .map(file => createBinFileConfig(file, pack, context));
 
+  // `rollup` will run this configurations in sequence
   return [
     tsConfig,
     dtsConfig,

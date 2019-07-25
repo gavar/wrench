@@ -7,15 +7,16 @@ import {
   LanguageServiceHost,
   TextChange,
 } from "typescript";
+import { TypeScript } from "../types";
 
-type TypeScript = typeof import("typescript");
-
-const defaultFormatCodeSettings: FormatCodeSettings = {
+/** Default settings for pretty output of `.d.ts` files. */
+export const defaultDtsFormatCodeSettings: FormatCodeSettings = {
   indentSize: 2,
   indentStyle: 2,
   newLineCharacter: "\n",
   convertTabsToSpaces: true,
   insertSpaceAfterCommaDelimiter: true,
+  insertSpaceBeforeAndAfterBinaryOperators: true,
 };
 
 /** {@link dtsPretty} plugin configuration options. */
@@ -35,7 +36,7 @@ export interface DtsPrettyOptions {
 export function dtsPretty(options?: DtsPrettyOptions): Plugin {
   // defaults
   options = Object.assign({}, options);
-  options.settings = Object.assign({}, defaultFormatCodeSettings, options.settings);
+  options.settings = Object.assign({}, defaultDtsFormatCodeSettings, options.settings);
 
   const ts: TypeScript = options.typescript || require("typescript");
   const host = new Host(ts);
@@ -52,7 +53,7 @@ export function dtsPretty(options?: DtsPrettyOptions): Plugin {
         .join("\n");
 
       // format via typescript service rules
-      host.files[fileName] = ts.ScriptSnapshot.fromString(code);
+      host.setScriptCode(fileName, code);
       const edits = service.getFormattingEditsForDocument(fileName, options.settings)
         .sort((a: TextChange, b: TextChange) => b.span.start - a.span.start);
 
@@ -71,18 +72,23 @@ export function dtsPretty(options?: DtsPrettyOptions): Plugin {
 class Host implements LanguageServiceHost {
   readonly ts: TypeScript;
   readonly options: CompilerOptions;
-  readonly files: Record<string, IScriptSnapshot>;
+  private readonly scripts: Record<string, IScriptSnapshot> = {};
+  private readonly versions: Record<string, string> = {};
 
-  constructor(ts: TypeScript, options?: CompilerOptions) {
+  constructor(ts: TypeScript, options: CompilerOptions = ts.getDefaultCompilerOptions()) {
     this.ts = ts;
-    this.files = {};
-    this.options = options || ts.getDefaultCompilerOptions();
+    this.options = options;
+  }
+
+  setScriptCode(fileName: string, code: string) {
+    this.scripts[fileName] = this.ts.ScriptSnapshot.fromString(code);
+    this.versions[fileName] = String((+this.versions[fileName]) + 1);
   }
 
   getCompilationSettings() { return this.options; };
-  getScriptFileNames(): string[] { return Object.keys(this.files); }
-  getScriptVersion(fileName: string): string { return "0"; }
-  getScriptSnapshot(fileName: string): IScriptSnapshot { return this.files[fileName]; }
+  getScriptFileNames(): string[] { return Object.keys(this.scripts); }
+  getScriptVersion(fileName: string): string { return this.versions[fileName] || "0"; }
+  getScriptSnapshot(fileName: string): IScriptSnapshot { return this.scripts[fileName]; }
   getCurrentDirectory() {return process.cwd();}
   getDefaultLibFileName(options: CompilerOptions) { return this.ts.getDefaultLibFilePath(options);};
 }

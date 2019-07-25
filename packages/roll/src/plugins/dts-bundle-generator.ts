@@ -49,6 +49,8 @@ export function dtsBundleGenerator(options?: DtsBundleGeneratorOptions): Plugin 
       // create bundle
       const bundle = generateDtsBundle([entry]);
       code = bundle.join("\n");
+      code = code.replace("export {};", "");
+      code = code.trim();
       return {code, map: ""};
     },
   };

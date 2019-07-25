@@ -37,7 +37,10 @@ export function createBinFileConfig(file: BinFile, pack: Package, context: Conte
       file: file.output,
       format: "cjs",
       sourcemap: true,
-      banner: "#!/usr/bin/env node", // make file executable
+      banner: [
+        "#!/usr/bin/env node", // make file executable
+        `require("source-map-support/register");`, // enable sourcemaps support
+      ].join("\n"),
       esModule: false, // NodeJS does not require to define __esModule
       preferConst: true, // NodeJS supports `const` since early versions
       strict: false, // NodeJS modules are strict by default,

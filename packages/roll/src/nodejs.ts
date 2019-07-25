@@ -1,17 +1,17 @@
 import { builtinModules } from "module";
 import path from "path";
+import { OutputOptions } from "rollup";
 import cleanup from "rollup-plugin-cleanup";
-import dts from "rollup-plugin-dts";
+import clear from "rollup-plugin-clear";
 import resolve from "rollup-plugin-node-resolve";
 import ts2 from "rollup-plugin-typescript2";
+import slash from "slash";
 import { CompilerOptions } from "typescript";
 import { collectBinFiles, createBinFileConfig } from "./bin";
 import { merge } from "./merge";
-import { dtsPretty } from "./plugins";
+import { dtsBundleGenerator, dtsPretty } from "./plugins";
 import { Context, Package, RollupConfig } from "./types";
 import { defaultDirectories, isUnderWorkingDirectory, resolveThrow, scriptFileTypes } from "./util";
-
-const clear = require("rollup-plugin-clear");
 
 /**
  * Create {@link RollupConfig} to bundle a NodeJS library.
@@ -19,46 +19,54 @@ const clear = require("rollup-plugin-clear");
  * @param base - base configurations to extend if any.
  */
 export function nodejs(pack: Package, base?: RollupConfig): RollupConfig[] {
-  const dir = Object.assign({}, defaultDirectories(pack), pack.directories);
-  const basename = pack.main && path.basename(pack.main) || "index";
+  // verify
+  if (!pack.main) throw new Error("package 'main' field is required");
 
-  const output = path.join(dir.lib, basename);
+  // `main` might contain double extension like: lib/index.cjs.js
+  const main = slash(pack.main);
+  const ext = main.slice(main.indexOf(".", main.lastIndexOf("/") || 0));
+  const basename = path.basename(main, ext);
+  const dir = Object.assign({}, defaultDirectories(pack), pack.directories);
   const input = resolveThrow(dir.src, basename);
+
+  const external: string[] = [
+    builtinModules,
+    pack.dependencies && Object.keys(pack.dependencies),
+    pack.peerDependencies && Object.keys(pack.peerDependencies),
+  ].filter(identity).flat();
 
   const context: Context = {
     directories: dir,
     rts2Cache: path.join(dir.tmp, "./.rts2_cache"),
-    external: [
-      pack.name, // allow to import itself
-      builtinModules,
-      Object.keys(pack.dependencies || []),
-      Object.keys(pack.peerDependencies || []),
-    ].flat(),
     resolve: {preferBuiltins: true},
+    external,
   };
 
   /** Temporary cache for the declarations output, to avoid output pollution. */
   const declarationDir = path.join(dir.tmp, "./.dts");
 
+  // CommonJS
+  const cjs: OutputOptions = {
+    file: pack.main,
+    format: "cjs",
+    sourcemap: true,
+    esModule: false, // NodeJS does not require to define __esModule
+    preferConst: true, // NodeJS supports `const` since early versions
+    strict: false, // NodeJS modules are strict by default
+  };
+
+  // ECMAScript
+  const esm: OutputOptions = pack.module && {
+    file: pack.module,
+    format: "esm",
+    sourcemap: true,
+  };
+
   /** Generate bundles from input. */
   const tsConfig = merge(base, {
     input,
-    output: [
-      { // CommonJS
-        file: output + ".js",
-        format: "cjs",
-        sourcemap: true,
-        esModule: false, // NodeJS does not require to define __esModule
-        preferConst: true, // NodeJS supports `const` since early versions
-        strict: false, // NodeJS modules are strict by default
-      },
-      { // ECMAScript
-        file: output + ".mjs",
-        format: "esm",
-        sourcemap: true,
-      },
-    ],
-    external: context.external,
+    output: [cjs, esm].filter(identity),
+    external,
     plugins: [
       // prevent accidentally removing working directory
       clear({targets: [dir.tmp, dir.lib].filter(isUnderWorkingDirectory)}),
@@ -83,14 +91,14 @@ export function nodejs(pack: Package, base?: RollupConfig): RollupConfig[] {
   });
 
   /** Generates `.d.ts` bundle from the the previous output. */
-  const dtsConfig: RollupConfig = {
+  const dtsConfig: RollupConfig = pack.types && {
     input: path.join(declarationDir, basename + ".d.ts"),
     plugins: [
-      dts(),
+      dtsBundleGenerator({external}),
       dtsPretty(),
     ],
-    output: {file: pack.types || `${output}.d.ts`, format: "esm"},
-    external: context.external,
+    output: {file: pack.types, format: "esm"},
+    external,
   };
 
   /** Generates bundle for each executable script. */
@@ -101,5 +109,9 @@ export function nodejs(pack: Package, base?: RollupConfig): RollupConfig[] {
     tsConfig,
     dtsConfig,
     ...binConfigs,
-  ];
+  ].filter(identity);
+}
+
+function identity<T>(x: T) {
+  return x;
 }

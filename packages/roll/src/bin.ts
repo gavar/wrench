@@ -1,6 +1,6 @@
 import fs from "fs";
+import Module from "module";
 import path from "path";
-import resolve from "rollup-plugin-node-resolve";
 import ts2 from "rollup-plugin-typescript2";
 import { CompilerOptions } from "typescript";
 import { Context, Package, RollupConfig } from "./types";
@@ -26,6 +26,11 @@ export interface BinFile {
  * @param context - configuration context.
  */
 export function createBinFileConfig(file: BinFile, pack: Package, context: Context): RollupConfig {
+  // TODO: borrow entry points from node-resolve plugin
+  const entry = new Set();
+  entry.add(path.resolve(pack.main));
+  entry.add(path.resolve(pack.module));
+
   return {
     input: file.input,
     output: {
@@ -39,7 +44,18 @@ export function createBinFileConfig(file: BinFile, pack: Package, context: Conte
     },
     external: context.external,
     plugins: [
-      resolve(context.resolve),
+      {
+        name: "self-import-as-external",
+        async resolveId(source: string, importer: string | undefined) {
+          if (importer) {
+            const r = Module.createRequire(path.resolve(importer));
+            const id = r.resolve(source);
+            return entry.has(id)
+              ? {id: path.resolve(path.dirname(importer), source), external: true} // path to package.json
+              : {id, external: false};
+          }
+        },
+      },
       ts2({
         cacheRoot: context.rts2Cache,
         useTsconfigDeclarationDir: true,

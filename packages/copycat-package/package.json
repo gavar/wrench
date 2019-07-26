@@ -1,0 +1,60 @@
+{
+  "name": "@wrench/copycat-package",
+  "version": "1.0.0-beta",
+  "description": "CLI tool allows to inherit properties from other packages",
+  "keywords": [
+    "common",
+    "dependency",
+    "derive",
+    "inherit",
+    "package",
+    "package.json",
+    "share"
+  ],
+  "homepage": "https://github.com/gavar/wrench/tree/master/packages/copycat-package#readme",
+  "bugs": {
+    "url": "https://github.com/gavar/wrench/labels/copycat-package"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gavar/wrench",
+    "directory": "packages/copycat-package"
+  },
+  "license": "ISC",
+  "author": "Max Stankevich <max.stankevich.me@gmail.com>",
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "module": "lib/index.es.js",
+  "types": "lib/index.d.ts",
+  "bin": {
+    "copycat-pack": "bin/copycat-pack.js"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "clean": "rimraf lib"
+  },
+  "dependencies": {
+    "colors": ">=1.3.0",
+    "semver": "^6.3.0",
+    "tslib": ">=1.10.0",
+    "lodash": ">=4.14"
+  },
+  "devDependencies": {
+    "@wrench/roll": ">=1.1.0-beta"
+  },
+  "copycat": {
+    "author": "../..",
+    "license": "../..",
+    "repository": "../..",
+    "dependencies": {
+      "tslib": "../..",
+      "colors": "../..",
+      "lodash": "../.."
+    },
+    "devDependencies": {
+      "@wrench/roll": "../roll"
+    }
+  }
+}

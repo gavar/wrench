@@ -3,10 +3,12 @@
   "version": "1.0.0-beta",
   "private": true,
   "description": ":wrench: Wrench is a toolset that provides various build tools for NodeJS, NPM and related libraries",
-  "repository": "https://github.com/gavar/wrench",
-  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gavar/wrench"
+  },
+  "license": "ISC",
   "author": "Max Stankevich <max.stankevich.me@gmail.com>",
-  "main": "",
   "workspaces": {
     "packages": [
       "packages/*",
@@ -24,11 +26,15 @@
     ]
   },
   "devDependencies": {
-    "@types/lodash": "^4.14",
     "@types/node": "^12.6.8",
     "husky": "^3.0.0",
-    "lodash": "^4.14",
-    "tslib": "^1.10.0",
     "typescript": "^3.5.3"
+  },
+  "commonDependencies": {
+    "colors": "^1.3.0",
+    "lodash": "^4.14",
+    "slash": "^3.0.0",
+    "source-map-support": "^0.5.12",
+    "tslib": "^1.10.0"
   }
 }

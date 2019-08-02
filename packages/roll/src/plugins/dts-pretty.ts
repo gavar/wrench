@@ -130,7 +130,8 @@ function isBlockEnter(value: string) {
 }
 
 function isBlockExit(value: string) {
-  return value && value.endsWith("}");
+  if (value)
+    return value.endsWith("}") || value.endsWith("};");
 }
 
 function trim(value: string) {

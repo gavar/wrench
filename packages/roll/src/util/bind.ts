@@ -81,7 +81,7 @@ const descriptors: Record<keyof Closure, PropertyDescriptor> = {
 };
 
 function bind<T extends Function>(func: T & Closure<T>, that: any): T & Closure<T> {
-  if (func.__this__ === that) {
+  if (func.__this__ !== that) {
     func = func.__function__ || func;
     descriptors.__this__.value = that;
     descriptors.__function__.value = func;

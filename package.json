@@ -11,8 +11,8 @@
   "author": "Max Stankevich <max.stankevich.me@gmail.com>",
   "workspaces": {
     "packages": [
-      "packages/*",
-      "packages/@types/*"
+      "@types/*",
+      "packages/*"
     ]
   },
   "husky": {

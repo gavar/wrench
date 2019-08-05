@@ -148,7 +148,7 @@ export function typescript(options?: TypeScriptOptions): Plugin {
       }
     },
 
-    renderChunk(this: PluginContext, code: string, chunk: RenderedChunk, output: OutputOptions) {
+    async renderChunk(this: PluginContext, code: string, chunk: RenderedChunk, output: OutputOptions) {
       if (chunk.fileName === VIRTUAL_NAME)
         return;
 
@@ -162,6 +162,11 @@ export function typescript(options?: TypeScriptOptions): Plugin {
 
         // rename to js file
         chunk.fileName = js.name;
+
+        // TODO: update sourcemaps
+        // `rollup` does not generate header / footer when `preserveModules`
+        if (output.banner && chunk.isEntry)
+          js.text = [(await output.banner), js.text].join(host.getNewLine());
 
         // write declarations
         if (dts) writeOutputFile(project, dts);

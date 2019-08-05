@@ -31,7 +31,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "build": "rimraf lib && tsc",
+    "build": "roll --preserveModules",
     "clean": "rimraf lib",
     "format": "yarn lint --fix",
     "lint": "echo no linting yet",
@@ -43,11 +43,13 @@
     "rollup-plugin-cleanup": "^3.1.1"
   },
   "devDependencies": {
-    "typescript": "^3.5.3"
+    "typescript": "^3.5.3",
+    "@wrench/roll": ">=2.0.0-beta"
   },
   "copycat": {
     "repository": "../..",
     "devDependencies": {
+      "@wrench/roll": "../roll",
       "typescript": "../.."
     }
   }

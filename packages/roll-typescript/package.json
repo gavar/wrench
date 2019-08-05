@@ -28,9 +28,7 @@
   },
   "license": "ISC",
   "author": "Max Stankevich <max.stankevich.me@gmail.com>",
-  "files": [
-    "lib"
-  ],
+  "files": ["lib", "es"],
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "lib/index.d.ts",

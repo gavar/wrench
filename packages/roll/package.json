@@ -24,8 +24,8 @@
   "license": "ISC",
   "author": "Max Stankevich <max.stankevich.me@gmail.com>",
   "files": [
-    "lib",
     "es",
+    "lib",
     "preset"
   ],
   "main": "lib/index.js",

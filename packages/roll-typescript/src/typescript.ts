@@ -72,6 +72,7 @@ export function typescript(options?: TypeScriptOptions): Plugin {
   let esnext: ProjectHost;
   let inputs: Set<string>;
   let pending: Set<string>;
+  let shouldBundleDts: boolean;
 
   return {
     name: NAME,
@@ -85,6 +86,7 @@ export function typescript(options?: TypeScriptOptions): Plugin {
       project.reportDiagnostic = createReportDiagnosticByPlugin(this);
       pending = new Set(collectDependencies(project, inputs, true));
       esnext = lazy(this, "esnext", forkESNext, project);
+      shouldBundleDts = !!(!modular && project.options.declarationDir && options.types);
 
       // rollup may exclude `index` files, so make sure to forcibly include them
       if (modular)
@@ -183,17 +185,16 @@ export function typescript(options?: TypeScriptOptions): Plugin {
           delete bundle[key];
 
       // generate .d.ts bundle
-      const {declarationDir} = project.options;
-      if (!modular && declarationDir && options.types) {
+      if (shouldBundleDts) {
         const outDir = path.resolve(path.dirname(output.file));
         const rel = path.relative(outDir, options.types);
         if (rel && !rel.startsWith("..")) {
+          shouldBundleDts = false; // bundle once
+          const {declarationDir} = project.options;
           const entry = path.join(declarationDir, rel);
           const relTypes = path.relative(process.cwd(), options.types);
           console.log(cyan(`${entry} → ${relTypes}`));
           addFileNames(host, collectDependencies(host, entry));
-
-          // const fileNames
           bundleDts({
             entry,
             program: host.getProgram(),

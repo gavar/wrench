@@ -1,4 +1,4 @@
-import pack from "./package.json";
-import {nodejs} from "@wrench/roll";
-
-export default nodejs(pack);
+// @ts-check
+export default require("@wrench/roll").nodejs(null, {
+  preserveModules: false,
+});

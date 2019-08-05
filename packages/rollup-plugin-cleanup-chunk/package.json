@@ -1,0 +1,54 @@
+{
+  "name": "rollup-plugin-cleanup-chunk",
+  "version": "1.0.0",
+  "description": "Extension of `rollup-plugin-cleanup` which allows to clean code in `renderChunk` hook",
+  "keywords": [
+    "cleanup",
+    "comments",
+    "es6",
+    "javascript",
+    "modules",
+    "removal",
+    "rollup",
+    "rollup-plugin",
+    "rollup-plugin-cleanup",
+    "typescript"
+  ],
+  "homepage": "https://github.com/gavar/wrench/tree/master/packages/rollup-plugin-cleanup-chunk#readme",
+  "bugs": {
+    "url": "https://github.com/gavar/wrench/labels/rollup-plugin-cleanup-chunk"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gavar/wrench",
+    "directory": "packages/rollup-plugin-cleanup-chunk"
+  },
+  "license": "ISC",
+  "author": "Max Stankevich <max.stankevich.me@gmail.com>",
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "rimraf lib && tsc",
+    "clean": "rimraf lib",
+    "format": "yarn lint --fix",
+    "lint": "echo no linting yet",
+    "prepack": "yarn build",
+    "prepublishOnly": "yarn test && yarn run lint",
+    "test": "echo no tests yet"
+  },
+  "dependencies": {
+    "rollup-plugin-cleanup": "^3.1.1"
+  },
+  "peerDependencies": {
+    "typescript": "^3.5.3"
+  },
+  "copycat": {
+    "repository": "../..",
+    "peerDependencies": {
+      "typescript": "../.."
+    }
+  }
+}

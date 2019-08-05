@@ -1,8 +1,5 @@
 import { InputOptions, ModuleFormat, OutputOptions, RollupOptions } from "rollup";
 
-/** TypeScript library type definitions. */
-export type TypeScript = typeof import("typescript");
-
 /** Package fields which may be referenced for conventional build. */
 export interface Package {
   /**
@@ -110,15 +107,18 @@ export interface RollupConfig extends InputOptions {
 
 /** Configuration context sharing common values. */
 export interface Context {
+  /**
+   * Whether to preserve original module structure.
+   * @see https://rollupjs.org/guide/en#preservemodules
+   */
+  modular: boolean;
+
   /** List of external modules allowed to use by the package. */
   external: string[];
 
   /** Resolved value of package directories. */
   directories: PackageDirectories;
 
-  /** Cache directory for `rollup-plugin-typescript2`. */
-  rts2Cache: string;
-
-  /** Shared options for `rollup-plugin-node-resolve`. */
-  resolve: import("rollup-plugin-node-resolve").Options;
+  /** Shared options for `rollup-plugin-cleanup-chunk`. */
+  cleanup?: import("rollup-plugin-cleanup-chunk").Options;
 }

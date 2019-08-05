@@ -1,33 +1,64 @@
+import { typescript, typescriptDts } from "@wrench/roll-typescript";
+import { identity } from "lodash";
 import { builtinModules } from "module";
 import path from "path";
 import { OutputOptions } from "rollup";
-import cleanup from "rollup-plugin-cleanup";
+import cleanup from "rollup-plugin-cleanup-chunk";
 import clear from "rollup-plugin-clear";
-import resolve from "rollup-plugin-node-resolve";
-import ts2 from "rollup-plugin-typescript2";
-import slash from "slash";
 import { CompilerOptions } from "typescript";
-import { collectBinFiles, createBinFileConfig } from "./bin";
-import { dtsBundleGenerator, dtsPretty } from "./plugins";
-import { merge } from "./util";
+import { collectBinFiles, createBinConfig } from "./bin";
 import { Context, Package, RollupConfig } from "./types";
-import { defaultDirectories, isUnderWorkingDirectory, resolveThrow, scriptFileTypes } from "./util";
+import {
+  defaultPackageDirectories,
+  dirname,
+  extname,
+  isSubPathOfWorkingDirectory,
+  merge,
+  output,
+  resolve,
+} from "./util";
+
+export interface PackInfo {
+  path: string;
+  pack?: Package;
+}
 
 /**
  * Create {@link RollupConfig} to bundle a NodeJS library.
- * @param pack - package describing library.
- * @param base - base configurations to extend if any.
+ * @param path - path to a `package.json` file.
+ * @param base - base configurations to extend.
  */
-export function nodejs(pack: Package, base?: RollupConfig): RollupConfig[] {
+export function nodejs(path?: string, base?: RollupConfig): RollupConfig[];
+
+/**
+ * Create {@link RollupConfig} to bundle a NodeJS library.
+ * @param info - `package.json` location and content.
+ * @param base - base configurations to extend.
+ */
+export function nodejs(info: PackInfo, base?: RollupConfig): RollupConfig[];
+
+/** @internal */
+export function nodejs(info: string | PackInfo, base: RollupConfig = {}): RollupConfig[] {
+  // resolve
+  info = normalizePackInfo(info);
+
+  // load package.json
+  if (!info.pack) {
+    console.log("loading package:", info.path);
+    info.pack = require(info.path);
+  }
+
+  // avoid mutating original package.json
+  info.pack = {...info.pack};
+
   // verify
+  const {pack} = info;
   if (!pack.main) throw new Error("package 'main' field is required");
 
-  // `main` might contain double extension like: lib/index.cjs.js
-  const main = slash(pack.main);
-  const ext = main.slice(main.indexOf(".", main.lastIndexOf("/") || 0));
-  const basename = path.basename(main, ext);
-  const dir = Object.assign({}, defaultDirectories(pack), pack.directories);
-  const input = resolveThrow(dir.src, basename);
+  const dir = pack.directories = Object.assign({}, defaultPackageDirectories(pack), pack.directories);
+  const rel = path.relative(dir.lib, pack.main);
+  const entry = rel.slice(0, -extname(rel).length);
+  const input = resolve(dir.src, rel);
 
   const external: string[] = [
     builtinModules,
@@ -35,40 +66,67 @@ export function nodejs(pack: Package, base?: RollupConfig): RollupConfig[] {
     pack.peerDependencies && Object.keys(pack.peerDependencies),
   ].filter(identity).flat();
 
+  const modular = base.preserveModules;
   const context: Context = {
+    modular,
     directories: dir,
-    rts2Cache: path.join(dir.tmp, "./.rts2_cache"),
-    resolve: {preferBuiltins: true},
     external,
+    cleanup: {
+      transform: false,
+      renderChunk: true,
+      comments: "none",
+      compactComments: true,
+      maxEmptyLines: 1,
+      sourcemap: true,
+      extensions: ["js", "jsx", "ts", "tsx"],
+    },
   };
 
   /** CommonJS bundle output options. */
-  const cjs: OutputOptions = {
-    file: pack.main,
+  const cjs = output(pack.main, modular, {
     format: "cjs",
     sourcemap: true,
     esModule: false, // NodeJS does not require to define __esModule
     preferConst: true, // NodeJS supports `const` since early versions
     strict: false, // NodeJS modules are strict by default
-  };
+  });
 
   /** ECMAScript bundle output options. */
-  const esm: OutputOptions = pack.module && {
-    file: pack.module,
+  const esm: OutputOptions = pack.module && output(pack.module, modular, {
     format: "esm",
     sourcemap: true,
-  };
+  });
 
   /** TypeScript compiler options.  */
   const compilerOptions: CompilerOptions = {
-    outDir: dir.lib,
+    outDir: path.join(dir.tmp, ".ts"),
+    declarationDir: path.join(dir.tmp, ".dts"),
+    rootDir: dir.src,
   };
 
-  // configure staging directory for type definitions if required
+  // configure staging directory for type definitions
   if (pack.types) {
     compilerOptions.declaration = true;
-    compilerOptions.declarationDir = path.join(dir.tmp, "./.dts");
-    compilerOptions.declarationMap = false;
+    compilerOptions.removeComments = false;
+    if (modular) {
+      compilerOptions.declarationDir = path.join(dirname(pack.types) || pack.types);
+    } else {
+      compilerOptions.declarationMap = false;
+    }
+  }
+
+  /** Generates `.d.ts` bundle from the the previous output. */
+  let dtsConfig: RollupConfig;
+  if (!modular && pack.types) {
+    dtsConfig = {
+      input: path.join(compilerOptions.declarationDir, entry + ".d.ts"),
+      output: {
+        file: path.normalize(pack.types),
+        format: "esm",
+      },
+      plugins: [typescriptDts()],
+      external,
+    };
   }
 
   /** Generate bundles from input. */
@@ -77,47 +135,44 @@ export function nodejs(pack: Package, base?: RollupConfig): RollupConfig[] {
     output: [cjs, esm].filter(identity),
     external,
     plugins: [
-      // prevent accidentally removing working directory
-      clear({targets: [dir.tmp, dir.lib].filter(isUnderWorkingDirectory)}),
-      resolve(context.resolve),
-      ts2({
-        cacheRoot: context.rts2Cache,
-        useTsconfigDeclarationDir: true,
-        tsconfigOverride: {
-          files: [input],
-          compilerOptions,
-        },
+      clear({
+        targets: [
+          dir.tmp,
+          dirname(pack.main) || pack.main,
+          dirname(pack.types) || pack.types,
+          dirname(pack.module) || pack.module,
+        ].filter(isSafeToDelete),
       }),
-      cleanup({
-        comments: ["sources"],
-        extensions: [...scriptFileTypes],
+      typescript({
+        compilerOptions,
+        types: !modular && pack.types,
       }),
+      cleanup(context.cleanup),
     ],
   });
 
-  /** Generates `.d.ts` bundle from the the previous output. */
-  const dtsConfig: RollupConfig = pack.types && {
-    input: path.join(compilerOptions.declarationDir, basename + ".d.ts"),
-    plugins: [
-      dtsBundleGenerator({external}),
-      dtsPretty(),
-    ],
-    output: {file: pack.types, format: "esm"},
-    external,
-  };
-
   /** Generates bundle for each executable script. */
   const binConfigs = collectBinFiles(pack, context)
-    .map(file => createBinFileConfig(file, pack, context));
+    .map(x => createBinConfig(x, info as PackInfo, context));
 
   // `rollup` will run this configurations in sequence
   return [
     tsConfig,
-    dtsConfig,
+    // dtsConfig,
     ...binConfigs,
   ].filter(identity);
 }
 
-function identity<T>(x: T) {
-  return x;
+function isSafeToDelete(p: string) {
+  // TODO: better guard from removing any of the source code
+  return isSubPathOfWorkingDirectory(p);
+}
+
+function normalizePackInfo(info: string | PackInfo): PackInfo {
+  if (info && typeof info === "object")
+    return {...info};
+
+  return {
+    path: info as string || path.resolve("package.json"),
+  };
 }

@@ -2,9 +2,8 @@
   "extends": "./tsconfig.json",
   "files": ["src/index.ts"],
   "compilerOptions": {
-    "outDir": "lib",
     "declarationMap": false,
-    "module": "commonjs"
+    "module": "commonjs",
+    "outDir": "lib"
   }
 }
-

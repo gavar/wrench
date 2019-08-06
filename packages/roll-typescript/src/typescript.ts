@@ -12,7 +12,7 @@ import {
   RenderedChunk,
   TransformResult,
 } from "rollup";
-import { CompilerOptions } from "typescript";
+import { CompilerOptions, ScriptTarget } from "typescript";
 import { bundleDts } from "./bundle-dts";
 import {
   addFileNames,
@@ -69,7 +69,8 @@ export function typescript(options?: TypeScriptOptions): Plugin {
   let modular: boolean;
 
   let project: Project;
-  let esnext: ProjectHost;
+  let compilerOptions: CompilerOptions;
+
   let inputs: Set<string>;
   let pending: Set<string>;
   let shouldBundleDts: boolean;
@@ -82,11 +83,15 @@ export function typescript(options?: TypeScriptOptions): Plugin {
       exclude = new Set<string>([NAME, VIRTUAL_NAME]);
       modular = input.preserveModules;
 
+      // initialize project
       [project, inputs] = lazy(this, "project", createProject, options, input);
-      project.reportDiagnostic = createReportDiagnosticByPlugin(this);
       pending = new Set(collectDependencies(project, inputs, true));
-      esnext = lazy(this, "esnext", forkESNext, project);
+      project.reportDiagnostic = createReportDiagnosticByPlugin(this);
       shouldBundleDts = !!(!modular && project.options.declarationDir && options.types);
+      compilerOptions = project.options;
+
+      // fork with ESNext target for fast transformations
+      project = lazy(this, "esnext", forkESNext, project);
 
       // rollup may exclude `index` files, so make sure to forcibly include them
       if (modular)
@@ -118,8 +123,8 @@ export function typescript(options?: TypeScriptOptions): Plugin {
       project.updateScript(fileName, code);
 
       // emit
-      const program = esnext.getProgram();
-      const out = emitByProgram(program, esnext, fileName);
+      const program = project.getProgram();
+      const out = emitByProgram(program, project, fileName);
       const {js, jsmap, dts, dtsmap} = out;
 
       // write declaration files for further bundling
@@ -143,7 +148,7 @@ export function typescript(options?: TypeScriptOptions): Plugin {
     renderStart(this: PluginContext) {
       // write .d.ts files excluded by tree-shaking
       if (!modular) {
-        flush(esnext, pending, true);
+        flush(project, pending, true);
         pending.clear();
       }
     },
@@ -153,7 +158,8 @@ export function typescript(options?: TypeScriptOptions): Plugin {
         return;
 
       if (modular) {
-        const host = lazy2(cache, output, this, outputHostKey, forkHostByOutput, project, output);
+        // updates program by `checkProgramDirty` if any change occurs during transform
+        const host = lazy2(cache, output, checkProgramDirty, this, outputHostKey, forkHostByOutput, output, project, compilerOptions);
 
         // emit
         const program = host.getProgram();
@@ -182,7 +188,8 @@ export function typescript(options?: TypeScriptOptions): Plugin {
     },
 
     generateBundle(this: PluginContext, output: OutputOptions, bundle: OutputBundle) {
-      const host = lazy2(cache, output, this, outputHostKey, forkHostByOutput, project, output);
+      // updates program by `checkProgramDirty` if any change occurs during transform
+      const host = lazy2(cache, output, checkProgramDirty, this, outputHostKey, forkHostByOutput, output, project, compilerOptions);
 
       // remove all virtual / empty chunks
       for (const key of Object.keys(bundle))
@@ -254,4 +261,8 @@ function isEmptyCode(code: string) {
     code = code.trim();
   }
   return !code;
+}
+
+function checkProgramDirty<T extends ProjectHost>(this: T) {
+  this.checkProgramDirty();
 }

@@ -23,6 +23,10 @@ import {
 } from "../host";
 import { bindToSelf, canonical, rebind, reportDiagnosticByConsole } from "../util";
 
+const NULL: Partial<ScriptText> = {
+  version: "0",
+};
+
 export interface ProjectProps extends Partial<Project> {
   ts: TypeScript;
   options: CompilerOptions;
@@ -70,8 +74,8 @@ export class Project implements LanguageServiceHost, ProjectHost, ResolutionHost
   /** Cache of scripts. */
   readonly scripts: Record<string, ScriptText> = {};
 
-  private program: Program;
   private dirty: boolean;
+  private program: Program;
 
   constructor(props: ProjectProps) {
     rebind(Object.assign(this, props), props);
@@ -80,7 +84,7 @@ export class Project implements LanguageServiceHost, ProjectHost, ResolutionHost
 
   /** @inheritdoc */
   fork(props: Partial<this>): this {
-    const host = Object.assign(Object.create(this), props);
+    const host: this = Object.assign(Object.create(this), props);
     (host as Mutable<this>).options = {...this.options, ...props.options};
     initialize.call(host, this, rebind);
     host.dirty = true;
@@ -95,20 +99,26 @@ export class Project implements LanguageServiceHost, ProjectHost, ResolutionHost
   }
 
   /** @inheritdoc */
-  getProgram(): Program {
-    // mark dirty if script modified
-    if (!this.dirty && this.program)
-      this.dirty = this.program.getSourceFiles().some(isVersionDiff, this);
+  getProgram(checkDirty?: boolean): Program {
+    if (checkDirty)
+      this.checkProgramDirty();
 
-    if (this.dirty || !this.program)
+    if (this.dirty || !this.program) {
       this.program = this.ts.createProgram({
         host: this,
         options: this.options,
         rootNames: this.fileNames,
         oldProgram: this.program,
       });
+    }
     this.dirty = false;
     return this.program;
+  }
+
+  /** @inheritdoc */
+  checkProgramDirty(): void {
+    if (!this.dirty && this.program)
+      this.dirty = this.program.getSourceFiles().some(isVersionDiff, this.scripts);
   }
 
   updateScript(fileName: string, text: string): ScriptText {
@@ -124,9 +134,16 @@ export class Project implements LanguageServiceHost, ProjectHost, ResolutionHost
       script = this.ts.ScriptSnapshot.fromString(text) as ScriptText;
       script.text = text;
       script.kind = this.getScriptKind(fileName);
-      script.version = "0";
+      script.version = NULL.version;
       this.scripts[fileName] = script;
     }
+
+    // mark as dirty
+    if (!this.dirty && this.program) {
+      const file: SourceFileInternal = this.program.getSourceFile(fileName);
+      this.dirty = file && file.version !== script.version;
+    }
+
     return script;
   }
 
@@ -179,8 +196,7 @@ export class Project implements LanguageServiceHost, ProjectHost, ResolutionHost
 
   /** @inheritdoc */
   getScriptVersion(fileName: string): string {
-    const script = this.scripts[fileName];
-    return script ? script.version : "0";
+    return (this.scripts[fileName] || NULL).version;
   }
 
   /** @inheritdoc */
@@ -274,8 +290,8 @@ interface Binder<T> {
   (self: T, source: T): void;
 }
 
-function isVersionDiff(this: Project, file: SourceFileInternal) {
-  return file.version !== this.getScriptVersion(file.path);
+function isVersionDiff(this: Record<string, ScriptText>, file: SourceFileInternal) {
+  return file.version !== (this[file.path] || NULL).version;
 }
 
 interface SourceFileInternal extends SourceFile {

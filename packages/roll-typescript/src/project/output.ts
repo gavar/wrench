@@ -8,10 +8,12 @@ import { formatToModule } from "../util";
  * Create host for the particular output options.
  * @param host - project host transforming code.
  * @param output - output options.
+ * @param options - base options.
  */
-export function forkHostByOutput(host: ProjectHost, output: OutputOptions): ProjectHost {
+export function forkHostByOutput(output: OutputOptions, host: ProjectHost, options: CompilerOptions): ProjectHost {
   const dir = path.resolve(host.getCurrentDirectory(), output.dir || path.dirname(output.file));
-  const options: CompilerOptions = {
+  options = {
+    ...options,
     outDir: dir,
     declarationDir: dir,
     inlineSources: false,

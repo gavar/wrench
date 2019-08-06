@@ -23,12 +23,13 @@ export function lazy<K, T, P extends any[]>({cache}: PluginContext, key: string,
  * New value will be calculate by provided calculation function if cache does not provide one.
  * @param fast - fast runtime cache.
  * @param fastKey - key for the value in a fast runtime cache.
+ * @param initialize - function to to call before saving to fast cache.
  * @param cache - plugin context cache.
  * @param key - key for the value in a plugin cache or function calculating it from a fast key.
  * @param calculate - function to use to calculate value when cache does not provide one.
  * @param params - parameters to pass into calculation function.
  */
-export function lazy2<K, T, P extends any[]>(fast: Map<any, any>, fastKey: any,
+export function lazy2<K, T, P extends any[]>(fast: Map<any, any>, fastKey: any, initialize: (this: T, ...params: P) => void,
                                              {cache}: PluginContext, key: string | ((fast: K) => string),
                                              calculate: (...params: P) => T, ...params: P): T {
   let value = fast.get(fastKey);
@@ -42,6 +43,8 @@ export function lazy2<K, T, P extends any[]>(fast: Map<any, any>, fastKey: any,
       value = calculate(...params);
       cache.set(key, value);
     }
+    if (initialize)
+      initialize.call(value, ...params);
     fast.set(fastKey, value);
   }
   return value;

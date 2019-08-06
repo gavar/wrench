@@ -12,7 +12,7 @@ import { TypeScriptHost } from "./typescript-host";
 import { WriteHost } from "./write-host";
 
 export interface ProjectHost extends TypeScriptHost, CompilerHost, EmitHost, ResolutionHost, WriteHost {
-  /** Compiler options of this host, may differ from {@link program#getCompilerOptions}. */
+  /** Compiler options of this host. */
   readonly options: CompilerOptions;
 
   /** List of file names to use for compilation. */
@@ -33,8 +33,12 @@ export interface ProjectHost extends TypeScriptHost, CompilerHost, EmitHost, Res
   /**
    * Program to use for TS to JS transformation.
    * Create new program instance when state is dirty or program is null.
+   * @param checkDirty - whether to run {@link checkProgramDirty}.
    */
-  getProgram(): Program;
+  getProgram(checkDirty?: boolean): Program;
+
+  /** Check if program became by scheduling new program creation for next {@link getProgram} call. */
+  checkProgramDirty(): void;
 
   /** @inheritdoc */
   getCurrentDirectory(): string;

@@ -19,7 +19,7 @@
     "strictNullChecks": false,
     "target": "es6",
     "typeRoots": [
-      "packages/@types",
+      "@types",
       "node_modules/@types"
     ]
   },

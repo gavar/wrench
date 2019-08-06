@@ -96,6 +96,10 @@ export class Project implements LanguageServiceHost, ProjectHost, ResolutionHost
 
   /** @inheritdoc */
   getProgram(): Program {
+    // mark dirty if script modified
+    if (!this.dirty && this.program)
+      this.dirty = this.program.getSourceFiles().some(isVersionDiff, this);
+
     if (this.dirty || !this.program)
       this.program = this.ts.createProgram({
         host: this,
@@ -268,4 +272,13 @@ function initialize<T extends Project>(this: Mutable<T>, prototype?: T, binder?:
 
 interface Binder<T> {
   (self: T, source: T): void;
+}
+
+function isVersionDiff(this: Project, file: SourceFileInternal) {
+  return file.version !== this.getScriptVersion(file.path);
+}
+
+interface SourceFileInternal extends SourceFile {
+  path?: string;
+  version?: string;
 }

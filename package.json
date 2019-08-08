@@ -16,7 +16,8 @@
   "workspaces": {
     "packages": [
       "@types/*",
-      "packages/*"
+      "packages/*",
+      "packages/_/*"
     ]
   },
   "husky": {

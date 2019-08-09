@@ -31,9 +31,12 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
+    "beta": "standard-version -p beta",
     "build": "roll --preserveModules",
+    "bump": "standard-version",
     "clean": "rimraf lib",
     "format": "yarn lint --fix",
+    "format:pack": "fixpack && sort-package-json",
     "lint": "echo no linting yet",
     "prepack": "yarn build",
     "prepublishOnly": "yarn test && yarn run lint",
@@ -42,15 +45,7 @@
   "dependencies": {
     "rollup-plugin-cleanup": "^3.1.1"
   },
-  "devDependencies": {
-    "typescript": "^3.5.3",
-    "@wrench/roll": ">=2.0.0-beta"
-  },
   "copycat": {
-    "repository": "../..",
-    "devDependencies": {
-      "@wrench/roll": "../roll",
-      "typescript": "../.."
-    }
+    "repository": "../.."
   }
 }

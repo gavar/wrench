@@ -27,7 +27,8 @@
   ],
   "scripts": {
     "beta": "standard-version -p beta",
-    "bump": "standard-version"
+    "bump": "standard-version",
+    "format:pack": "fixpack && sort-package-json"
   },
   "dependencies": {
     "standard-version": ">=7.0.0"

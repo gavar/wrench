@@ -37,8 +37,7 @@
   "copycat": {
     "author": "../../..",
     "license": "../../..",
-    "repository": "../../..",
-    "publishConfig": "../../.."
+    "repository": "../../.."
   },
   "standard-version": {
     "extends": "@wrench/standard-version-config",

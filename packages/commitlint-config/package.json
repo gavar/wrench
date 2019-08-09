@@ -27,6 +27,11 @@
     "index.js"
   ],
   "main": "index.js",
+  "scripts": {
+    "beta": "standard-version -p beta",
+    "bump": "standard-version",
+    "format:pack": "fixpack && sort-package-json"
+  },
   "dependencies": {
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^8.1.0"

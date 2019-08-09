@@ -21,7 +21,11 @@
     "directory": "packages/copycat-package"
   },
   "license": "ISC",
-  "author": "Max Stankevich <max.stankevich.me@gmail.com>",
+  "author": {
+    "name": "Max Stankevich",
+    "email": "max.stankevich.me@gmail.com",
+    "url": "https://github.com/gavar"
+  },
   "files": [
     "lib"
   ],
@@ -32,9 +36,12 @@
     "copycat-pack": "bin/copycat-pack.js"
   },
   "scripts": {
+    "beta": "standard-version -p beta",
     "build": "rollup -c",
+    "bump": "standard-version",
     "clean": "rimraf lib",
     "format": "yarn lint --fix",
+    "format:pack": "fixpack && sort-package-json",
     "lint": "echo no linting yet",
     "prepack": "yarn build",
     "prepublishOnly": "yarn test && yarn run lint",
@@ -54,8 +61,7 @@
     "@types/lodash": "^4.14.136",
     "@types/semver": "^6.0.1",
     "@types/source-map-support": "^0.5.0",
-    "@types/yargs": "^13.0.2",
-    "@wrench/roll": ">=2.0.0-beta"
+    "@types/yargs": "^13.0.2"
   },
   "copycat": {
     "author": "../..",
@@ -66,9 +72,6 @@
       "colors": "../..",
       "lodash": "../..",
       "source-map-support": "../.."
-    },
-    "devDependencies": {
-      "@wrench/roll": "../roll"
     }
   }
 }

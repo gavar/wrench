@@ -12,9 +12,6 @@
   "bugs": {
     "url": "https://github.com/gavar/wrench/labels/ts-config"
   },
-  "scripts": {
-    "release": "npm release --access public"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/gavar/wrench",
@@ -29,9 +26,22 @@
   "files": [
     "tsconfig.json"
   ],
+  "scripts": {
+    "beta": "standard-version -p beta",
+    "bump": "standard-version",
+    "format:pack": "fixpack && sort-package-json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "copycat": {
-    "author": "../..",
-    "license": "../..",
-    "repository": "../.."
+    "author": "../../..",
+    "license": "../../..",
+    "repository": "../../..",
+    "publishConfig": "../../.."
+  },
+  "standard-version": {
+    "extends": "@wrench/standard-version-config",
+    "tag-prefix": "v/ts-config/"
   }
 }

@@ -65,5 +65,9 @@
       "tslib": "../..",
       "tstt": "../.."
     }
+  },
+  "standard-version": {
+    "extends": "@wrench/standard-version-config",
+    "tag-prefix": "v/roll-typescript/"
   }
 }

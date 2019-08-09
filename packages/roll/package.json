@@ -69,5 +69,9 @@
       "source-map-support": "../..",
       "tslib": "../.."
     }
+  },
+  "standard-version": {
+    "extends": "@wrench/standard-version-config",
+    "tag-prefix": "v/roll/"
   }
 }

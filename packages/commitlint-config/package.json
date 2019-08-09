@@ -38,5 +38,9 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "standard-version": {
+    "extends": "@wrench/standard-version-config",
+    "tag-prefix": "v/commitlint-config/"
   }
 }

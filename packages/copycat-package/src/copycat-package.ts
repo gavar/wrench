@@ -106,10 +106,9 @@ const processors: ProcessorRegistry = {
  * @param registry - registry of all packages.
  * @return true if any property has been modified.
  */
-function updatePackage(node: PackNode, registry: PackRegistry) {
-  for (const key of Object.keys(node.props) as Array<keyof CopycatPackageProps>)
-    if (processors[key]) processors[key](node, registry, key as any);
-    else processPrimitive(node, registry, key);
+function updatePackage<K extends keyof ProcessorRegistry>(node: PackNode, registry: PackRegistry) {
+  for (const key of Object.keys(node.props) as K[])
+    ((processors[key] || processPrimitive) as PropertyProcessor<K>)(node, registry, key);
 }
 
 /**

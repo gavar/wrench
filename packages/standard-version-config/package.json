@@ -1,0 +1,44 @@
+{
+  "name": "@wrench/standard-version-config",
+  "version": "1.0.0",
+  "private": false,
+  "description": "common configuration for standard-version",
+  "keywords": [
+    "config",
+    "standard-version"
+  ],
+  "homepage": "https://github.com/gavar/wrench/tree/master/packages/standard-version-config#readme",
+  "bugs": {
+    "url": "https://github.com/gavar/wrench/labels/standard-version-config"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gavar/wrench",
+    "directory": "packages/standard-version-config"
+  },
+  "license": "ISC",
+  "author": {
+    "name": "Max Stankevich",
+    "email": "max.stankevich.me@gmail.com",
+    "url": "https://github.com/gavar"
+  },
+  "files": [
+    "index.json"
+  ],
+  "scripts": {
+    "bump": "standard-version",
+    "beta": "standard-version -p beta"
+  },
+  "standard-version": {
+    "extends": "./index.json",
+    "tag-prefix": "v/standard-version-config/"
+  },
+  "dependencies": {
+    "standard-version": ">=7.0.0"
+  },
+  "copycat": {
+    "author": "../..",
+    "license": "../..",
+    "repository": "../.."
+  }
+}

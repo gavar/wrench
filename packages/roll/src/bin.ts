@@ -113,7 +113,7 @@ function binResolvePlugin(dir: string, pack: Package): Plugin {
             moduleSideEffects: true,
           } as PartialResolvedId;
 
-        if (id && ownDirs.some(dirOwnThis, id))
+        if (id && ownDirs.some(dir => belongsToDir(dir, id)))
           return {
             id,
             external: true,
@@ -163,7 +163,7 @@ function resolveOwnDirs(dir: string, pack: Package, entry: Iterable<string>): st
   return [...dirs];
 }
 
-function dirOwnThis(this: string, dir: string) {
-  const rel = path.relative(dir, this);
+function belongsToDir(dir: string, p: string) {
+  const rel = path.relative(dir, p);
   return !rel.startsWith("..");
 }

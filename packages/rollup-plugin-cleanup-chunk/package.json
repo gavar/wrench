@@ -45,6 +45,9 @@
   "dependencies": {
     "rollup-plugin-cleanup": "^3.1.1"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "copycat": {
     "repository": "../.."
   }

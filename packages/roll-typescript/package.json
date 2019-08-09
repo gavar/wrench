@@ -54,6 +54,9 @@
     "tslib": "^1.10.0",
     "tstt": "^1.0.4"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "copycat": {
     "repository": "../..",
     "dependencies": {

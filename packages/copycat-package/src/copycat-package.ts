@@ -226,7 +226,7 @@ function persist(nodes: PackNode[]) {
     console.group(yellow("Writing changes"));
     for (const node of nodes) {
       console.log(">>", cyan(node.pack.name), gray(node.filename));
-      fs.writeFileSync(node.filename, node.raw);
+      fs.writeFileSync(node.filename, node.raw + "\n");
     }
   } else {
     console.log("Packages are up to date!");

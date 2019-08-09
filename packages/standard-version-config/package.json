@@ -26,19 +26,22 @@
     "index.json"
   ],
   "scripts": {
-    "bump": "standard-version",
-    "beta": "standard-version -p beta"
-  },
-  "standard-version": {
-    "extends": "./index.json",
-    "tag-prefix": "v/standard-version-config/"
+    "beta": "standard-version -p beta",
+    "bump": "standard-version"
   },
   "dependencies": {
     "standard-version": ">=7.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "copycat": {
     "author": "../..",
     "license": "../..",
     "repository": "../.."
+  },
+  "standard-version": {
+    "extends": "./index.json",
+    "tag-prefix": "v/standard-version-config/"
   }
 }

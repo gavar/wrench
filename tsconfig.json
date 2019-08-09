@@ -1,34 +1,3 @@
 {
-  "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "alwaysStrict": true,
-    "baseUrl": ".",
-    "declaration": true,
-    "declarationMap": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "importHelpers": true,
-    "lib": ["esnext"],
-    "moduleResolution": "node",
-    "noEmitHelpers": true,
-    "noImplicitAny": true,
-    "outDir": "./out",
-    "resolveJsonModule": true,
-    "sourceMap": true,
-    "strict": true,
-    "strictNullChecks": false,
-    "target": "es6",
-    "typeRoots": [
-      "@types",
-      "node_modules/@types"
-    ]
-  },
-  "exclude": [
-    "**/#*", // all files where names starts with #
-    "**/out", // all 'out' directories
-    "**/tmp", // all 'tmp' directories
-    "**/lib", // all 'lib' directories
-    "**/dist", // all 'dist' directories
-    "**/node_modules/*" // node_modules
-  ]
+  "extends": "@wrench/ts-config"
 }

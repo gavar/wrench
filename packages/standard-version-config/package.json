@@ -33,6 +33,7 @@
   "dependencies": {
     "standard-version": ">=7.0.0"
   },
+  "devDependencies": {},
   "publishConfig": {
     "access": "public"
   },

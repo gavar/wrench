@@ -42,6 +42,6 @@
   },
   "standard-version": {
     "extends": "@wrench/standard-version-config",
-    "tag-prefix": "v/commitlint-config/"
+    "tag-prefix": "v/commit-lint-config/"
   }
 }

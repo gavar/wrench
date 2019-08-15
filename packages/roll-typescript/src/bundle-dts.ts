@@ -36,7 +36,7 @@ export function bundleDts(options: BundleDtsOptions): void {
   });
 
   const collector = new Collector({
-    program,
+    program: program as any, // types may be incompatible if different TS versions
     messageRouter,
     extractorConfig,
   });

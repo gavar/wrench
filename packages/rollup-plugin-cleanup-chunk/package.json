@@ -24,7 +24,11 @@
     "directory": "packages/rollup-plugin-cleanup-chunk"
   },
   "license": "ISC",
-  "author": "Max Stankevich <max.stankevich.me@gmail.com>",
+  "author": {
+    "name": "Max Stankevich",
+    "email": "max.stankevich.me@gmail.com",
+    "url": "https://github.com/gavar"
+  },
   "files": [
     "lib"
   ],
@@ -45,10 +49,13 @@
   "dependencies": {
     "rollup-plugin-cleanup": "^3.1.1"
   },
+  "devDependencies": {},
   "publishConfig": {
     "access": "public"
   },
   "copycat": {
+    "author": "../..",
+    "license": "../..",
     "repository": "../.."
   },
   "standard-version": {

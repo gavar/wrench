@@ -27,7 +27,11 @@
     "directory": "packages/roll-typescript"
   },
   "license": "ISC",
-  "author": "Max Stankevich <max.stankevich.me@gmail.com>",
+  "author": {
+    "name": "Max Stankevich",
+    "email": "max.stankevich.me@gmail.com",
+    "url": "https://github.com/gavar"
+  },
   "files": [
     "lib",
     "es"
@@ -58,6 +62,8 @@
     "access": "public"
   },
   "copycat": {
+    "author": "../..",
+    "license": "../..",
     "repository": "../..",
     "dependencies": {
       "colors": "../..",

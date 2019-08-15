@@ -20,6 +20,9 @@
       "packages/_/*"
     ]
   },
+  "scripts": {
+    "format:pack": "fixpack && sort-package-json && wsrun -c format:pack"
+  },
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
@@ -33,7 +36,8 @@
   "devDependencies": {
     "@types/node": "^12.6.8",
     "husky": "^3.0.0",
-    "typescript": "^3.6.0-dev"
+    "typescript": "^3.6.0-dev",
+    "wsrun": "^5.0.0"
   },
   "commonDependencies": {
     "colors": "^1.3.0",

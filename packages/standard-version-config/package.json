@@ -42,6 +42,7 @@
     "license": "../..",
     "repository": "../.."
   },
+  "release": true,
   "standard-version": {
     "extends": "./index.json",
     "tag-prefix": "v/standard-version-config/"

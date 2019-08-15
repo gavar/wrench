@@ -58,6 +58,7 @@
     "license": "../..",
     "repository": "../.."
   },
+  "release": true,
   "standard-version": {
     "extends": "@wrench/standard-version-config",
     "tag-prefix": "v/rollup-plugin-cleanup-chunk/"

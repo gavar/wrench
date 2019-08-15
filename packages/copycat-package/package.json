@@ -77,6 +77,7 @@
       "source-map-support": "../.."
     }
   },
+  "release": true,
   "standard-version": {
     "extends": "@wrench/standard-version-config",
     "tag-prefix": "v/copycat-package/"

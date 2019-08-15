@@ -2,7 +2,7 @@ import { Context } from "@wrench/semantic-release";
 import { Workspace } from "../../types";
 import { createWorkspaceContext } from "../../util";
 
-const tag = require("semantic-release/lib/git");
+const {tag} = require("semantic-release/lib/git");
 
 export async function tagWorkspace(workspace: Workspace, owner: Context) {
   const {logger} = owner;

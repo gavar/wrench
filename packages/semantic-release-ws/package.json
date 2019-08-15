@@ -1,0 +1,90 @@
+{
+  "name": "@wrench/semantic-release-ws",
+  "version": "1.0.0-beta",
+  "description": "Semantic Release plugin for publishing Yarn workspaces",
+  "keywords": [
+    "automation",
+    "changelog",
+    "monorepo",
+    "publish",
+    "release",
+    "semantic",
+    "semantic-release",
+    "semver",
+    "typescript",
+    "version",
+    "workspace",
+    "yarn"
+  ],
+  "homepage": "https://github.com/gavar/wrench/tree/master/semantic-release-ws#readme",
+  "bugs": {
+    "url": "https://github.com/gavar/wrench/labels/semantic-release-ws"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gavar/wrench",
+    "directory": "packages/semantic-release-ws"
+  },
+  "license": "ISC",
+  "author": {
+    "name": "Max Stankevich",
+    "email": "max.stankevich.me@gmail.com",
+    "url": "https://github.com/gavar"
+  },
+  "files": [
+    "lib",
+    "es"
+  ],
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "compile": "rimraf lib && tsc -p self.tsconfig.json",
+    "format:pack": "fixpack && sort-package-json"
+  },
+  "dependencies": {
+    "@semantic-release/error": "^2.2.0",
+    "@wrench/semantic-release": ">=1.0.0-beta",
+    "cli-table3": "^0.5.1",
+    "colors": "^1.3.0",
+    "find-up": "^3.0.0",
+    "inquirer": "^6.2.2",
+    "lodash": "^4.17.4",
+    "semver": "^5.4.1",
+    "shelljs": "^0.8.3",
+    "tslib": "^1.10.0",
+    "yargs": "^12.0.0"
+  },
+  "devDependencies": {
+    "@types/find-up": "^2.1.1",
+    "@types/inquirer": "^6.5.0",
+    "@types/lodash": "^4.14.136",
+    "@types/semantic-release": "^15.13.0",
+    "@types/semver": "^5.5.0",
+    "@types/shelljs": "^0.8.5",
+    "@types/yargs": "^12.0.12"
+  },
+  "peerDependencies": {
+    "semantic-release": "^16.0.0-beta"
+  },
+  "copycat": {
+    "author": "../..",
+    "license": "../..",
+    "repository": "../..",
+    "dependencies": {
+      "@semantic-release/error": "semantic-release",
+      "@wrench/semantic-release": "@wrench/semantic-release",
+      "colors": "../..",
+      "lodash": "semantic-release",
+      "semver": "semantic-release",
+      "tslib": "../..",
+      "yargs": "semantic-release",
+      "find-up": "yargs"
+    }
+  },
+  "release": true,
+  "standard-version": {
+    "extends": "@wrench/standard-version-config",
+    "tag-prefix": "v/semantic-release-ws/"
+  }
+}

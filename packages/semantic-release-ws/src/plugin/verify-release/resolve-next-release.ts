@@ -1,18 +1,14 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
-import { Release, VerifyReleaseContext } from "@wrench/semantic-release";
+import { getNextVersion, makeTag, Release, VerifyReleaseContext } from "@wrench/semantic-release";
 import { Workspace } from "../../types";
-import { createWorkspaceContext } from "../../util";
+import { createWorkspaceLogger } from "../../util";
 
-const getNextVersion = require("semantic-release/lib/get-next-version");
-const {makeTag} = require("semantic-release/lib/utils");
-
-export function resolveNextRelease(workspace: Workspace, owner: VerifyReleaseContext): Release {
-  let {nextRelease} = workspace;
+export function resolveNextRelease(w: Workspace, owner: VerifyReleaseContext): Release {
+  let {nextRelease} = w;
   if (nextRelease.type) {
-    const context = createWorkspaceContext(workspace, owner);
-    const {tagFormat} = context.options;
-    nextRelease = context.nextRelease = {...owner.nextRelease, ...nextRelease};
-    nextRelease.version = getNextVersion(context);
+    const {tagFormat} = w.options;
+    const logger = createWorkspaceLogger(w, owner);
+    nextRelease = {...owner.nextRelease, ...nextRelease};
+    nextRelease.version = getNextVersion(w.branch, nextRelease.type, nextRelease.channel, w.lastRelease, logger);
     nextRelease.gitTag = makeTag(tagFormat, nextRelease.version, nextRelease.channel);
     nextRelease.name = makeTag(tagFormat, nextRelease.version);
   }

@@ -19,10 +19,11 @@ export function releaseSummary(workspaces: Workspace[]): string {
     table.push([
       style(w.name, !active && grey),
       last.gitHead ? style(last.gitHead.slice(0, 7), $yellow) : "",
-      style(last.version, $yellow),
+      last.version ? style(last.version, $yellow) : "",
       active ? style(next.version, green) : "",
       active ? style(w.commits.length, green) : "",
       active ? style(next.type, magenta) : "",
+      active ? style(next.gitTag, green) : "",
     ]);
   }
 
@@ -31,8 +32,8 @@ export function releaseSummary(workspaces: Workspace[]): string {
 
 function createTable(): HorizontalTable {
   return new Table({
-    head: ["Name", "Commit", "Version", "Next", "Commits", "Release"],
-    colAligns: ["left", "center", "left", "left", "right", "center"],
+    head: ["Name", "Commit", "Version", "Next", "Commits", "Release", "Release Tag"],
+    colAligns: ["left", "center", "left", "left", "right", "center", "left"],
     colWidths: [null, 9],
     style: {
       "padding-left": 1,

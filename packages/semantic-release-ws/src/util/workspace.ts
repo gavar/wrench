@@ -138,8 +138,12 @@ export function createWorkspaceContext<T extends Context>(w: Workspace, owner: T
   } as T & AnalyzeCommitsContext & PrepareContext;
   context.cwd = w.cwd;
   context.env = {...owner.env};
-  context.logger = owner.logger.scope(w.name);
+  context.logger = createWorkspaceLogger(w, owner);
   return context;
+}
+
+export function createWorkspaceLogger(w: Workspace, owner: Context) {
+  return owner.logger.scope(w.name);
 }
 
 export function shouldCallWorkspace(w: Workspace, step: Step) {

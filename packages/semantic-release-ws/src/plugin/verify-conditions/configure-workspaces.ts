@@ -1,11 +1,9 @@
-import { VerifyConditionsContext } from "@wrench/semantic-release";
+import { getConfig, VerifyConditionsContext } from "@wrench/semantic-release";
 import findUp from "find-up";
 import { readFileSync } from "fs";
 import yargs, { Arguments, Argv } from "yargs";
 import { CommonOptions, Workspace, WsConfiguration } from "../../types";
 import { createWorkspaceContext } from "../../util";
-
-const getConfig = require("semantic-release/lib/get-config");
 
 export async function configureWorkspaces(
   config: WsConfiguration,
@@ -27,7 +25,6 @@ export async function configureWorkspaces(
     const context = createWorkspaceContext(w, owner, null);
     const options = Object.assign({}, argv, packages && packages[w.name]) as CommonOptions;
     Object.assign(w, await getConfig(context, options));
-  debugger;
     if (w.options.tagFormat === "v${version}") {
       const args = resolveStandardVersionConfig(w);
       if (args.tagPrefix) w.options.tagFormat = args.tagPrefix + "${version}";

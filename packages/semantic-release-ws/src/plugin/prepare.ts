@@ -1,8 +1,6 @@
-import { PrepareContext } from "@wrench/semantic-release";
+import { PrepareContext, tag } from "@wrench/semantic-release";
 import { Workspace, WsConfiguration } from "../types";
 import { callWorkspacesOf, createWorkspaceContext, WorkspacesHooks } from "../util";
-
-const tag = require("semantic-release/lib/git");
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export async function prepare(config: WsConfiguration, context: PrepareContext) {

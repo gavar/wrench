@@ -24,7 +24,7 @@ const hooks: WorkspacesHooks<"publish"> = {
 
   /** Push workspaces tags and changes to remote repository. */
   postProcessWorkspaces(workspaces: Workspace[], outputs: never, output: never, owner: PublishContext): Promise<unknown> {
-    if (warnNoGitPush(owner.options as CommonOptions, owner.logger))
+    if (warnNoGitPush(owner.logger, owner.options.dryRun, (owner.options as CommonOptions).git))
       return;
 
     const {env} = owner;
@@ -36,7 +36,7 @@ const hooks: WorkspacesHooks<"publish"> = {
       const {options, cwd} = workspace;
       const {repositoryUrl} = options;
       if (!repos.has(repositoryUrl) && repos.add(repositoryUrl))
-        if (!warnNoGitPush(options, createWorkspaceLogger(workspace, owner)))
+        if (!warnNoGitPush(createWorkspaceLogger(workspace, owner), options.dryRun, options.git))
           pending.push(push(repositoryUrl, {cwd, env}));
     }
 

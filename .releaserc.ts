@@ -1,14 +1,25 @@
 import { WsConfiguration } from "@wrench/semantic-release-ws";
 
+const git = false;
+const npmPublish = false;
+
 export default {
-  git: false,
-  npmPublish: false,
+  git,
+  npmPublish,
+  assets: [[
+    "**/package.json",
+    "**/CHANGELOG.md",
+    "!**/node_modules/**",
+  ]],
   tagFormat: "v/release/${version}",
-  plugins: ["@wrench/semantic-release-ws"],
+  plugins: [
+    "@wrench/semantic-release-ws",
+    "@wrench/semantic-release-git",
+  ],
   workspace: {
-    git: false,
+    git,
+    npmPublish,
     tarballDir: "out",
-    npmPublish: false,
     plugins: [
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",

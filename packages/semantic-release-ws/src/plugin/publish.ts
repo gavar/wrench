@@ -16,9 +16,8 @@ const hooks: WorkspacesHooks<"publish"> = {
 
   processWorkspacesOutputs(releases: Release[][]): void | false | Release {
     if (releases && releases.length) {
-      const flat = releases.flat().filter(x => x.type);
-      // TODO: normalize to a single Release object
-      // `plugin/hotfix` allows to return array
+      const flat = releases.flat().filter(hasReleaseType);
+      // `allowPublishReleaseArray` hotfix allows to return array
       return flat.length && flat as any;
     }
   },
@@ -44,3 +43,7 @@ const hooks: WorkspacesHooks<"publish"> = {
     return Promise.all(pending);
   },
 };
+
+function hasReleaseType(release: Release): boolean {
+  return !!release.type;
+}

@@ -1,7 +1,10 @@
 import { Branch, Commit, Options, Package, Plugins, Release, ReleaseNotes, Step } from "@wrench/semantic-release";
 
 export interface CommonOptions extends Options {
-  /** Whether to update git, by creating tags or pushing changes to remote. */
+  /**
+   * Whether to allow running git commands making modifications to a repository.
+   * @default true
+   */
   git: boolean;
 
   /**
@@ -22,6 +25,12 @@ export interface CommonOptions extends Options {
    * @see {@link https://www.npmjs.com/package/@semantic-release/git @semantic-release/git}
    */
   message: string;
+
+  /**
+   * Files to include in the release commit.
+   * @see {@link https://www.npmjs.com/package/@semantic-release/git @semantic-release/git}
+   */
+  assets: false | string[];
 
   /**
    * Whether to publish the npm package to the registry.

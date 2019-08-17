@@ -37,7 +37,8 @@
     "format:pack": "fixpack && sort-package-json"
   },
   "dependencies": {
-    "@semantic-release/npm": "^5.2.0-beta.5"
+    "@semantic-release/npm": "^5.2.0-beta",
+    "@wrench/semantic-release": ">=1.0.0-beta"
   },
   "devDependencies": {},
   "publishConfig": {
@@ -49,6 +50,7 @@
     "repository": "../..",
     "publishConfig": "../..",
     "dependencies": {
+      "@wrench/semantic-release": "../semantic-release",
       "@semantic-release/npm": "semantic-release"
     }
   },

@@ -1,0 +1,60 @@
+{
+  "name": "@wrench/semantic-release-npm",
+  "version": "1.0.0-beta",
+  "description": "Semantic Release plugin making @semantic-release/npm friendly to workspaces",
+  "keywords": [
+    "npm",
+    "publish",
+    "registry",
+    "semantic-release",
+    "version",
+    "typescript"
+  ],
+  "homepage": "https://github.com/gavar/wrench/tree/master/semantic-release-npm#readme",
+  "bugs": {
+    "url": "https://github.com/gavar/wrench/labels/semantic-release-npm"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gavar/wrench",
+    "directory": "packages/semantic-release-npm"
+  },
+  "license": "ISC",
+  "author": {
+    "name": "Max Stankevich",
+    "email": "max.stankevich.me@gmail.com",
+    "url": "https://github.com/gavar"
+  },
+  "files": [
+    "lib",
+    "es"
+  ],
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "compile": "rimraf lib && tsc -p self.tsconfig.json",
+    "format:pack": "fixpack && sort-package-json"
+  },
+  "dependencies": {
+    "@semantic-release/npm": "^5.2.0-beta.5"
+  },
+  "devDependencies": {},
+  "publishConfig": {
+    "access": "public"
+  },
+  "copycat": {
+    "author": "../..",
+    "license": "../..",
+    "repository": "../..",
+    "publishConfig": "../..",
+    "dependencies": {
+      "@semantic-release/npm": "semantic-release"
+    }
+  },
+  "release": true,
+  "standard-version": {
+    "extends": "@wrench/standard-version-config",
+    "tag-prefix": "v/semantic-release-npm/"
+  }
+}

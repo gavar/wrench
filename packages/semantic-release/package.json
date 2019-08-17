@@ -56,10 +56,14 @@
   "peerDependencies": {
     "semantic-release": "^16.0.0-beta"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "copycat": {
     "author": "../..",
     "license": "../..",
     "repository": "../..",
+    "publishConfig": "../..",
     "dependencies": {
       "cosmiconfig": "semantic-release",
       "signale": "semantic-release",

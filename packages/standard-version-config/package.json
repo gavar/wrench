@@ -40,7 +40,8 @@
   "copycat": {
     "author": "../..",
     "license": "../..",
-    "repository": "../.."
+    "repository": "../..",
+    "publishConfig": "../.."
   },
   "release": true,
   "standard-version": {

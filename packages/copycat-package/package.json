@@ -44,7 +44,7 @@
     "format:pack": "fixpack && sort-package-json",
     "lint": "echo no linting yet",
     "prepack": "yarn build",
-    "prepublishOnly": "yarn test && yarn run lint",
+    "prepublishOnly": "yarn test && yarn lint",
     "test": "echo no tests yet"
   },
   "dependencies": {
@@ -70,6 +70,7 @@
     "author": "../..",
     "license": "../..",
     "repository": "../..",
+    "publishConfig": "../..",
     "dependencies": {
       "tslib": "../..",
       "colors": "../..",

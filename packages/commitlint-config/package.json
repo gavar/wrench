@@ -18,11 +18,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gavar/wrench.git",
+    "url": "https://github.com/gavar/wrench",
     "directory": "packages/commitlint-config"
   },
-  "license": "MIT",
-  "author": "Max Stankevich <max.stankevich.me@gmail.com>",
+  "license": "ISC",
+  "author": {
+    "name": "Max Stankevich",
+    "email": "max.stankevich.me@gmail.com",
+    "url": "https://github.com/gavar"
+  },
   "files": [
     "index.js"
   ],
@@ -39,6 +43,12 @@
   "devDependencies": {},
   "publishConfig": {
     "access": "public"
+  },
+  "copycat": {
+    "author": "../..",
+    "license": "../..",
+    "repository": "../..",
+    "publishConfig": "../.."
   },
   "release": true,
   "standard-version": {

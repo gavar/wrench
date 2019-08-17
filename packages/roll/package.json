@@ -71,6 +71,7 @@
     "author": "../..",
     "license": "../..",
     "repository": "../..",
+    "publishConfig": "../..",
     "dependencies": {
       "@wrench/roll-typescript": "../roll-typescript",
       "colors": "../..",

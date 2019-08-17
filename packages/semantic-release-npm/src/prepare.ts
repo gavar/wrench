@@ -7,10 +7,11 @@ const execute = require("@semantic-release/npm/lib/prepare");
 
 export async function prepare(config: NpmConfig, context: PrepareContext) {
   const {tarballDir} = config;
+  const {cwd, nextRelease} = context;
   if (tarballDir) {
-    const pack = await readPack(context.cwd);
-    const tarball = resolveTarballName(pack.name, pack.version);
-    const tarballPath = resolve(context.cwd, tarballDir, tarball);
+    const pack = await readPack(cwd);
+    const tarball = resolveTarballName(pack.name, nextRelease.version);
+    const tarballPath = resolve(cwd, tarballDir, tarball);
     if (existsSync(tarballPath)) {
       // BUG: `@semantic-release/npm` throws an error if tarball already exists
       context.logger.warn("removing previous tarball: %s", tarballPath);

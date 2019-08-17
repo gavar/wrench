@@ -149,8 +149,8 @@ export function shouldCallWorkspace(w: Workspace, step: Step) {
   switch (step) {
     case "verifyRelease":
       // allow to run this step without relevant changes
-      // since this is the first step containing next release essential props
-      // required to resolve release for workspaces
+      // this is the first step containing next release primary props
+      // required to resolve release type for workspaces
       break;
     case "generateNotes":
     case "prepare":

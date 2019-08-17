@@ -15,5 +15,5 @@ export interface GitConfig {
    * Files to include in the release commit.
    * @see {@link https://www.npmjs.com/package/@semantic-release/git @semantic-release/git}
    */
-  assets: false | string[];
+  assets: false | Array<string | string[]>;
 }

@@ -30,7 +30,7 @@ export interface CommonOptions extends Options {
    * Files to include in the release commit.
    * @see {@link https://www.npmjs.com/package/@semantic-release/git @semantic-release/git}
    */
-  assets: false | string[];
+  assets: false | Array<string | string[]>;
 
   /**
    * Whether to publish the npm package to the registry.

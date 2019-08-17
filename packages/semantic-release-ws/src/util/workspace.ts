@@ -123,6 +123,7 @@ export function createWorkspace(root: Context, name: string, relative: string): 
 }
 
 const workspaceToContextKeys: Array<keyof Workspace & keyof SuccessContext> = [
+  "cwd",
   "branch",
   "branches",
   "commits",
@@ -136,8 +137,6 @@ export function createWorkspaceContext<T extends Context>(w: Workspace, owner: T
     ...pick(w, ...workspaceToContextKeys),
     options,
   } as T & AnalyzeCommitsContext & PrepareContext;
-  context.cwd = w.cwd;
-  context.env = {...owner.env};
   context.logger = createWorkspaceLogger(w, owner);
   return context;
 }

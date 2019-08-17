@@ -1,6 +1,13 @@
 import { Branch, Commit, Options, Package, Plugins, Release, ReleaseNotes } from "@wrench/semantic-release";
 
 export interface CommonOptions extends Options {
+
+  /**
+   * Commands to execute along with a step.
+   * Similar to {@link https://www.npmjs.com/package/@semantic-release/exec @semantic-release/exec}.
+   */
+  exec: WorkspaceExecHooks;
+
   /**
    * Conventional Changelog preset.
    * @see {@link https://www.npmjs.com/package/@semantic-release/commit-analyzer @semantic-release/commit-analyzer}
@@ -20,6 +27,9 @@ export interface CommonOptions extends Options {
    */
   npmPublish: boolean;
 }
+
+export type WorkspaceExecHookType = "pre" | "post";
+export type WorkspaceExecHooks = Record<Step, Partial<Record<WorkspaceExecHookType, string>>>;
 
 /**
  * Set of workplace packages.

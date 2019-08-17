@@ -11,12 +11,15 @@ import {
   Step,
   SuccessContext,
 } from "@wrench/semantic-release";
-import { pick } from "lodash";
+import { exec } from "child_process";
+import { get, pick } from "lodash";
 import path from "path";
+import { promisify } from "util";
 import { projectByContext } from "../process";
-import { Workspace } from "../types";
+import { CommonOptions, Workspace, WorkspaceExecHookType } from "../types";
 
 const DEBUG = false;
+const execAsync = promisify(exec);
 
 export interface WorkspacesHooks<S extends Step> extends WorkspaceHooks<S> {
   preProcessWorkspaces?(
@@ -102,8 +105,10 @@ export async function callWorkspace<S extends Step>(
     await hooks.preProcessWorkspace(workspace, owner);
 
   // call workspace plugin
+  await execHook(owner, step, "pre");
   const context = createWorkspaceContext(workspace, owner);
   let output = await (workspace.plugins[step] as PluginsFunction<S>)(context);
+  await execHook(owner, step, "post");
 
   // process output
   if (hooks && hooks.processWorkspaceOutput)
@@ -161,4 +166,10 @@ export function shouldCallWorkspace(w: Workspace, step: Step) {
   }
   // always allow other steps
   return true;
+}
+
+function execHook(context: Context, step: Step, type: WorkspaceExecHookType) {
+  const command = get(context.options as CommonOptions, ["exec", step, type]);
+  if (command)
+    return execAsync(command);
 }

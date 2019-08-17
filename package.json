@@ -21,7 +21,8 @@
     ]
   },
   "scripts": {
-    "format:pack": "fixpack && sort-package-json && wsrun -c format:pack"
+    "format:pack": "fixpack && sort-package-json && wsrun -c format:pack",
+    "sync:pack": "copycat-pack -r && typesync && yarn && yarn format:pack"
   },
   "husky": {
     "hooks": {

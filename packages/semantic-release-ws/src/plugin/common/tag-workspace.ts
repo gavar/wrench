@@ -1,14 +1,21 @@
 import { Context, tag } from "@wrench/semantic-release";
 import { Workspace } from "../../types";
-import { createWorkspaceContext } from "../../util";
+import { createWorkspaceLogger } from "../../util";
+
+export function warnNotCreatingTag(workspace: Workspace, owner: Context): boolean {
+  const logger = createWorkspaceLogger(workspace, owner);
+  const {gitTag} = workspace.nextRelease;
+  const {dryRun, git} = workspace.options;
+  if (dryRun) logger.warn(`Skip '${gitTag}' tag creation in dry-run mode`);
+  else if (!git) logger.warn(`Skip '${gitTag}' tag creation since git disabled`);
+  else return false;
+  return true;
+}
 
 export async function tagWorkspace(workspace: Workspace, owner: Context) {
-  const {logger} = owner;
-  const {cwd, env} = createWorkspaceContext(workspace, owner);
-  const {nextRelease} = workspace;
-  if (workspace.options.dryRun) {
-    owner.logger.warn(`Skip '${nextRelease.gitTag}' tag creation in dry-run mode`);
-  } else {
+  const {logger, env} = owner;
+  const {nextRelease, cwd} = workspace;
+  if (!warnNotCreatingTag(workspace, owner)) {
     await tag(nextRelease, {cwd, env});
     logger.success(`Created tag '${nextRelease.gitTag}'`);
   }

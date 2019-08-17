@@ -1,7 +1,7 @@
 import { GenerateNotesContext } from "@wrench/semantic-release";
 import { Workspace, WsConfiguration } from "../types";
 import { callWorkspacesOf, WorkspacesHooks } from "../util";
-import { tagWorkspace } from "./common";
+import { warnNotCreatingTag } from "./common";
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export async function generateNotes(config: WsConfiguration, context: GenerateNotesContext) {
@@ -11,8 +11,8 @@ export async function generateNotes(config: WsConfiguration, context: GenerateNo
 const hooks: WorkspacesHooks<"generateNotes"> = {
   async postProcessWorkspace(workspace: Workspace, notes: string, owner: GenerateNotesContext) {
     workspace.nextRelease.notes = notes;
-    // try to tag workspace here since "prepare" step is skipped in a dry run mode.
-    await tagWorkspace(workspace, owner);
+    // notify here since "prepare" step is skipped in a dry run mode.
+    warnNotCreatingTag(workspace, owner);
   },
 
   processWorkspacesOutputs(notes: string[], workspaces: Workspace[]): string {

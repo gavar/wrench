@@ -8,6 +8,11 @@ export async function publish(input: WsConfiguration, context: PublishContext) {
 }
 
 const hooks: WorkspacesHooks<"publish"> = {
+
+  async postProcessWorkspace(workspace: Workspace, output: never, owner: PublishContext) {
+    await tagWorkspace(workspace, owner);
+  },
+
   processWorkspacesOutputs(releases: Release[][]): void | false | Release {
     if (releases && releases.length) {
       const flat = releases.flat().filter(x => x.type);

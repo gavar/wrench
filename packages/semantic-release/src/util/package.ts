@@ -4,6 +4,7 @@ import { promisify } from "util";
 const readFileAsync = promisify(readFile);
 
 export interface Package {
+  name: string;
   version: string;
   private: boolean;
   release: boolean | object;

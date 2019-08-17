@@ -1,6 +1,8 @@
 import { Branch, Commit, Options, Package, Plugins, Release, ReleaseNotes } from "@wrench/semantic-release";
 
 export interface CommonOptions extends Options {
+  /** Whether to update git, by creating tags or pushing changes to remote. */
+  git: boolean;
 
   /**
    * Commands to execute along with a step.

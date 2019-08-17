@@ -5,6 +5,10 @@ import yargs, { Arguments, Argv } from "yargs";
 import { CommonOptions, Workspace, WsConfiguration } from "../../types";
 import { createWorkspaceContext } from "../../util";
 
+const defaults: Partial<CommonOptions> = {
+  git: true,
+};
+
 export async function configureWorkspaces(
   config: WsConfiguration,
   owner: VerifyConditionsContext,
@@ -23,7 +27,7 @@ export async function configureWorkspaces(
   for (const w of workspaces) {
     owner.logger.start("configuring workspace:", w.name);
     const context = createWorkspaceContext(w, owner, null);
-    const options = Object.assign({}, argv, packages && packages[w.name]) as CommonOptions;
+    const options = Object.assign({}, defaults, argv, packages && packages[w.name]) as CommonOptions;
     Object.assign(w, await getConfig(context, options));
     if (w.options.tagFormat === "v${version}") {
       const args = resolveStandardVersionConfig(w);

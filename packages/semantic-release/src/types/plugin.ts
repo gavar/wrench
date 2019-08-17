@@ -19,10 +19,12 @@ export type Step =
   | "analyzeCommits"
   | "verifyRelease"
   | "generateNotes"
+  | "addChannel"
   | "prepare"
   | "publish"
   | "success"
-  | "fail";
+  | "fail"
+  ;
 
 /**
  * Defines what kind of context provided for the particular release step.
@@ -32,6 +34,7 @@ export interface ContextType {
   analyzeCommits: AnalyzeCommitsContext;
   verifyRelease: VerifyReleaseContext;
   generateNotes: GenerateNotesContext;
+  addChannel: PrepareContext;
   prepare: PrepareContext;
   publish: PublishContext;
   success: SuccessContext;
@@ -44,6 +47,7 @@ export interface Plugin<T = unknown> {
   analyzeCommits(config: T, context: AnalyzeCommitsContext): Promise<ReleaseType>;
   verifyRelease(config: T, context: VerifyReleaseContext): Promise<void>;
   generateNotes(config: T, context: GenerateNotesContext): Promise<string>;
+  addChannel(config: T, context: PrepareContext): Promise<unknown>;
   prepare(config: T, context: PrepareContext): Promise<void>;
   publish(config: T, context: PublishContext): Promise<void | null | false | Partial<Release>>;
   success(config: T, context: SuccessContext): Promise<void>;
@@ -59,6 +63,7 @@ export interface Plugins {
   analyzeCommits(context: AnalyzeCommitsContext): Promise<ReleaseType>;
   verifyRelease(context: VerifyReleaseContext): Promise<void>;
   generateNotes(context: GenerateNotesContext): Promise<string>;
+  addChannel(context: PrepareContext): Promise<unknown>;
   prepare(context: PrepareContext): Promise<void>;
   publish(context: PublishContext): Promise<Release[]>;
   success(context: SuccessContext): Promise<void>;

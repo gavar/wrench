@@ -1,5 +1,6 @@
 import { Context, tag } from "@wrench/semantic-release";
-import { Workspace } from "../../types";
+import { Signale } from "signale";
+import { CommonOptions, Workspace } from "../../types";
 import { createWorkspaceLogger } from "../../util";
 
 export function warnNotCreatingTag(workspace: Workspace, owner: Context): boolean {
@@ -8,6 +9,13 @@ export function warnNotCreatingTag(workspace: Workspace, owner: Context): boolea
   const {dryRun, git} = workspace.options;
   if (dryRun) logger.warn(`Skip '${gitTag}' tag creation in dry-run mode`);
   else if (!git) logger.warn(`Skip '${gitTag}' tag creation since git disabled`);
+  else return false;
+  return true;
+}
+
+export function warnNoGitPush(options: CommonOptions, logger: Signale): boolean {
+  if (options.dryRun) logger.warn(`Skip 'git push' in dry-run mode`);
+  else if (options.git === false) logger.warn(`Skip 'git push' since git disabled`);
   else return false;
   return true;
 }

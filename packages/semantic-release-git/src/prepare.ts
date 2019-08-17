@@ -17,7 +17,7 @@ export async function prepare(config: GitConfig, context: PrepareContext) {
     if (files.length > 0) {
       const msg = message
         ? template(message)({branch, lastRelease, nextRelease})
-        : `chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}`;
+        : `chore(release): ${nextRelease.gitTag}`;
       logger.log("%d files to commit >> %s", files.length, msg);
       if (!warnNoGitCommit(logger, dryRun, config.git)) {
         await add(files, {env, cwd});

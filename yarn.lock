@@ -6112,12 +6112,7 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@^3.6.0-dev:
-  version "3.6.0-dev.20190809"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.6.0-dev.20190809.tgz#655f6990e682c3efb9268c2ebd4b42cfbf5cd486"
-  integrity sha512-cESW57Zs7B6EJspZ1jBt1yYxSY7wcCGPbaWd2KgtOYjwC+IUgow1IRCl2QrfIYy6+JUfTAkBxUh5bc4nF3D9XA==
-
-typescript@~3.5.3:
+typescript@^3.5.3, typescript@~3.5.3:
   version "3.5.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.5.3.tgz#c830f657f93f1ea846819e929092f5fe5983e977"
   integrity sha512-ACzBtm/PhXBDId6a6sDJfroT2pOWt/oOnk4/dElG5G33ZL776N3Y6/6bKZJBFpd+b05F3Ct9qDjMeJmRWtE2/g==

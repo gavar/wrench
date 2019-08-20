@@ -17,6 +17,12 @@ export function resolve(host: ResolutionHost, importer: string, specifier: strin
   if (require) throw new Error(`unable to import '${specifier}' by ${importer}`);
 }
 
+export function computeCommonSourceDirectoryOfFilenames(host: ResolutionHost, fileNames: ReadonlyArray<string>): string {
+  const {directorySeparator} = host.ts;
+  const dir = host.ts.computeCommonSourceDirectoryOfFilenames(fileNames, host.getCurrentDirectory(), host.getCanonicalFileName);
+  return dir.endsWith(directorySeparator) ? dir : dir + directorySeparator;
+}
+
 export function collectDependencies(host: ResolutionHost, entry: string | Iterable<string>, scriptOnly?: boolean): string[] {
   const stack = typeof entry === "string" ? [entry] : Array.from(entry).flat();
   const visits = new Set<string>();

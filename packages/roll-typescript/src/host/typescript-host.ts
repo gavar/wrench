@@ -22,11 +22,13 @@ export interface TypeScriptHost {
 export type TypeScript = typeof import("typescript") & {
   sys: System;
   readonly Diagnostics: Record<string, DiagnosticMessage>;
+  readonly directorySeparator: string;
   createMap<T>(): ESMap<T>;
   getScriptKindFromFileName(fileName: string): ScriptKind;
   createCompilerDiagnostic(message: DiagnosticMessage, ...args: (string | number | undefined)[]): Diagnostic;
   getNewLineCharacter(options: CompilerOptions | PrinterOptions, getNewLine?: () => string): string;
   readConfigFile(fileName: string, readFile: (path: string) => string | undefined): TsConfigJsonParse;
+  computeCommonSourceDirectoryOfFilenames(fileNames: ReadonlyArray<string>, currentDirectory: string, getCanonicalFileName: (fileName: string) => string): string;
 }
 
 export interface TsConfigJsonParse {

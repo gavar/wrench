@@ -144,6 +144,7 @@ export function nodejs(info: string | PackInfo, base: RollupConfig = {}): Rollup
         ].filter(isSafeToDelete),
       }),
       typescript({
+        external,
         compilerOptions,
         types: !modular && pack.types,
       }),

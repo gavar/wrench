@@ -1,13 +1,13 @@
 import typescript from "@wrench/roll-typescript";
 import { cyan } from "colors";
 import fs from "fs";
-import Module from "module";
+import { identity } from "lodash";
 import path from "path";
-import { InputOptions, PartialResolvedId, Plugin, PluginContext } from "rollup";
+import { InputOptions, Plugin } from "rollup";
 import cleanup from "rollup-plugin-cleanup-chunk";
 import { PackInfo } from "./nodejs";
 import { Context, Package, RollupConfig } from "./types";
-import { output, resolve } from "./util";
+import { dirname, output, resolve } from "./util";
 
 /**
  * Package executable file.
@@ -31,7 +31,11 @@ export interface BinFile {
 export function createBinConfig(file: BinFile, info: PackInfo, context: Context): RollupConfig {
   const {pack} = info;
   const {modular} = context;
-  const dir = path.dirname(info.path);
+  const root = path.dirname(info.path);
+  const external = [
+    ...externalDirsOf(root, pack),
+    context.external,
+  ].flat();
   return {
     input: file.input,
     preserveModules: modular,
@@ -46,10 +50,15 @@ export function createBinConfig(file: BinFile, info: PackInfo, context: Context)
       preferConst: true, // NodeJS supports `const` since early versions
       strict: false, // NodeJS modules are strict by default,
     }),
-    external: context.external,
+    external,
     plugins: [
-      binResolvePlugin(dir, pack),
-      typescript(),
+      binInfoPlugin(),
+      typescript({
+        external,
+        baseCompilerOptions: {
+          rootDirs: [dirname(file.input)].filter(identity),
+        },
+      }),
       cleanup(context.cleanup),
     ],
   };
@@ -87,11 +96,9 @@ export function collectBinFiles(pack: Package, context: Context): BinFile[] {
   return [];
 }
 
-function binResolvePlugin(dir: string, pack: Package): Plugin {
-  const entries = resolveEntryPoints(dir, pack);
-  const ownDirs = resolveOwnDirs(dir, pack, entries);
+function binInfoPlugin(): Plugin {
   return {
-    name: "bin-resolve",
+    name: "bin-info",
     options({input}: InputOptions) {
       if (typeof input === "object" && !Array.isArray(input))
         for (const key of Object.keys(input)) {
@@ -101,69 +108,14 @@ function binResolvePlugin(dir: string, pack: Package): Plugin {
         }
       return null;
     },
-    resolveId(this: PluginContext, source: string, importer: string | undefined) {
-      if (source && importer) {
-        const id = tryResolve(source, importer);
-        // resolve to directory with `package.json`,
-        // so further plugins could use `module` field if applicable
-        if (id && entries.has(id))
-          return {
-            id: dir,
-            external: true,
-            moduleSideEffects: true,
-          } as PartialResolvedId;
-
-        if (id && ownDirs.some(dir => belongsToDir(dir, id)))
-          return {
-            id,
-            external: true,
-            moduleSideEffects: true,
-          } as PartialResolvedId;
-      }
-    },
   };
 }
 
-function tryResolve(source: string, importer: string): string {
-  try {
-    importer = path.resolve(importer);
-    const r = Module.createRequire(importer);
-    return r.resolve(source);
-  } catch (e) {
-
-  }
-}
-
-const entryKeys: Array<keyof Package> = [
-  "main",
-  "module",
-];
-
-function resolveEntryPoints(dir: string, pack: Package): Set<string> {
-  const entries = new Set<string>();
-  for (const key of entryKeys)
-    if (pack[key])
-      entries.add(path.resolve(dir, pack[key] as string));
-  return entries;
-}
-
-function resolveOwnDirs(dir: string, pack: Package, entry: Iterable<string>): string[] {
-  const entries = Array.from(entry).map(path.dirname).concat(
-    dir,
+function externalDirsOf(root: string, pack: Package): string[] {
+  return [
+    root,
     pack.directories.lib,
-    pack.directories.bin,
-    pack.directories.cli,
-  );
-
-  const dirs = new Set<string>();
-  for (let entry of entries)
-    if (entry)
-      dirs.add(path.resolve(dir, entry));
-
-  return [...dirs];
-}
-
-function belongsToDir(dir: string, p: string) {
-  const rel = path.relative(dir, p);
-  return !rel.startsWith("..");
+    pack.directories.src,
+  ].filter(identity)
+    .map(x => path.resolve(root, x));
 }

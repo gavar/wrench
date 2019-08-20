@@ -1,4 +1,4 @@
 // @ts-check
-export default require("@wrench/roll").nodejs(null, {
-  preserveModules: true,
-});
+require("../../ts-node");
+const {nodejs} = require(".");
+export default nodejs(null, {preserveModules: true});

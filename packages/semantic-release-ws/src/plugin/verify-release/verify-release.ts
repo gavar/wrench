@@ -1,7 +1,6 @@
 import { ReleaseNotes, VerifyReleaseContext } from "@wrench/semantic-release";
 import { Workspace, WsConfiguration } from "../../types";
-import { callWorkspacesOf, WorkspacesHooks } from "../../util";
-import { askToContinue } from "../../util/ask-to-continue";
+import { askToContinue, callWorkspacesOf, WorkspacesHooks } from "../../util";
 import { releaseSummary } from "./release-summary";
 import { resolveNextRelease } from "./resolve-next-release";
 

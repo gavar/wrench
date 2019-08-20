@@ -110,8 +110,8 @@ export class Project implements LanguageServiceHost, ProjectHost, ResolutionHost
         rootNames: this.fileNames,
         oldProgram: this.program,
       });
+      this.dirty = false;
     }
-    this.dirty = false;
     return this.program;
   }
 

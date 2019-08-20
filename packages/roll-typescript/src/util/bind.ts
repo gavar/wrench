@@ -4,7 +4,6 @@ declare const Object: {
   getOwnPropertyNames<T>(o: T): Array<keyof T>;
 } & ObjectConstructor;
 
-
 /**
  * Re-bind those functions that are bound to source object.
  * @param self - object to use as `this` argument.

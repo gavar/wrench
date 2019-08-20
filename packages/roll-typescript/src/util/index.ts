@@ -6,3 +6,4 @@ export * from "./extname";
 export * from "./format-to-module";
 export * from "./lazy";
 export * from "./input";
+export * from "./is-external";

@@ -12,7 +12,7 @@ import {
   RenderedChunk,
   TransformResult,
 } from "rollup";
-import { CompilerOptions, ScriptTarget } from "typescript";
+import { CompilerOptions } from "typescript";
 import { bundleDts } from "./bundle-dts";
 import {
   addFileNames,
@@ -26,7 +26,7 @@ import {
   writeOutputFile,
 } from "./host";
 import { createProject, forkHostByOutput, Project } from "./project";
-import { isOutputChunk, lazy, lazy2 } from "./util";
+import { createIsExternal, IsExternal, isOutputChunk, lazy, lazy2 } from "./util";
 
 const NAME = "@wrench/typescript";
 const VIRTUAL_NAME = `_virtual/${NAME}`;
@@ -55,6 +55,9 @@ export interface TypeScriptOptions {
    */
   compilerOptions?: CompilerOptions;
 
+  /** List of external modules. */
+  external: string[];
+
   /** Output path for project typings bundle. */
   types?: string;
 }
@@ -62,8 +65,11 @@ export interface TypeScriptOptions {
 export function typescript(options?: TypeScriptOptions): Plugin {
   // defaults
   options = {...options};
+
+  // normalize
   if (options.types) options.types = path.resolve(options.types);
 
+  let isExternal: IsExternal;
   let cache: Map<any, any>;
   let exclude: Set<string>;
   let modular: boolean;
@@ -85,7 +91,14 @@ export function typescript(options?: TypeScriptOptions): Plugin {
 
       // initialize project
       [project, inputs] = lazy(this, "project", createProject, options, input);
-      pending = new Set(collectDependencies(project, inputs, true));
+      const {rootDir, rootDirs} = project.options;
+      const roots = rootDirs ? rootDirs : rootDir ? [rootDir] : null;
+      isExternal = createIsExternal(roots, options.external);
+
+      const dependencies = collectDependencies(project, inputs, true);
+      const localDependencies = dependencies.filter(x => isExternal(x) === false);
+      pending = new Set(localDependencies);
+
       project.reportDiagnostic = createReportDiagnosticByPlugin(this);
       shouldBundleDts = !!(!modular && project.options.declarationDir && options.types);
       compilerOptions = project.options;
@@ -102,7 +115,8 @@ export function typescript(options?: TypeScriptOptions): Plugin {
     resolveId(specifier: string, importer: string): PartialResolvedId {
       if (isTsOrTsx(project, importer)) {
         const id = resolve(project, importer, specifier);
-        return {id, moduleSideEffects: true};
+        const external = isExternal(specifier, importer, id);
+        return {id, external, moduleSideEffects: true};
       }
     },
 

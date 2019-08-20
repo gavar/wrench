@@ -7,6 +7,7 @@ import {
   ScriptKind,
   System,
 } from "typescript";
+import { extname } from "../util";
 
 /** Provides reference to a TypeScript library to use. */
 export interface TypeScriptHost {
@@ -49,9 +50,10 @@ export function getScriptKind({ts}: TypeScriptHost, fileName: string): ScriptKin
 
 export function isTsOrTsx({ts}: TypeScriptHost, fileName: string): boolean {
   if (fileName) {
-    switch (ts.getScriptKindFromFileName(fileName)) {
-      case ts.ScriptKind.TS:
-      case ts.ScriptKind.TSX:
+    const e = extname(fileName);
+    switch (e) {
+      case ts.Extension.Ts:
+      case ts.Extension.Tsx:
         return true;
     }
   }

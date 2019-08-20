@@ -56,9 +56,9 @@ export function nodejs(info: string | PackInfo, base: RollupConfig = {}): Rollup
   if (!pack.main) throw new Error("package 'main' field is required");
 
   const dir = pack.directories = Object.assign({}, defaultPackageDirectories(pack), pack.directories);
-  const rel = path.relative(dir.lib, pack.main);
+  const rel = slash(pack.esnext) || path.relative(dir.lib, pack.main);
   const entry = rel.slice(0, -extname(rel).length);
-  const input = resolve(dir.src, rel);
+  const input = resolve(pack.esnext ? "" : dir.src, rel);
 
   const external: string[] = [
     builtinModules,
@@ -175,4 +175,8 @@ function normalizePackInfo(info: string | PackInfo): PackInfo {
   return {
     path: info as string || path.resolve("package.json"),
   };
+}
+
+function slash(path: string) {
+  return path ? path.split("\\").join("/") : path;
 }

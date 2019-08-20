@@ -24,6 +24,12 @@ export interface Package {
   module?: string;
 
   /**
+   * A module ID with untranspiled code that is the primary to your program.
+   * Defines path to TypeScript file to use as entry point.
+   */
+  esnext: string;
+
+  /**
    * Entry point for type declarations file.
    * Defines the output path for declarations bundle.
    * Declarations bundle won't be generated if this field is empty.

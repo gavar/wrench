@@ -27,8 +27,7 @@
     "tsconfig.json"
   ],
   "scripts": {
-    "beta": "standard-version -p beta",
-    "bump": "standard-version",
+    "clean": "rimraf tmp out lib es bin",
     "format:pack": "fixpack && sort-package-json"
   },
   "devDependencies": {},

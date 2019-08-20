@@ -21,6 +21,8 @@
     ]
   },
   "scripts": {
+    "build": "wsrun --bin npm -c pack",
+    "clean": "wsrun clean",
     "format:pack": "fixpack && sort-package-json && wsrun -c format:pack",
     "semantic-release": "semantic-release --no-ci",
     "sync:pack": "copycat-pack -r && typesync && yarn && yarn format:pack"

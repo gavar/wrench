@@ -27,6 +27,7 @@
     "url": "https://github.com/gavar"
   },
   "files": [
+    "bin",
     "lib"
   ],
   "main": "lib/index.js",
@@ -36,10 +37,8 @@
     "copycat-pack": "bin/copycat-pack.js"
   },
   "scripts": {
-    "beta": "standard-version -p beta",
-    "build": "rollup -c",
-    "bump": "standard-version",
-    "clean": "rimraf lib",
+    "build": "yarn clean && rollup -c",
+    "clean": "rimraf tmp out lib es bin",
     "format": "yarn lint --fix",
     "format:pack": "fixpack && sort-package-json",
     "lint": "echo no linting yet",

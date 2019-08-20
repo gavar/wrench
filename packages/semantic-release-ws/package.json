@@ -39,19 +39,28 @@
   "module": "es/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "compile": "rimraf lib && tsc -p self.tsconfig.json",
-    "format:pack": "fixpack && sort-package-json"
+    "build": "yarn clean && rollup -c",
+    "clean": "rimraf tmp out lib es bin",
+    "format": "yarn lint --fix",
+    "format:pack": "fixpack && sort-package-json",
+    "lint": "echo no linting yet",
+    "prepack": "yarn build",
+    "prepublishOnly": "yarn test && yarn run lint",
+    "test": "echo no tests yet"
   },
   "dependencies": {
+    "@emulsy/async": "^1.0.0-beta",
+    "@emulsy/util": "^1.0.0-beta",
     "@semantic-release/error": "^2.2.0",
     "@wrench/semantic-release": ">=1.0.0-beta",
     "cli-table3": "^0.5.1",
     "colors": "^1.3.0",
     "find-up": "^3.0.0",
-    "inquirer": "^6.2.2",
+    "inquirer": "^6.5.1",
     "lodash": "^4.17.4",
     "semver": "^5.4.1",
     "shelljs": "^0.8.3",
+    "signale": "^1.2.1",
     "tslib": "^1.10.0",
     "yargs": "^12.0.0"
   },
@@ -59,13 +68,10 @@
     "@types/find-up": "^2.1.1",
     "@types/inquirer": "^6.5.0",
     "@types/lodash": "^4.14.136",
-    "@types/semantic-release": "^15.13.0",
     "@types/semver": "^5.5.0",
     "@types/shelljs": "^0.8.5",
+    "@types/signale": "^1.2.1",
     "@types/yargs": "^12.0.12"
-  },
-  "peerDependencies": {
-    "semantic-release": "^16.0.0-beta"
   },
   "publishConfig": {
     "access": "public"
@@ -76,16 +82,20 @@
     "repository": "../..",
     "publishConfig": "../..",
     "dependencies": {
+      "@emulsy/async": "../..",
+      "@emulsy/util": "../..",
       "@semantic-release/error": "semantic-release",
-      "@wrench/semantic-release": "@wrench/semantic-release",
+      "@wrench/semantic-release": "../semantic-release",
       "colors": "../..",
+      "find-up": "yargs",
       "lodash": "semantic-release",
       "semver": "semantic-release",
+      "signale": "semantic-release",
       "tslib": "../..",
-      "yargs": "semantic-release",
-      "find-up": "yargs"
+      "yargs": "semantic-release"
     }
   },
+  "esnext": "src/plugin/index.ts",
   "release": true,
   "standard-version": {
     "extends": "@wrench/standard-version-config",

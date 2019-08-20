@@ -33,12 +33,19 @@
   "module": "es/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "compile": "rimraf lib && tsc -p self.tsconfig.json",
-    "format:pack": "fixpack && sort-package-json"
+    "build": "yarn clean && rollup -c",
+    "clean": "rimraf tmp out lib es bin",
+    "format": "yarn lint --fix",
+    "format:pack": "fixpack && sort-package-json",
+    "lint": "echo no linting yet",
+    "prepack": "yarn build",
+    "prepublishOnly": "yarn test && yarn run lint",
+    "test": "echo no tests yet"
   },
   "dependencies": {
-    "@semantic-release/npm": "^5.2.0-beta",
-    "@wrench/semantic-release": ">=1.0.0-beta"
+    "@semantic-release/npm": "^5.2.0-beta.5",
+    "@wrench/semantic-release": ">=1.0.0-beta",
+    "execa": "^1.0.0"
   },
   "devDependencies": {},
   "publishConfig": {
@@ -50,8 +57,9 @@
     "repository": "../..",
     "publishConfig": "../..",
     "dependencies": {
+      "@semantic-release/npm": "semantic-release",
       "@wrench/semantic-release": "../semantic-release",
-      "@semantic-release/npm": "semantic-release"
+      "execa": "semantic-release"
     }
   },
   "release": true,

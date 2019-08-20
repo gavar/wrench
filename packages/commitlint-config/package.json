@@ -32,8 +32,7 @@
   ],
   "main": "index.js",
   "scripts": {
-    "beta": "standard-version -p beta",
-    "bump": "standard-version",
+    "clean": "rimraf tmp out lib es bin",
     "format:pack": "fixpack && sort-package-json"
   },
   "dependencies": {

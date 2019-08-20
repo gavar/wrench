@@ -1,6 +1,6 @@
+import glob from "glob";
 import { copycatPackages } from "..";
 import { parse } from "./parse";
-import glob from "glob";
 
 const props = parse();
 const fileNames = resolveFileNames(props.recurse);

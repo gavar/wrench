@@ -1,4 +1,4 @@
-import { PluginHooks, PluginContext, RenderedChunk, SourceDescription } from "rollup";
+import { PluginContext, PluginHooks, RenderedChunk, SourceDescription } from "rollup";
 import { Options as BaseOptions } from "rollup-plugin-cleanup";
 
 export interface Options extends BaseOptions {

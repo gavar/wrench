@@ -1,4 +1,4 @@
-import { Context, ContextType, Plugin, Plugins, PluginsFunction, Step } from "../../src/types";
+import { Context, ContextType, Plugin, Plugins, PluginsFunction, Step } from "../..";
 
 type Is<A extends B, B> = never;
 type Eq<A extends B, B extends C, C = A> = never;

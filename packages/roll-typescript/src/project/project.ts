@@ -14,6 +14,7 @@ import {
   SourceFile,
 } from "typescript";
 import {
+  computeCommonSourceDirectoryOfFilenames,
   getKeyForCompilationSettings,
   getScriptKind,
   ProjectHost,
@@ -74,6 +75,9 @@ export class Project implements LanguageServiceHost, ProjectHost, ResolutionHost
   /** Cache of scripts. */
   readonly scripts: Record<string, ScriptText> = {};
 
+  /** Common source directory to use for emit. */
+  readonly commonSourceDirectory: string;
+
   private dirty: boolean;
   private program: Program;
 
@@ -95,6 +99,7 @@ export class Project implements LanguageServiceHost, ProjectHost, ResolutionHost
   setFileNames(fileNames: ReadonlyArray<string>, canonical?: boolean): void {
     if (!canonical) fileNames = fileNames.map(this.getCanonicalFileName);
     (this as Mutable<this>).fileNames = fileNames;
+    (this as Mutable<this>).commonSourceDirectory = computeCommonSourceDirectoryOfFilenames(this, this.fileNames);
     this.dirty = true;
   }
 
@@ -155,6 +160,11 @@ export class Project implements LanguageServiceHost, ProjectHost, ResolutionHost
   /** @inheritdoc */
   getSourceFile(fileName: string, target: ScriptTarget, onError: ErrorCallback = throwError): SourceFile {
     return this.getSourceFileByPath(fileName, fileName as Path, target, onError);
+  }
+
+  /** @inheritdoc */
+  getCommonSourceDirectory(): string {
+    return this.commonSourceDirectory;
   }
 
   /** @inheritdoc */
@@ -283,6 +293,7 @@ function initialize<T extends Project>(this: Mutable<T>, prototype?: T, binder?:
   this.currentDirectory = this.currentDirectory || this.ts.sys.getCurrentDirectory();
   this.defaultLibLocation = this.defaultLibLocation || dirname(this.ts.sys.getExecutingFilePath());
   this.caseSensitiveFileNames = this.caseSensitiveFileNames || this.ts.sys.useCaseSensitiveFileNames;
+  this.commonSourceDirectory = this.commonSourceDirectory || computeCommonSourceDirectoryOfFilenames(this, this.fileNames);
   this.moduleResolutionCache = this.ts.createModuleResolutionCache(this.currentDirectory, this.getCanonicalFileName, this.options);
 }
 

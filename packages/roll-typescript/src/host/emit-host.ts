@@ -1,3 +1,4 @@
+import { pick } from "lodash";
 import { CustomTransformers, OutputFile, Program, SourceFile } from "typescript";
 import { extname } from "../util";
 import { reportDiagnostics, ReportHost } from "./report-host";
@@ -13,8 +14,16 @@ export interface Emit {
   dtsmap?: OutputFile;
 }
 
+type OverrideKey = Extract<keyof ProgramInternal, | "getCommonSourceDirectory">;
+const overrides: Array<OverrideKey> = ["getCommonSourceDirectory"];
+
+interface ProgramInternal extends Program {
+  getCommonSourceDirectory(): string;
+}
+
 export interface EmitHost extends TypeScriptHost, ReportHost {
   transform?: CustomTransformers;
+  getCommonSourceDirectory?(): string;
 }
 
 let current: Emit;
@@ -27,8 +36,15 @@ export function emitByProgram(program: Program, host: EmitHost, fileName: string
     files: [],
   };
   if (emit.sourceFile) {
-    const r = program.emit(emit.sourceFile, writeFile, void 0, dtsOnly, host.transform);
-    reportDiagnostics(host, r.diagnostics);
+    const origin = pick(program as ProgramInternal, overrides);
+    const injects = pick(host, overrides);
+    Object.assign(program, injects);
+    try {
+      const r = program.emit(emit.sourceFile, writeFile, void 0, dtsOnly, host.transform);
+      reportDiagnostics(host, r.diagnostics);
+    } finally {
+      Object.assign(program, origin);
+    }
   } else {
     const template = ts.Diagnostics.File_0_not_found;
     const diagnostic = ts.createCompilerDiagnostic(template, fileName);

@@ -98,6 +98,7 @@ export function typescript(options?: TypeScriptOptions): Plugin {
       const dependencies = collectDependencies(project, inputs, true);
       const localDependencies = dependencies.filter(x => isExternal(x) === false);
       pending = new Set(localDependencies);
+      project.setFileNames(localDependencies);
 
       project.reportDiagnostic = createReportDiagnosticByPlugin(this);
       shouldBundleDts = !!(!modular && project.options.declarationDir && options.types);

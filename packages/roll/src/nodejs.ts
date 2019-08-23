@@ -7,7 +7,7 @@ import cleanup from "rollup-plugin-cleanup-chunk";
 import clear from "rollup-plugin-clear";
 import { CompilerOptions } from "typescript";
 import { collectBinFiles, createBinConfig } from "./bin";
-import { Context, Package, RollupConfig } from "./types";
+import { Context, BinType, Package, RollupConfig } from "./types";
 import {
   defaultPackageDirectories,
   dirname,
@@ -153,7 +153,7 @@ export function nodejs(info: string | PackInfo, base: RollupConfig = {}): Rollup
   });
 
   /** Generates bundle for each executable script. */
-  const binConfigs = collectBinFiles(pack, context)
+  const binConfigs = collectBinFiles(pack, context, pack.roll)
     .map(x => createBinConfig(x, info as PackInfo, context));
 
   // `rollup` will run this configurations in sequence

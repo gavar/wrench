@@ -1,5 +1,22 @@
 import { InputOptions, ModuleFormat, OutputOptions, RollupOptions } from "rollup";
 
+/**
+ * Defines strategy of how to build package executables.
+ * * "exec" - build as entry point of the executable.
+ * * "lib" - build as library nearby to executable.
+ */
+export const enum BinType {
+  /** Bundle as entry point of the executable. */
+  exec = "exec",
+  /** Bundle as entry point for the executable in a `bin/lib` directory. */
+  lib = "lib"
+}
+
+export interface BundleOptions {
+  /** Defines strategy of how to build package executables. */
+  bin?: false | BinType;
+}
+
 /** Package fields which may be referenced for conventional build. */
 export interface Package {
   /**
@@ -57,6 +74,9 @@ export interface Package {
    * @see https://rollupjs.org/guide/en#peer-dependencies
    */
   peerDependencies?: Record<string, string>;
+
+  /** Options for `@wrench/roll` module. */
+  roll?: BundleOptions;
 }
 
 export interface PackageDirectories {

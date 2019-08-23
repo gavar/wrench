@@ -1,12 +1,12 @@
 import typescript from "@wrench/roll-typescript";
 import { cyan } from "colors";
 import fs from "fs";
-import { identity } from "lodash";
+import { get, identity } from "lodash";
 import path from "path";
 import { InputOptions, Plugin } from "rollup";
 import cleanup from "rollup-plugin-cleanup-chunk";
 import { PackInfo } from "./nodejs";
-import { Context, Package, RollupConfig } from "./types";
+import { BinType, BundleOptions, Context, Package, RollupConfig } from "./types";
 import { dirname, output, resolve } from "./util";
 
 /**
@@ -16,6 +16,8 @@ import { dirname, output, resolve } from "./util";
 export interface BinFile {
   /** Name of the cli command. */
   name: string;
+  /** Bundle strategy. */
+  type: BinType;
   /** Path to a input file. */
   input: string;
   /** Path for the output file. */
@@ -65,30 +67,36 @@ export function createBinConfig(file: BinFile, info: PackInfo, context: Context)
  * Gather `bin` files associated with the package.
  * @param pack - `package.json` contents.
  * @param context - configuration context.
+ * @param options - bundling options.
  */
-export function collectBinFiles(pack: Package, context: Context): BinFile[] {
+export function collectBinFiles(pack: Package, context: Context, options?: BundleOptions): BinFile[] {
   const dir = context.directories;
+  const type = get(options, "bin", BinType.exec);
 
-  // check for `bin` scripts in `package.json`
-  if (pack.bin)
-    return Object.keys(pack.bin)
-      .map(function (name) {
-        const input = resolve(dir.cli, name);
-        const output = pack.bin[name];
-        return {name, input, output};
+  if (type) {
+    // check for `bin` scripts in `package.json`
+    if (pack.bin)
+      return Object.keys(pack.bin)
+        .map(function (name) {
+          const input = resolve(dir.cli, name);
+          let output = pack.bin[name];
+          output = outputByType(type, output);
+          return {name, input, output, type};
+        });
+
+    // scan `cli` directory for executable scripts when all of above true:
+    // - package explicitly states to include 'bin' directory by defining its path
+    // - package has `cli` directory containing files to become executables
+    if (pack.directories && pack.directories.bin && fs.existsSync(dir.cli))
+      return fs.readdirSync(dir.cli).map(input => {
+        input = path.join(dir.cli, input);
+        const ext = path.extname(input);
+        const name = path.basename(input, ext);
+        let output = path.join(dir.bin, name + ".js");
+        output = outputByType(type, output);
+        return {name, input, output, type};
       });
-
-  // scan `cli` directory for executable scripts when all of above true:
-  // - package explicitly states to include 'bin' directory by defining its path
-  // - package has `cli` directory containing files to become executables
-  if (pack.directories && pack.directories.bin && fs.existsSync(dir.cli))
-    return fs.readdirSync(dir.cli).map(input => {
-      input = path.join(dir.cli, input);
-      const ext = path.extname(input);
-      const name = path.basename(input, ext);
-      const output = path.join(dir.bin, name + ".js");
-      return {name, input, output};
-    });
+  }
 
   return [];
 }
@@ -115,4 +123,13 @@ function externalDirsOf(root: string, pack: Package): string[] {
     pack.directories.src,
   ].filter(identity)
     .map(x => path.resolve(root, x));
+}
+
+function outputByType(type: BinType, output: string) {
+  if (type === BinType.lib) {
+    const {dir, name, ext} = path.parse(output);
+    const base = name.slice(-ext.length);
+    return path.join(dir, "lib", base, name + ext);
+  }
+  return output;
 }

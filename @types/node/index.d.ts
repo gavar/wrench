@@ -2,6 +2,7 @@
 
 declare namespace NodeJS {
   export namespace Module {
+    export const _extensions: NodeExtensions;
     export function createRequire(path: string): NodeRequire;
   }
 }

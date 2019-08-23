@@ -41,10 +41,6 @@ export function createBinConfig(file: BinFile, info: PackInfo, context: Context)
     preserveModules: modular,
     output: output(file.output, modular, {
       format: "cjs",
-      banner: [
-        "#!/usr/bin/env node", // make file executable
-        `require("source-map-support/register");`, // enable sourcemaps support
-      ].join("\n"),
       sourcemap: true,
       esModule: false, // NodeJS does not require to define __esModule
       preferConst: true, // NodeJS supports `const` since early versions

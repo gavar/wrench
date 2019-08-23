@@ -33,6 +33,7 @@ export function createBinConfig(file: BinFile, info: PackInfo, context: Context)
   const {modular} = context;
   const root = path.dirname(info.path);
   const external = [
+    info.pack.name,
     ...externalDirsOf(root, pack),
     context.external,
   ].flat();

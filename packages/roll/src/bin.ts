@@ -128,8 +128,7 @@ function externalDirsOf(root: string, pack: Package): string[] {
 function outputByType(type: BinType, output: string) {
   if (type === BinType.lib) {
     const {dir, name, ext} = path.parse(output);
-    const base = name.slice(-ext.length);
-    return path.join(dir, "lib", base, name + ext);
+    return path.join(dir, "lib", name, name + ext);
   }
   return output;
 }

@@ -1,9 +1,3 @@
-import { cyan, green, grey, red } from "colors";
-import { ensureDir, existsSync, realpath, remove, symlink, unlink } from "fs-extra";
-import { intersection } from "lodash";
-import match from "micromatch";
-import { dirname, relative, resolve } from "path";
-import { CommandModule } from "yargs";
 import {
   createDependencyGraph,
   DependencyNode,
@@ -12,6 +6,12 @@ import {
   yarnConfigCurrent,
   yarnWorkspacesInfo,
 } from "@wrench/ywl";
+import { cyan, green, grey, red } from "colors";
+import { ensureDir, existsSync, realpath, remove, symlink, unlink } from "fs-extra";
+import { intersection } from "lodash";
+import match from "micromatch";
+import { dirname, relative, resolve } from "path";
+import { CommandModule } from "yargs";
 import { YwlProps } from "../types";
 
 /**

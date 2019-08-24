@@ -1,5 +1,5 @@
+import { CompilerOptions, CustomTransformers } from "typescript";
 import { LoaderHook } from "./types";
-import { CustomTransformers, CompilerOptions } from "typescript";
 
 export interface TsNode {
   /** Register TypeScript compiler. */

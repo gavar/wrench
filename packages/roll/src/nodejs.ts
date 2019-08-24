@@ -7,7 +7,7 @@ import cleanup from "rollup-plugin-cleanup-chunk";
 import clear from "rollup-plugin-clear";
 import { CompilerOptions } from "typescript";
 import { collectBinFiles, createBinConfig } from "./bin";
-import { Context, BinType, Package, RollupConfig } from "./types";
+import { Context, Package, RollupConfig } from "./types";
 import {
   defaultPackageDirectories,
   dirname,

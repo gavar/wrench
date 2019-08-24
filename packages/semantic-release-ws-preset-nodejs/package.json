@@ -52,6 +52,7 @@
     "@semantic-release/changelog": "^3.0.4",
     "@semantic-release/commit-analyzer": "^7.0.0-beta.1",
     "@semantic-release/release-notes-generator": "^7.3.0",
+    "@wrench/loaders": ">=1.0.0-beta",
     "@wrench/semantic-release-git": ">=1.0.0-beta",
     "@wrench/semantic-release-npm": ">=1.0.0-beta",
     "@wrench/semantic-release-ws": ">=1.0.0-beta"
@@ -67,6 +68,7 @@
     "publishConfig": "../..",
     "dependencies": {
       "@semantic-release/commit-analyzer": "semantic-release",
+      "@wrench/loaders": "../loaders",
       "@wrench/semantic-release-git": "../semantic-release-git",
       "@wrench/semantic-release-npm": "../semantic-release-npm",
       "@wrench/semantic-release-ws": "../semantic-release-ws"

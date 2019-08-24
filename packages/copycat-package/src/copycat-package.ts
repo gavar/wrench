@@ -164,12 +164,12 @@ function repositoryToObject(repository: string | PackageRepository): PackageRepo
     : repository || {};
 }
 
-function resolve(importer: NodeRequire, registry: PackRegistry, from: string): PackNode {
+function resolve(importer: NodeRequire, registry: PackRegistry, id: string): PackNode {
   // append `package.json` if required
-  if (!path.extname(from))
-    from = path.join(from, "package.json");
+  if (!path.extname(id))
+    id = path.join(id, "package.json");
 
-  const filename = importer.resolve(from);
+  const filename = importer.resolve(id);
   const node = registry[filename] = registry[filename] || createNode(filename);
   visit(node, registry);
   return node;

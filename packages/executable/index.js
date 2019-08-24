@@ -1,7 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 const {Module} = require("module");
-const {loaders, register} = require("@wrench/loaders");
+const {loaders} = require("@wrench/loaders");
 
 /**
  * Resolution results.
@@ -23,7 +23,7 @@ function exec(filename) {
   const entry = resolve(filename);
   if (entry.filename) {
     console.log(grey("[@wrench/executable]:"), grey(entry.filename));
-    register(loaders);
+    require("@wrench/loaders/register");
     require(entry.filename);
   } else {
     console.error("unable to find bin file to execute", entry.locations);

@@ -1,9 +1,13 @@
 import { AsyncTest, isOwnReleaseConfig, testify } from "@wrench/semantic-release";
+import fs from "fs";
+import { promisify } from "util";
 import { Workspace } from "../../types";
 
+const realpath = promisify(fs.realpath);
 const exclusions: AsyncTest<Workspace>[] = [
   [isPrivate, "package is private"],
   [isReleaseFalse, "release is disabled by `release` flag in package.json"],
+  [isForeignProject, "real path points outside the working directory."],
   [isNotOwnReleaseConfig, "does not provide own semantic-release configuration"],
 ];
 
@@ -25,4 +29,10 @@ export function isReleaseFalse(workspace: Workspace): boolean {
 
 export async function isNotOwnReleaseConfig(workspace: Workspace): Promise<boolean> {
   return !await isOwnReleaseConfig(workspace.cwd);
+}
+
+export async function isForeignProject(workspace: Workspace): Promise<boolean> {
+  const cwd = process.cwd();
+  const real = await realpath(workspace.cwd);
+  return !real.startsWith(cwd);
 }

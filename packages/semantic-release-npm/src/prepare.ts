@@ -1,7 +1,8 @@
 import { PrepareContext } from "@wrench/semantic-release";
 import { existsSync, unlinkSync } from "fs";
 import { resolve } from "path";
-import { NpmConfig, readPack, resolveTarballName } from "./common";
+import { readPack, resolveTarballName } from "./common";
+import { NpmConfig } from "./types";
 
 const execute = require("@semantic-release/npm/lib/prepare");
 

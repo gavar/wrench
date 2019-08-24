@@ -19,36 +19,6 @@ export interface CommonOptions extends Options {
    * @see {@link https://github.com/conventional-changelog/conventional-changelog conventional-changelog}
    */
   preset: "angular" | "angular" | "atom" | "codemirror" | "ember" | "eslint" | "express" | "jquery" | "jshint";
-
-  /**
-   * Message for the release commit.
-   * @see {@link https://www.npmjs.com/package/@semantic-release/git @semantic-release/git}
-   */
-  message: string;
-
-  /**
-   * Files to include in the release commit.
-   * @see {@link https://www.npmjs.com/package/@semantic-release/git @semantic-release/git}
-   */
-  assets: false | Array<string | string[]>;
-
-  /**
-   * Whether to publish the npm package to the registry.
-   * @see {@link https://www.npmjs.com/package/@semantic-release/npm @semantic-release/npm}
-   */
-  npmPublish: boolean;
-
-  /**
-   * Directory path to publish.
-   * @see {@link https://www.npmjs.com/package/@semantic-release/npm @semantic-release/npm}
-   */
-  pkgRoot: string;
-
-  /**
-   * Directory path in which to write the the package tarball.
-   * @see {@link https://www.npmjs.com/package/@semantic-release/npm @semantic-release/npm}
-   */
-  tarballDir: string;
 }
 
 export type WorkspaceExecHookType = "pre" | "post";
@@ -60,12 +30,12 @@ export type WorkspaceExecHooks = Record<Step, Partial<Record<WorkspaceExecHookTy
  */
 export type WorkspacePackages = Record<string, Partial<CommonOptions>>;
 
-export interface WsConfiguration extends CommonOptions {
+export type WsConfiguration<P = {}> = CommonOptions & P & {
   /** Set to automatically confirm all prompts. */
   confirm?: boolean;
 
   /** Common options for all workspaces. */
-  workspace?: Partial<CommonOptions>;
+  workspace?: Partial<CommonOptions & P>;
 
   /** Options for particular package. */
   packages?: WorkspacePackages;

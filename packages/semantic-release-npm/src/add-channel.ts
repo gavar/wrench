@@ -1,5 +1,5 @@
 import { Context } from "@wrench/semantic-release";
-import { NpmConfig } from "./common";
+import { NpmConfig } from "./types";
 
 const $addChannel = require("@semantic-release/npm/lib/add-channel");
 

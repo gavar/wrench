@@ -1,0 +1,80 @@
+{
+  "name": "@wrench/semantic-release-ws-preset-nodejs",
+  "version": "1.0.0-beta",
+  "description": "Configuration preset for releasing NodeJS monorepo via semantic-release",
+  "keywords": [
+    "automation",
+    "changelog",
+    "monorepo",
+    "publish",
+    "release",
+    "semantic",
+    "semantic-release",
+    "semver",
+    "typescript",
+    "version",
+    "workspace",
+    "yarn"
+  ],
+  "homepage": "https://github.com/gavar/wrench/tree/master/semantic-release-ws-preset-nodejs#readme",
+  "bugs": {
+    "url": "https://github.com/gavar/wrench/labels/semantic-release-ws-preset-nodejs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gavar/wrench",
+    "directory": "packages/semantic-release-ws-preset-nodejs"
+  },
+  "license": "ISC",
+  "author": {
+    "name": "Max Stankevich",
+    "email": "max.stankevich.me@gmail.com",
+    "url": "https://github.com/gavar"
+  },
+  "files": [
+    "lib",
+    "es"
+  ],
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "yarn clean && rollup -c",
+    "clean": "rimraf tmp out lib es bin",
+    "format": "yarn lint --fix",
+    "format:pack": "fixpack && sort-package-json",
+    "lint": "echo no linting yet",
+    "prepack": "yarn build",
+    "prepublishOnly": "yarn test && yarn run lint",
+    "test": "echo no tests yet"
+  },
+  "dependencies": {
+    "@semantic-release/changelog": "^3.0.4",
+    "@semantic-release/commit-analyzer": "^7.0.0-beta.1",
+    "@semantic-release/release-notes-generator": "^7.3.0",
+    "@wrench/semantic-release-git": ">=1.0.0-beta",
+    "@wrench/semantic-release-npm": ">=1.0.0-beta",
+    "@wrench/semantic-release-ws": ">=1.0.0-beta"
+  },
+  "devDependencies": {},
+  "publishConfig": {
+    "access": "public"
+  },
+  "copycat": {
+    "author": "../..",
+    "license": "../..",
+    "repository": "../..",
+    "publishConfig": "../..",
+    "dependencies": {
+      "@semantic-release/commit-analyzer": "semantic-release",
+      "@wrench/semantic-release-git": "../semantic-release-git",
+      "@wrench/semantic-release-npm": "../semantic-release-npm",
+      "@wrench/semantic-release-ws": "../semantic-release-ws"
+    }
+  },
+  "release": true,
+  "standard-version": {
+    "extends": "@wrench/standard-version-config",
+    "tag-prefix": "v/semantic-release-ws-preset-nodejs/"
+  }
+}

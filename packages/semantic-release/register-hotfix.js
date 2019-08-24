@@ -1,3 +1,2 @@
 const {hotfix} = require(".");
-hotfix.signale.hotfix();
-hotfix.allowPublishReleaseArray();
+hotfix.hotfix(process.cwd());

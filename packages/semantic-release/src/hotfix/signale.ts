@@ -1,11 +1,12 @@
-import { Signale } from "signale";
+type Signale = typeof import("signale");
 
 export namespace signale {
   /**
    * Fix errors caused by invalid usage of {@link Signale}.
    * @see scope
    */
-  export function hotfix(): void {
+  export function hotfix(importer: NodeRequire = require): void {
+    const {Signale} = importer("signale");
     Signale.prototype.scope = scope(Signale.prototype.scope);
   }
 

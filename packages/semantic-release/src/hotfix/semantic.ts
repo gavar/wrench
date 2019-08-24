@@ -1,11 +1,10 @@
-const {publish} = require("semantic-release/lib/definitions/plugins");
-
 /**
  * Semantic Release throws an error when `publish` step returns an array.
  * This hotfix hijacks validation of the return object since each workspace
  * have its own release resulting in array of releases from a single step.
  */
-export function allowPublishReleaseArray() {
+export function allowPublishReleaseArray(importer: NodeRequire = require) {
+  const {publish} = importer("semantic-release/lib/definitions/plugins");
   const {outputValidator} = publish;
   const config = publish.pipelineConfig();
 

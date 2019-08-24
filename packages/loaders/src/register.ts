@@ -41,7 +41,7 @@ function createTransform(importer: NodeRequire, ext: string, loaders: Loader[]):
     // call loader to transform current file
     const loader = Module._extensions[ext];
     if (loader) loader(m, filename);
-    else console.warn(PREFIX, yellow(`no require hook was installed for ${ext}`));
+    else console.warn(PREFIX, yellow(`no require hook installed for ${ext}`));
   } as TransformHook;
 
   hook.owner = OWNER;
@@ -53,7 +53,7 @@ function load(importer: NodeRequire, loader: Loader, ext: string) {
   const path = tryResolve(importer, id);
   if (path) {
     if (visits.has(loader))
-      return console.debug(PREFIX, `skip installing loader '${id}' for '${ext}' as it has bee installed with same configuration`);
+      return console.debug(PREFIX, `skip loader '${id}' for '${ext}' - already installed with same configuration`);
 
     console.log(PREFIX, cyan(id), LR, grey(path));
     const instance = require(path);
@@ -63,7 +63,7 @@ function load(importer: NodeRequire, loader: Loader, ext: string) {
 
 function warnHookPresent(ext: string, hook: Partial<TransformHook>): boolean {
   if (hook && hook.owner !== OWNER) {
-    console.warn(PREFIX, `skip registering hook for '${ext}' since it already registered externally`);
+    console.warn(PREFIX, `skip registering hook for '${ext}' - already registered externally`);
     return true;
   }
 }

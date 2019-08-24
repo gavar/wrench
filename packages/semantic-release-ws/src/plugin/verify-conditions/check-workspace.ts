@@ -4,7 +4,7 @@ import { Workspace } from "../../types";
 const exclusions: AsyncTest<Workspace>[] = [
   [isPrivate, "package is private"],
   [isReleaseFalse, "release is disabled by `release` flag in package.json"],
-  [isExternalReleaseConfig, "does not provide own semantic-release configuration"],
+  [isNotOwnReleaseConfig, "does not provide own semantic-release configuration"],
 ];
 
 /**
@@ -23,6 +23,6 @@ export function isReleaseFalse(workspace: Workspace): boolean {
   return workspace.package.release === false;
 }
 
-export async function isExternalReleaseConfig(workspace: Workspace): Promise<boolean> {
+export async function isNotOwnReleaseConfig(workspace: Workspace): Promise<boolean> {
   return !await isOwnReleaseConfig(workspace.cwd);
 }

@@ -36,7 +36,7 @@
   },
   "scripts": {
     "build": "yarn clean && rollup -c",
-    "clean": "rimraf tmp out lib es bin",
+    "clean": "rimraf tmp out lib es bin/lib",
     "format": "yarn lint --fix",
     "format:pack": "fixpack && sort-package-json",
     "lint": "echo no linting yet",
@@ -45,6 +45,7 @@
     "test": "echo no tests yet"
   },
   "dependencies": {
+    "@wrench/executable": ">=1.0.0-beta",
     "colors": "^1.3.0",
     "find-up": "^3.0.0",
     "fs-extra": "^8.1.0",
@@ -70,6 +71,7 @@
     "repository": "../..",
     "publishConfig": "../..",
     "dependencies": {
+      "@wrench/executable": "../executable",
       "colors": "../..",
       "find-up": "yargs",
       "fs-extra": "../..",
@@ -80,6 +82,9 @@
     }
   },
   "release": true,
+  "roll": {
+    "bin": "lib"
+  },
   "standard-version": {
     "extends": "@wrench/standard-version-config",
     "tag-prefix": "v/ywl/"

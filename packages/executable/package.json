@@ -1,0 +1,57 @@
+{
+  "name": "@wrench/executable",
+  "version": "1.0.0-beta",
+  "description": "NodeJS executable wrapper registering loaders and source maps support",
+  "keywords": [
+    "bin",
+    "binary",
+    "exec",
+    "loaders",
+    "source-map-support",
+    "typescript"
+  ],
+  "homepage": "https://github.com/gavar/wrench/tree/master/packages/executable#readme",
+  "bugs": {
+    "url": "https://github.com/gavar/wrench/labels/executable"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gavar/wrench",
+    "directory": "packages/executable"
+  },
+  "license": "ISC",
+  "author": {
+    "name": "Max Stankevich",
+    "email": "max.stankevich.me@gmail.com",
+    "url": "https://github.com/gavar"
+  },
+  "files": [
+    "index.js"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf tmp out",
+    "format:pack": "fixpack && sort-package-json"
+  },
+  "dependencies": {
+    "@wrench/loaders": ">=1.0.0-beta"
+  },
+  "devDependencies": {},
+  "publishConfig": {
+    "access": "public"
+  },
+  "copycat": {
+    "author": "../..",
+    "license": "../..",
+    "repository": "../..",
+    "publishConfig": "../..",
+    "dependencies": {
+      "@wrench/loaders": "../loaders"
+    }
+  },
+  "release": true,
+  "standard-version": {
+    "extends": "@wrench/standard-version-config",
+    "tag-prefix": "v/commit-lint-config/"
+  }
+}

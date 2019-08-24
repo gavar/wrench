@@ -28,6 +28,7 @@ export function createProject(props: TypeScriptOptions, input: InputOptions): [P
     options,
     fileNames: pcl.fileNames,
     currentDirectory: host.currentDirectory,
+    transformerFactory: props.transformerFactory,
   });
 
   return [

@@ -1,7 +1,9 @@
+import { castArray, isEmpty, map, omitBy } from "lodash";
 import { dirname } from "path";
 import { Mutable } from "tstt";
 import {
   CompilerOptions,
+  CustomTransformers,
   Diagnostic,
   DocumentRegistry,
   FormatDiagnosticsHost,
@@ -22,6 +24,7 @@ import {
   ScriptText,
   TypeScript,
 } from "../host";
+import { TransformersFactory } from "../typescript";
 import { bindToSelf, canonical, rebind, reportDiagnosticByConsole } from "../util";
 
 const NULL: Partial<ScriptText> = {
@@ -78,6 +81,12 @@ export class Project implements LanguageServiceHost, ProjectHost, ResolutionHost
   /** Common source directory to use for emit. */
   readonly commonSourceDirectory: string;
 
+  /** @inheritdoc */
+  readonly transform?: CustomTransformers;
+
+  /** Factory to use for creating source code transformers. */
+  transformerFactory?: TransformersFactory;
+
   private dirty: boolean;
   private program: Program;
 
@@ -115,6 +124,8 @@ export class Project implements LanguageServiceHost, ProjectHost, ResolutionHost
         rootNames: this.fileNames,
         oldProgram: this.program,
       });
+
+      (this as Mutable<this>).transform = toCustomTransformers(this.transformerFactory, this.program);
       this.dirty = false;
     }
     return this.program;
@@ -308,4 +319,18 @@ function isVersionDiff(this: Record<string, ScriptText>, file: SourceFileInterna
 interface SourceFileInternal extends SourceFile {
   path?: string;
   version?: string;
+}
+
+function toCustomTransformers(factory: TransformersFactory, program: Program): CustomTransformers {
+  if (factory) {
+    const transforms = castArray(factory(program));
+    const conf: CustomTransformers = omitBy({
+      before: map(transforms, "before"),
+      after: map(transforms, "after"),
+      afterDeclarations: map(transforms, "afterDeclarations"),
+    });
+
+    if (!isEmpty(conf))
+      return conf;
+  }
 }

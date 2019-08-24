@@ -12,7 +12,7 @@ import {
   RenderedChunk,
   TransformResult,
 } from "rollup";
-import { CompilerOptions } from "typescript";
+import { Bundle, CompilerOptions, Program, SourceFile, TransformationContext, Transformer } from "typescript";
 import { bundleDts } from "./bundle-dts";
 import {
   addFileNames,
@@ -32,6 +32,18 @@ const NAME = "@wrench/typescript";
 const VIRTUAL_NAME = `_virtual/${NAME}`;
 const EXPORT_NULL = "exports = null;";
 
+/** Defines a function creating source code for particular program. */
+export interface TransformersFactory {
+  (program: Program): Transformers | Transformers[];
+}
+
+/** Transformation hooks. */
+export interface Transformers {
+  before?(context: TransformationContext): Transformer<SourceFile>;
+  after?(context: TransformationContext): Transformer<SourceFile>;
+  afterDeclarations?(context: TransformationContext): Transformer<Bundle | SourceFile>;
+}
+
 export interface TypeScriptOptions {
   /**
    * Path to the project configuration.
@@ -49,6 +61,7 @@ export interface TypeScriptOptions {
    * @default null
    */
   baseCompilerOptions?: CompilerOptions;
+
   /**
    * Compiler options to override.
    * @default null.
@@ -60,6 +73,9 @@ export interface TypeScriptOptions {
 
   /** Output path for project typings bundle. */
   types?: string;
+
+  /** Factory to use for creating source code transformers. */
+  transformerFactory?: TransformersFactory;
 }
 
 export function typescript(options?: TypeScriptOptions): Plugin {

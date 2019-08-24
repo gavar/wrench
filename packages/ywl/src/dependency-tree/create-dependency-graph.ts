@@ -23,7 +23,11 @@ interface PackEntry {
   visited?: boolean;
 
   /** Require function configured to resolve imports from {@link filename}. */
-  importer: NodeRequire;
+  importer: NodeRequireResolve;
+}
+
+export interface NodeRequireResolve extends NodeRequireFunction {
+  resolve(id: string, options?: { paths?: string[]; }): string;
 }
 
 export interface CreateDependencyGraph {
@@ -59,7 +63,7 @@ function dfs(entry: PackEntry, distance: number, context: Context): void {
   }
 }
 
-function dfsDependencyGroup(importer: NodeRequire, group: DependencyGroup, distance: number, context: Context): DependencyNode[] {
+function dfsDependencyGroup(importer: NodeRequireResolve, group: DependencyGroup, distance: number, context: Context): DependencyNode[] {
   const ids = group && Object.keys(group);
   if (ids && ids.length)
     return ids.map(id => {
@@ -73,7 +77,7 @@ function createNode(filename: string): PackEntry {
   filename = slash(resolve(filename));
   const raw = readFileSync(filename).toString();
   const pack = JSON.parse(raw) as Package;
-  const importer = Module.createRequire(filename);
+  const importer = createRequireResolve(filename);
   return {
     node: {
       name: pack.name,
@@ -85,7 +89,7 @@ function createNode(filename: string): PackEntry {
   };
 }
 
-function resolveNode(id: string, importer: NodeRequire, registry: PackRegistry): PackEntry {
+function resolveNode(id: string, importer: NodeRequireResolve, registry: PackRegistry): PackEntry {
   const manifest = join(id, "package.json");
   const filename = slash(importer.resolve(manifest));
   return registry[filename] = registry[filename] || createNode(filename);
@@ -102,4 +106,25 @@ function isLibrary(filename: string) {
 
 function slash(value: string) {
   return value.split("\\").join("/");
+}
+
+function createRequireResolve(filename: string): NodeRequireResolve {
+  const base = Module.createRequire(filename);
+
+  const importer = function (id: string) {
+    id = importer.resolve(id);
+    return base(id);
+  } as NodeRequireResolve;
+
+  importer.resolve = function (id: string, options?: { paths?: string[]; }) {
+    try {
+      // search in modules of request source
+      return base.resolve(id, options);
+    } catch (e) {
+      // search in own modules
+      return require.resolve(id, options);
+    }
+  };
+
+  return importer;
 }

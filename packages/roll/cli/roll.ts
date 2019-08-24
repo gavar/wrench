@@ -4,12 +4,17 @@ process.argv = [
   ...process.argv.slice(2),
 ];
 
-// find rollup executable
 const path = require("path");
-const packPath = require.resolve("rollup/package.json");
-const pack = require(packPath);
-const binPath = path.join(packPath, "..", pack.bin.rollup);
+const {Module} = require("module");
 
-// execute rollup
-require(binPath);
+void function () {
+  // find rollup executable
+  const importer = Module.createRequire(process.cwd());
+  const packPath = importer.resolve("rollup/package.json");
+  const pack = require(packPath);
+  const binPath = path.join(packPath, "..", pack.bin.rollup);
+  // execute
+  require(binPath);
+}();
+
 export {};

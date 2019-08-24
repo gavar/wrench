@@ -41,7 +41,7 @@
   },
   "scripts": {
     "build": "yarn clean && rollup -c",
-    "clean": "rimraf tmp out lib es bin",
+    "clean": "rimraf tmp out lib es bin/lib",
     "format": "yarn lint --fix",
     "format:pack": "fixpack && sort-package-json",
     "lint": "echo no linting yet",
@@ -72,6 +72,7 @@
     "repository": "../..",
     "publishConfig": "../..",
     "dependencies": {
+      "@wrench/executable": "../executable",
       "@wrench/roll-typescript": "../roll-typescript",
       "colors": "../..",
       "lodash": "../..",
@@ -79,6 +80,9 @@
       "source-map-support": "../..",
       "tslib": "../.."
     }
+  },
+  "roll": {
+    "bin": "lib"
   },
   "release": true,
   "standard-version": {

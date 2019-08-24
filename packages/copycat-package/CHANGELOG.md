@@ -1,3 +1,10 @@
+# [1.0.0-beta.3](https://github.com/gavar/wrench/compare/v/copycat-package/1.0.0-beta.2...v/copycat-package/1.0.0-beta.3@beta) (2019-08-24)
+
+
+### Bug Fixes
+
+* import paths ([aac0cb1](https://github.com/gavar/wrench/commit/aac0cb1))
+
 # Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.

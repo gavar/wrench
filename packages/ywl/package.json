@@ -1,6 +1,6 @@
 {
   "name": "@wrench/ywl",
-  "version": "1.0.0-beta",
+  "version": "1.0.0-beta.0",
   "description": "Yarn tool for making symlinks of yarn link as workspace directory",
   "keywords": [
     "link",

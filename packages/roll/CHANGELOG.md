@@ -1,3 +1,21 @@
+# [2.0.0-beta.2](https://github.com/gavar/wrench/compare/v/roll/2.0.0-beta.1...v/roll/2.0.0-beta.2@beta) (2019-08-24)
+
+
+### Bug Fixes
+
+* allow bin to reference own files by package name ([a345083](https://github.com/gavar/wrench/commit/a345083))
+* bin output path in `lib` mode ([91a33cb](https://github.com/gavar/wrench/commit/91a33cb))
+* do not inject executable header into bin ([cbde25e](https://github.com/gavar/wrench/commit/cbde25e))
+* format imports ([ddefdce](https://github.com/gavar/wrench/commit/ddefdce))
+
+
+### Features
+
+* allow to `roll` bin as library ([120f063](https://github.com/gavar/wrench/commit/120f063))
+* check for esnext field to find typescript sources ([23f2b02](https://github.com/gavar/wrench/commit/23f2b02))
+* no need in complex external check for bin ([f1a37e7](https://github.com/gavar/wrench/commit/f1a37e7))
+* run `roll` through `@wrench/executable` ([1e42817](https://github.com/gavar/wrench/commit/1e42817))
+
 # Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.

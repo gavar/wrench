@@ -148,6 +148,28 @@
   dependencies:
     find-up "^4.0.0"
 
+"@emulsy/async@^1.0.0-beta":
+  version "1.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@emulsy/async/-/async-1.0.0-beta.0.tgz#fcaa53c316de704d8f8153689804cf76aaf81574"
+  integrity sha512-uU9sxIGbMNlO/l0qtfyr1MM4kADvdifdplDHXgjcFMrNqC36bFYVxR+VfdbLCvz9Xd8oADeLp19gFxL3gkyKsA==
+  dependencies:
+    "@emulsy/util" ">=1.0.0-beta"
+    lodash "^4.17.13"
+    tstt "^1.0.4"
+
+"@emulsy/lang@>=1.0.0-beta":
+  version "1.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@emulsy/lang/-/lang-1.0.0-beta.0.tgz#fd7e0346be65017bdd395decaaf25b141e1ea748"
+  integrity sha512-MSRSHTYnTOwFSB8rTFmrUw8FuCfh4h1i90q4rGgHpiFv1yL3vqdQRcTG15auR1EsE3KOqhSqtrUiJvdadvdikg==
+
+"@emulsy/util@>=1.0.0-beta":
+  version "1.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@emulsy/util/-/util-1.0.0-beta.0.tgz#289e09a38e5cc3b4a510a291ad82e2705c695f50"
+  integrity sha512-+2K3qwT7RSi/XCou0kuc6vByZ647Jo8i/EpLsdixHKGF6yIWQ477w1GQgy/QcYVnomIQzoFUzjx8aZaOccBuGg==
+  dependencies:
+    "@emulsy/lang" ">=1.0.0-beta"
+    lodash "^4.17.13"
+
 "@marionebl/sander@^0.6.0":
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/@marionebl/sander/-/sander-0.6.1.tgz#1958965874f24bc51be48875feb50d642fc41f7b"

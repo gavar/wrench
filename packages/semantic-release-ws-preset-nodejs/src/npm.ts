@@ -16,8 +16,8 @@ export function npm(options?: NodeJsPresetOptions): Partial<NodeJsPresetConfig> 
   };
 
   const conf: Partial<NodeJsPresetConfig> = {
-    git: false,
-    npmPublish: false,
+    git: true,
+    npmPublish: true,
     assets: [[
       "**/package.json",
       "**/CHANGELOG.md",

@@ -1,72 +1,79 @@
 import { cyan, green, grey, red } from "colors";
 import { ensureDir, existsSync, realpath, remove, symlink, unlink } from "fs-extra";
 import { intersection } from "lodash";
+import match from "micromatch";
 import { dirname, relative, resolve } from "path";
 import { CommandModule } from "yargs";
-import { yarnConfigCurrent, YarnConfigCurrent, yarnList, yarnListNames } from "../..";
+import {
+  createDependencyGraph,
+  DependencyNode,
+  flattenDependencyGraph,
+  YarnConfigCurrent,
+  yarnConfigCurrent,
+  yarnWorkspacesInfo,
+} from "@wrench/ywl";
 import { YwlProps } from "../types";
 
 /**
  * List of parameters available to be configured by CLI.
  */
 export interface LinkProps extends YwlProps {
-  /**
-   * Whether to search only for first-level dependencies.
-   * @default false
-   */
-  flat?: boolean;
 
-  /**
-   * Restrict the depth of the dependencies.
-   * @see https://yarnpkg.com/lang/en/docs/cli/list/#toc-yarn-list-depth-pattern
-   */
+  /** Whether to run in a testing mode without persisting changes. */
+  dryRun: boolean;
+
+  /** Restrict the depth of the dependencies to search for. */
   depth?: number;
-
-  /**
-   * Filter the list of dependencies by the pattern flag.
-   * @see https://yarnpkg.com/lang/en/docs/cli/list/#toc-yarn-list-depth-pattern
-   */
-  pattern: string;
 
   /** Flag to remove previous symlinks. */
   clean: boolean;
 
-  /** Set of particular links to install. */
-  links: string[];
+  /**
+   * Glob patterns filtering dependencies ellidable to be included as workspace.
+   * Powered by {@link https://www.npmjs.com/package/micromatch micromatch}
+   */
+  pattern: string[];
+
+  /** Whether to include dev dependencies. */
+  dev: boolean;
 }
 
 export const link: CommandModule<YwlProps, LinkProps> = {
   aliases: "*",
-  command: "link",
+  command: "link [pattern...]",
   describe: "add local dependencies as workspaces",
+
   builder(yargs) {
     return yargs
-      .option("clean", {type: "boolean"})
-      .option("flat", {type: "boolean", conflicts: "depth"})
-      .option("depth", {type: "number"})
-      .option("pattern", {type: "string"})
-      .option("links", {type: "string", array: true, conflicts: ["pattern", "depth"]})
-      .middleware(args => {
-        if (args.flat) args.depth = 0;
-      })
+      .positional("pattern", {type: "string", array: true, default: []})
+      .option("dev", {type: "boolean", default: true})
+      .option("clean", {type: "boolean", default: false})
+      .option("depth", {type: "number", default: 5})
+      .option("dryRun", {type: "boolean"})
       ;
   },
-  async handler(props): Promise<void> {
-    let {links} = props;
-    const {root} = props;
-    const conf = await yarnConfigCurrent();
 
-    if (!links) {
-      const list = await yarnList(props);
-      const names = yarnListNames(list);
-      links = intersection(names, conf.linkedModules);
-    }
+  async handler(props): Promise<void> {
+    const {root, pattern} = props;
+    const run = !props.dryRun;
+
+    const [conf, own] = await Promise.all([
+      await yarnConfigCurrent(),
+      await resolveOwnPackages(props),
+    ]);
+
+    const dirs = Object.values(own);
+    const graph = createDependencyGraph(dirs, props);
+    const flat = flattenDependencyGraph(graph, props);
+    const externals = toUniqExternalNames(flat, own);
+    const names = pattern && pattern.length ? match(externals, pattern) : externals;
+    const links = intersection(names, conf.linkedModules).sort();
 
     // clear previous links
     if (props.clean)
-      await remove(resolve(root, props.dir));
+      run && await remove(resolve(root, props.out));
 
-    await ensureDir(resolve(root, props.dir));
+    run && await ensureDir(resolve(root, props.out));
     await Promise.all(links.map(x => updateSymlink(x, conf, props)));
   },
 };
@@ -76,8 +83,9 @@ const AL = grey("<-");
 
 async function updateSymlink(link: string, conf: YarnConfigCurrent, props: LinkProps): Promise<void> {
   const cwd = process.cwd();
+  const run = !props.dryRun;
   const target = resolve(conf.linkFolder, link);
-  const path = resolve(props.root, props.dir, link);
+  const path = resolve(props.root, props.out, link);
 
   const [a, b] = await Promise.all([
     existsSync(path) ? realpath(path) : "",
@@ -96,9 +104,9 @@ async function updateSymlink(link: string, conf: YarnConfigCurrent, props: LinkP
     console.log(red("-"), cyan(link),
       AR, grey(relative(cwd, a)),
       AL, grey(target));
-    await unlink(path);
+    run && await unlink(path);
   } else {
-    await ensureDir(dirname(path));
+    run && await ensureDir(dirname(path));
   }
 
   console.log(green("+"), cyan(link),
@@ -106,5 +114,36 @@ async function updateSymlink(link: string, conf: YarnConfigCurrent, props: LinkP
     AR, grey(relative(cwd, b)),
     AL, grey(target));
 
-  await symlink(target, path);
+  run && await symlink(target, path);
+}
+
+async function resolveOwnPackages(props: LinkProps): Promise<Record<string, string>> {
+  const root = resolve(props.root);
+  const out = resolve(root, props.out);
+
+  const own: Record<string, string> = {
+    [props.pack.name]: root,
+  };
+
+  const info = await yarnWorkspacesInfo();
+  for (const [name, w] of Object.entries(info)) {
+    const path = resolve(root, w.location);
+    if (!dirOwnsPath(out, path))
+      own[name] = path;
+  }
+
+  return own;
+}
+
+function dirOwnsPath(dir: string, path: string) {
+  const rel = relative(dir, path);
+  return !rel.startsWith("..");
+}
+
+function toUniqExternalNames(graph: DependencyNode[], own: Record<string, string>): string[] {
+  const uniq: Record<string, boolean> = {};
+  for (const node of graph)
+    if (!own[node.name])
+      uniq[node.name] = true;
+  return Object.keys(uniq);
 }

@@ -1,5 +1,5 @@
 import yargs, { Argv } from "yargs";
-import { yarnWorkspaceRoot, YWL_DIR } from "..";
+import { yarnWorkspaceRoot } from "@wrench/ywl";
 import { link } from "./actions";
 import { YwlProps } from "./types";
 
@@ -7,7 +7,7 @@ void async function () {
   const [root, pack] = await yarnWorkspaceRoot(process.cwd());
   if (!root) throw new Error("unable to find workspace root");
   (yargs as Argv<YwlProps>)(process.argv.slice(2), root)
-    .option("dir", {type: "string", default: YWL_DIR})
+    .option("out", {type: "string", default: ".ywl"})
     .pkgConf("ywl", root)
     .middleware(args => {
       args.root = root;

@@ -2,7 +2,7 @@
   "name": "wrench",
   "version": "0.0.0-dev",
   "private": true,
-  "description": ":wrench: Wrench is a toolset that provides various build tools for NodeJS, NPM and related libraries",
+  "description": "Wrench is a toolset that provides various build tools for NodeJS, NPM and related libraries",
   "repository": {
     "type": "git",
     "url": "https://github.com/gavar/wrench"

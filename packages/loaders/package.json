@@ -8,6 +8,7 @@
     "loader",
     "rechoir",
     "require",
+    "source-map-support",
     "typescript"
   ],
   "homepage": "https://github.com/gavar/wrench/tree/master/loaders#readme",

@@ -50,7 +50,6 @@
   },
   "dependencies": {
     "@emulsy/async": "^1.0.0-beta",
-    "@emulsy/util": "^1.0.0-beta",
     "@semantic-release/error": "^2.2.0",
     "@wrench/semantic-release": ">=1.0.0-beta",
     "cli-table3": "^0.5.1",
@@ -83,7 +82,6 @@
     "publishConfig": "../..",
     "dependencies": {
       "@emulsy/async": "../..",
-      "@emulsy/util": "../..",
       "@semantic-release/error": "semantic-release",
       "@wrench/semantic-release": "../semantic-release",
       "colors": "../..",

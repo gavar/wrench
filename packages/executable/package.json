@@ -30,7 +30,7 @@
   ],
   "main": "index.js",
   "scripts": {
-    "clean": "rimraf tmp out",
+    "clean": "rimraf tmp out *.tgz",
     "format:pack": "fixpack && sort-package-json"
   },
   "dependencies": {

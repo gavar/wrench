@@ -26,7 +26,7 @@
     "index.json"
   ],
   "scripts": {
-    "clean": "rimraf tmp out lib es bin",
+    "clean": "rimraf tmp out lib es bin *.tgz",
     "format:pack": "fixpack && sort-package-json"
   },
   "dependencies": {

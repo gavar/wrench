@@ -81,10 +81,10 @@
       "tslib": "../.."
     }
   },
+  "release": true,
   "roll": {
     "bin": "lib"
   },
-  "release": true,
   "standard-version": {
     "extends": "@wrench/standard-version-config",
     "tag-prefix": "v/roll/"

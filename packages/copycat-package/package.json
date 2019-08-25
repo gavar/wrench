@@ -38,7 +38,7 @@
   },
   "scripts": {
     "build": "yarn clean && rollup -c",
-    "clean": "rimraf tmp out lib es bin *.tgz",
+    "clean": "rimraf tmp out lib es bin/lib *.tgz",
     "format": "yarn lint --fix",
     "format:pack": "fixpack && sort-package-json",
     "lint": "echo no linting yet",
@@ -78,6 +78,9 @@
     }
   },
   "release": true,
+  "roll": {
+    "bin": "lib"
+  },
   "standard-version": {
     "extends": "@wrench/standard-version-config",
     "tag-prefix": "v/copycat-package/"

@@ -26,6 +26,7 @@
     "tsconfig.json"
   ],
   "scripts": {
+    "build": "exit 0",
     "clean": "rimraf tmp out lib es bin *.tgz",
     "format:pack": "fixpack && sort-package-json"
   },

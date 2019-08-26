@@ -1,3 +1,10 @@
+# [1.0.0-beta.4](https://github.com/gavar/wrench/compare/v/copycat-package/1.0.0-beta.3@beta...v/copycat-package/1.0.0-beta.4@beta) (2019-08-26)
+
+
+### Bug Fixes
+
+* run `copycat-pack` through `@wrench/executable` ([17faa0a](https://github.com/gavar/wrench/commit/17faa0a))
+
 # [1.0.0-beta.3](https://github.com/gavar/wrench/compare/v/copycat-package/1.0.0-beta.2...v/copycat-package/1.0.0-beta.3@beta) (2019-08-24)
 
 

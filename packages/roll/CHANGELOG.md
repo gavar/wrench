@@ -1,3 +1,10 @@
+# [2.0.0-beta.3](https://github.com/gavar/wrench/compare/v/roll/2.0.0-beta.2@beta...v/roll/2.0.0-beta.3@beta) (2019-08-26)
+
+
+### Bug Fixes
+
+* import paths ([e54e108](https://github.com/gavar/wrench/commit/e54e108))
+
 # [2.0.0-beta.2](https://github.com/gavar/wrench/compare/v/roll/2.0.0-beta.1...v/roll/2.0.0-beta.2@beta) (2019-08-24)
 
 

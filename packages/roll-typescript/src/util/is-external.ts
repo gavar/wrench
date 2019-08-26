@@ -46,7 +46,7 @@ function isPathOfDirs(id: string, roots: string[]) {
 }
 
 export interface IsExternal {
-  (specifier: string, importer?: string, id?: string): boolean;
+  (specifier: string, importer?: string, id?: string): boolean | undefined;
 }
 
 function dirOwnsFile(dir: string, fileName: string) {

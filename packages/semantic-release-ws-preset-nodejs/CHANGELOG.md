@@ -1,3 +1,10 @@
+# [1.0.0-beta.3](https://github.com/gavar/wrench/compare/v/semantic-release-ws-preset-nodejs/1.0.0-beta.2@beta...v/semantic-release-ws-preset-nodejs/1.0.0-beta.3@beta) (2019-08-26)
+
+
+### Bug Fixes
+
+* missing `default.js` ([b6c9521](https://github.com/gavar/wrench/commit/b6c9521))
+
 # 1.0.0-beta.2 (2019-08-24)
 
 

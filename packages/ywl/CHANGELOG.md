@@ -1,3 +1,10 @@
+# [1.0.0-beta.2](https://github.com/gavar/wrench/compare/v/ywl/1.0.0-beta.1@beta...v/ywl/1.0.0-beta.2@beta) (2019-08-26)
+
+
+### Bug Fixes
+
+* build ESM to own directory ([ee98611](https://github.com/gavar/wrench/commit/ee98611))
+
 # 1.0.0-beta.1 (2019-08-24)
 
 

@@ -1,3 +1,10 @@
+# [1.0.0-beta.3](https://github.com/gavar/wrench/compare/v/roll-typescript/1.0.0-beta.2@beta...v/roll-typescript/1.0.0-beta.3@beta) (2019-08-26)
+
+
+### Bug Fixes
+
+* return type of IsExternal may be undefined ([e3bba76](https://github.com/gavar/wrench/commit/e3bba76))
+
 # [1.0.0-beta.2](https://github.com/gavar/wrench/compare/v/roll-typescript/1.0.0-beta.1...v/roll-typescript/1.0.0-beta.2@beta) (2019-08-24)
 
 

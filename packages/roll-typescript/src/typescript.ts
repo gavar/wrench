@@ -137,7 +137,7 @@ export function typescript(options?: TypeScriptOptions): Plugin {
       }
     },
 
-    async load(this: PluginContext, id: string) {
+    load(this: PluginContext, id: string) {
       if (id === NAME)
         return EXPORT_NULL;
     },

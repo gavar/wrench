@@ -32,8 +32,9 @@
     "url": "https://github.com/gavar"
   },
   "files": [
+    "es",
     "lib",
-    "es"
+    "default.js"
   ],
   "main": "lib/index.js",
   "module": "es/index.js",

@@ -36,7 +36,7 @@
     "copycat-pack": "bin/copycat-pack.js"
   },
   "scripts": {
-    "build": "yarn clean && rollup -c",
+    "build": "yarn clean && roll --preserveModules",
     "clean": "rimraf tmp out lib es bin/lib *.tgz",
     "format": "yarn lint --fix",
     "format:pack": "fixpack && sort-package-json",

@@ -40,7 +40,7 @@
   "module": "es/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "build": "yarn clean && rollup -c",
+    "build": "yarn clean && roll --preserveModules",
     "clean": "rimraf tmp out lib es bin *.tgz",
     "format": "yarn lint --fix",
     "format:pack": "fixpack && sort-package-json",

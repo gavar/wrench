@@ -31,7 +31,6 @@
     "lib"
   ],
   "main": "lib/index.js",
-  "module": "lib/index.es.js",
   "types": "lib/index.d.ts",
   "bin": {
     "copycat-pack": "bin/copycat-pack.js"

@@ -26,10 +26,11 @@
   },
   "files": [
     "bin",
+    "es",
     "lib"
   ],
   "main": "lib/index.js",
-  "module": "lib/index.es.js",
+  "module": "es/index.js",
   "types": "lib/index.d.ts",
   "bin": {
     "ywl": "bin/ywl.js"

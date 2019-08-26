@@ -1,2 +1,2 @@
-const {loaders, register} = require(".");
-register(loaders);
+const cjs = require("./cjs");
+cjs.register(cjs.loaders);

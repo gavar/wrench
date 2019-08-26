@@ -1,6 +1,6 @@
 process.argv = [
   ...process.argv.slice(0, 2),
-  "-c", require.resolve("../preset/nodejs.js"),
+  "-c", require.resolve("@wrench/roll/preset/nodejs.js"),
   ...process.argv.slice(2),
 ];
 

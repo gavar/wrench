@@ -4,12 +4,12 @@ import {
   Branch,
   Commit,
   getTags,
-  ReleaseNotes,
   ReleaseType,
   updateCommitFiles,
 } from "@wrench/semantic-release";
 import { Workspace, WsConfiguration } from "../../types";
-import { callWorkspacesOf, WorkspacesHooks } from "../../util";
+import { callWorkspacesOf, createWorkspaceLogger, WorkspacesHooks } from "../../util";
+import { resolveNextRelease } from "../common";
 import { mostSignificantReleaseType } from "./most-significant-release-type";
 import { ownCommits } from "./own-commits";
 import { resolveLastRelease } from "./resolve-last-release";
@@ -47,9 +47,8 @@ const hooks: WorkspacesHooks<"analyzeCommits"> = {
   },
 
   postProcessWorkspace(workspace: Workspace, type: ReleaseType, owner: AnalyzeCommitsContext) {
-    // always override owner release
-    workspace.nextRelease = {} as ReleaseNotes;
-    if (type) workspace.nextRelease.type = type;
+    const logger = createWorkspaceLogger(workspace, owner);
+    workspace.nextRelease = resolveNextRelease(workspace, type, logger);
   },
 
   /** @inheritdoc */

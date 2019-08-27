@@ -148,7 +148,7 @@
   dependencies:
     find-up "^4.0.0"
 
-"@emulsy/async@^1.0.0-beta":
+"@emulsy/async@beta":
   version "1.0.0-beta.0"
   resolved "https://registry.yarnpkg.com/@emulsy/async/-/async-1.0.0-beta.0.tgz#fcaa53c316de704d8f8153689804cf76aaf81574"
   integrity sha512-uU9sxIGbMNlO/l0qtfyr1MM4kADvdifdplDHXgjcFMrNqC36bFYVxR+VfdbLCvz9Xd8oADeLp19gFxL3gkyKsA==

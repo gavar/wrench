@@ -47,7 +47,7 @@
     "test": "echo no tests yet"
   },
   "dependencies": {
-    "@emulsy/async": "^1.0.0-beta",
+    "@emulsy/async": "beta",
     "cosmiconfig": "^5.0.1",
     "execa": "^1.0.0",
     "lodash": "^4.17.4",

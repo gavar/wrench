@@ -1,3 +1,10 @@
+# [2.0.0-beta.4](https://github.com/gavar/wrench/compare/v/roll/2.0.0-beta.3@beta...v/roll/2.0.0-beta.4@beta) (2019-08-27)
+
+
+### Bug Fixes
+
+* output directory when modular project main points to nested directory ([8da963b](https://github.com/gavar/wrench/commit/8da963b))
+
 # [2.0.0-beta.3](https://github.com/gavar/wrench/compare/v/roll/2.0.0-beta.2@beta...v/roll/2.0.0-beta.3@beta) (2019-08-26)
 
 

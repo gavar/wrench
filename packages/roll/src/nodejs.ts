@@ -16,6 +16,7 @@ import {
   merge,
   output,
   resolve,
+  slash,
 } from "./util";
 
 export interface PackInfo {
@@ -83,7 +84,7 @@ export function nodejs(info: string | PackInfo, base: RollupConfig = {}): Rollup
   };
 
   /** CommonJS bundle output options. */
-  const cjs = output(pack.main, modular, {
+  const cjs = output(input, pack.main, modular, {
     format: "cjs",
     sourcemap: true,
     esModule: false, // NodeJS does not require to define __esModule
@@ -92,7 +93,7 @@ export function nodejs(info: string | PackInfo, base: RollupConfig = {}): Rollup
   });
 
   /** ECMAScript bundle output options. */
-  const esm: OutputOptions = pack.module && output(pack.module, modular, {
+  const esm: OutputOptions = pack.module && output(input, pack.module, modular, {
     format: "esm",
     sourcemap: true,
   });
@@ -178,6 +179,3 @@ function normalizePackInfo(info: string | PackInfo): PackInfo {
   };
 }
 
-function slash(path: string) {
-  return path ? path.split("\\").join("/") : path;
-}

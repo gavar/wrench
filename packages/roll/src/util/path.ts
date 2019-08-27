@@ -44,3 +44,11 @@ export function isSubPathOf(sub: string, dir: string): boolean {
 export function isSubPathOfWorkingDirectory(sub: string) {
   return isSubPathOf(sub, process.cwd());
 }
+
+/**
+ * Replace path back-slashes with forward-slashes.
+ * @param p - path to process.
+ */
+export function slash(p: string): string {
+  return p ? p.split("\\").join("/") : p;
+}

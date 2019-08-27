@@ -36,8 +36,11 @@ const hooks: WorkspacesHooks<"analyzeCommits"> = {
     w.lastRelease = resolveLastRelease(w.branch, tagFormat, w.package);
 
     // should analyze only commits since last release
-    if (w.lastRelease.gitHead)
-      w.commits = w.commits.slice(0, w.commits.findIndex(hashEqual, w.lastRelease.gitHead));
+    if (w.lastRelease.gitHead) {
+      // workspace tag may be excluded by global release tag, so check it's there
+      const last = w.commits.findIndex(hashEqual, w.lastRelease.gitHead) + 1;
+      if (last > 0) w.commits = w.commits.slice(0, last);
+    }
 
     // use only commits that affecting workspace
     w.commits = ownCommits(w.commits, w.cwd);

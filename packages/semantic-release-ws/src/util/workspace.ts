@@ -14,6 +14,7 @@ import {
 import { exec } from "child_process";
 import { get, pick } from "lodash";
 import path from "path";
+import { Signale } from "signale";
 import { promisify } from "util";
 import { projectByContext } from "../process";
 import { CommonOptions, Workspace, WorkspaceExecHookType } from "../types";
@@ -146,7 +147,7 @@ export function createWorkspaceContext<T extends Context>(w: Workspace, owner: T
   return context;
 }
 
-export function createWorkspaceLogger(w: Workspace, owner: Context) {
+export function createWorkspaceLogger(w: Workspace, owner: Context): Signale {
   return owner.logger.scope(w.name);
 }
 

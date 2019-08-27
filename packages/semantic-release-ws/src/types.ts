@@ -85,7 +85,7 @@ export interface Workspace {
    * Next release of this workspace.
    * @see VerifyReleaseContext#nextRelease
    */
-  nextRelease: ReleaseNotes;
+  nextRelease: Release & Partial<ReleaseNotes>;
 }
 
 /** Project information. */

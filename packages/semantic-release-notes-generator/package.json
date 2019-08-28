@@ -1,0 +1,71 @@
+{
+  "name": "@wrench/semantic-release-notes-generator",
+  "version": "1.0.0-beta",
+  "description": "Semantic Release plugin allowing to regenerate changelog",
+  "keywords": [
+    "changelog",
+    "conventional-changelog",
+    "conventional-commits",
+    "github",
+    "publish",
+    "release",
+    "release-note-generator",
+    "semantic-release",
+    "regenereate"
+  ],
+  "homepage": "https://github.com/gavar/wrench/tree/master/semantic-release-notes-generator#readme",
+  "bugs": {
+    "url": "https://github.com/gavar/wrench/labels/semantic-release-notes-generator"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gavar/wrench",
+    "directory": "packages/semantic-release-notes-generator"
+  },
+  "license": "ISC",
+  "author": {
+    "name": "Max Stankevich",
+    "email": "max.stankevich.me@gmail.com",
+    "url": "https://github.com/gavar"
+  },
+  "files": [
+    "lib",
+    "es"
+  ],
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "yarn clean && roll --preserveModules",
+    "clean": "rimraf tmp out lib es bin *.tgz",
+    "format": "yarn lint --fix",
+    "format:pack": "fixpack && sort-package-json",
+    "lint": "echo no linting yet",
+    "prepack": "yarn build",
+    "prepublishOnly": "yarn test && yarn run lint",
+    "test": "echo no tests yet"
+  },
+  "dependencies": {
+    "@wrench/semantic-release": "^1.0.0-beta",
+    "@semantic-release/release-notes-generator": "^7.1.2"
+  },
+  "devDependencies": {},
+  "publishConfig": {
+    "access": "public"
+  },
+  "copycat": {
+    "author": "../..",
+    "license": "../..",
+    "repository": "../..",
+    "publishConfig": "../..",
+    "dependencies": {
+      "@wrench/semantic-release": "../semantic-release",
+      "@semantic-release/release-notes-generator": "semantic-release"
+    }
+  },
+  "release": true,
+  "standard-version": {
+    "extends": "@wrench/standard-version-config",
+    "tag-prefix": "v/semantic-release-notes-generator/"
+  }
+}

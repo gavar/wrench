@@ -46,7 +46,7 @@ const hooks: WorkspacesHooks<"analyzeCommits"> = {
 
   callWorkspace(plugin: PluginsFunction<"analyzeCommits">, context: AnalyzeCommitsContext, workspace: Workspace, owner: AnalyzeCommitsContext) {
     const {logger} = context;
-    const {version} = workspace.options;
+    const version = workspace.options.forceRelease;
     if (version != null) {
       logger.info("skipping commits analysis since next version defined explicitly:", version);
       return semverToReleaseType(version) || "manual" as ReleaseType;

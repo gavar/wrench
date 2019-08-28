@@ -9,7 +9,7 @@ export interface CommonOptions extends Options {
   git: boolean;
 
   /** Explicitly define next version or release type, skipping commits history analysis. */
-  version: string | SemVerReleaseType;
+  forceRelease: string | SemVerReleaseType;
 
   /**
    * Commands to execute along with a step.

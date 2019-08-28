@@ -6,9 +6,9 @@ import { Workspace } from "../../types";
 
 const stub = {log: noop} as Signale;
 
-export function resolveNextRelease({branch, options: {tagFormat, version}, lastRelease}: Workspace, type: ReleaseType, logger: Signale): Release {
-  type = semverToReleaseType(version) || type || void 0;
-  version = valid(version);
+export function resolveNextRelease({branch, options: {tagFormat, forceRelease}, lastRelease}: Workspace, type: ReleaseType, logger: Signale): Release {
+  type = semverToReleaseType(forceRelease) || type || void 0;
+  const version = valid(forceRelease);
 
   const next = {
     type,

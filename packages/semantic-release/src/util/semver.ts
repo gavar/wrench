@@ -1,4 +1,4 @@
-import { parse, ReleaseType } from "semver";
+import { prerelease, ReleaseType } from "semver";
 import { ReleaseType as SemanticReleaseType } from "../types";
 
 const releaseTypes: Record<ReleaseType, SemanticReleaseType> = {
@@ -31,8 +31,8 @@ export function isSemverReleaseType(value: string | ReleaseType): value is Relea
  * Get first prerelease component from the version.
  * @param version - version to parse.
  */
-export function semverReleaseChannel(version: string): string | undefined {
-  const semver = parse(version);
-  if (semver && semver.prerelease && semver.prerelease.length)
-    return String(semver.prerelease[0]);
+export function getReleaseChannel(version: string): string | undefined {
+  const pre = prerelease(version);
+  if (pre && pre.length)
+    return pre[0];
 }

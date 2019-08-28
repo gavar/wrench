@@ -32,7 +32,6 @@ const hooks: WorkspacesHooks<"analyzeCommits"> = {
     // update last release
     w.commits = owner.commits;
     w.branches = await getTags(cwd, env, tagFormat, owner.branches);
-    w.branches.forEach(fixTags);
     w.branch = w.branches.find(nameEqual, owner.branch.name);
     w.lastRelease = resolveLastRelease(w.branch, tagFormat, w.package);
 
@@ -76,13 +75,6 @@ const hooks: WorkspacesHooks<"analyzeCommits"> = {
       showReleaseTypesSummary(workspaces, releaseType);
   },
 };
-
-function fixTags(branch: Branch) {
-  // inherit channel from the branch itself
-  for (const tag of branch.tags)
-    if (tag.channel === void 0)
-      tag.channel = branch.channel;
-}
 
 function hashEqual(this: string, commit: Commit) {
   return commit.hash === this;

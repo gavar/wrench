@@ -57,15 +57,12 @@ export async function updateCommitFiles(commit: Commit): Promise<string[]> {
  * @param path - path to directory to use as commit filter.
  */
 export function ownCommits(commits: Commit[], path: string): Commit[] {
-  const rel = relative(process.cwd(), path).split("\\").join("/");
-  return commits.filter(isOwnCommit, `${rel}/`);
+  const rel = relative(process.cwd(), path).split("\\").join("/") + "/";
+  return commits.filter(commit => isOwnCommit(commit, rel));
 }
 
-function isOwnCommit(this: string, commit: Commit): boolean {
-  const files = commitGet(commit, "files");
-  return !!files.find(startsWith, this);
-}
-
-function startsWith(this: string, file: string): boolean {
-  return file.startsWith(this);
+function isOwnCommit(commit: Commit, path: string): boolean {
+  for (const file of commitGet(commit, "files"))
+    if (file.startsWith(path))
+      return true;
 }

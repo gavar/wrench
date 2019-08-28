@@ -1,7 +1,5 @@
 import {
   AnalyzeCommitsContext,
-  Branch,
-  Commit,
   getTags,
   initializeCommitsFiles,
   ownCommits,
@@ -32,13 +30,13 @@ const hooks: WorkspacesHooks<"analyzeCommits"> = {
     // update last release
     w.commits = owner.commits;
     w.branches = await getTags(cwd, env, tagFormat, owner.branches);
-    w.branch = w.branches.find(nameEqual, owner.branch.name);
+    w.branch = w.branches.find(x => x.name === owner.branch.name);
     w.lastRelease = resolveLastRelease(w.branch, tagFormat, w.package);
 
     // should analyze only commits since last release
     if (w.lastRelease.gitHead) {
       // workspace tag may be excluded by global release tag, so check it's there
-      const last = w.commits.findIndex(hashEqual, w.lastRelease.gitHead) + 1;
+      const last = w.commits.findIndex(x => x.hash === w.lastRelease.gitHead) + 1;
       if (last > 0) w.commits = w.commits.slice(0, last);
     }
 
@@ -75,14 +73,6 @@ const hooks: WorkspacesHooks<"analyzeCommits"> = {
       showReleaseTypesSummary(workspaces, releaseType);
   },
 };
-
-function hashEqual(this: string, commit: Commit) {
-  return commit.hash === this;
-}
-
-function nameEqual(this: string, branch: Branch) {
-  return branch.name === this;
-}
 
 function isManual(value: string): boolean {
   return value === "manual";

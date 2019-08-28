@@ -51,7 +51,7 @@
   "dependencies": {
     "@emulsy/async": "beta",
     "@semantic-release/error": "^2.2.0",
-    "@wrench/semantic-release": ">=1.0.0-beta",
+    "@wrench/semantic-release": "^1.0.0-beta",
     "cli-table3": "^0.5.1",
     "colors": "^1.3.0",
     "find-up": "^3.0.0",

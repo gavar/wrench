@@ -50,12 +50,12 @@
     "test": "echo no tests yet"
   },
   "dependencies": {
-    "@wrench/executable": ">=1.1.0-beta",
-    "@wrench/roll-typescript": ">=1.0.0-beta",
+    "@wrench/executable": "^1.1.0-beta",
+    "@wrench/roll-typescript": "^1.0.0-beta",
     "colors": "^1.3.0",
     "lodash": "^4.14",
     "rollup": "^1.19.2",
-    "rollup-plugin-cleanup-chunk": ">=1.0.1-beta",
+    "rollup-plugin-cleanup-chunk": "^1.0.1-beta",
     "rollup-plugin-clear": "^2.0.7",
     "source-map-support": "^0.5.12",
     "tslib": "^1.10.0"

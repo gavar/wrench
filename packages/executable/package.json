@@ -35,7 +35,7 @@
     "format:pack": "fixpack && sort-package-json"
   },
   "dependencies": {
-    "@wrench/loaders": ">=1.0.0-beta"
+    "@wrench/loaders": "^1.0.0-beta"
   },
   "devDependencies": {},
   "publishConfig": {

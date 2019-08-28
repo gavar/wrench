@@ -53,7 +53,10 @@ const hooks: WorkspacesHooks<"analyzeCommits"> = {
 
   /** @inheritdoc */
   processWorkspacesOutputs(releaseTypes: ReleaseType[]): ReleaseType {
-    return mostSignificantReleaseType(releaseTypes);
+    // use only patch release type to increment global version
+    // as it's used only to avoid analyzing whole repository history
+    const major = mostSignificantReleaseType(releaseTypes);
+    return major ? "patch" : undefined;
   },
 
   /** @inheritdoc */

@@ -1,16 +1,39 @@
-import { getNextVersion, makeTag, Release, ReleaseType } from "@wrench/semantic-release";
-import { lt } from "semver";
+import { getNextVersion, makeTag, Release, ReleaseType, semverToReleaseType } from "@wrench/semantic-release";
+import { noop } from "lodash";
+import { lt, valid } from "semver";
 import { Signale } from "signale";
 import { Workspace } from "../../types";
 
-export function resolveNextRelease({branch, options: {tagFormat}, lastRelease}: Workspace, type: ReleaseType, logger: Signale): Release {
-  const next = {type} as Release;
+const mute = {log: noop} as Signale;
+
+export function resolveNextRelease({branch, options: {tagFormat, version}, lastRelease}: Workspace, type: ReleaseType, logger: Signale): Release {
+  type = semverToReleaseType(version) || type || void 0;
+  version = valid(version);
+
+  const next = {
+    type,
+    channel: branch.channel,
+  } as Release;
+
   if (type) {
-    next.channel = branch.channel;
-    next.version = getNextVersion(branch, type, next.channel, lastRelease, logger);
+    // resolve next version
+    if (version) {
+      if (branch.type === "prerelease") {
+        next.version = getNextVersion(branch, null, next.channel, {...lastRelease, version}, mute);
+        next.version = next.version.replace("null", version);
+      } else {
+        next.version = version;
+      }
+      logger.log("The next release version is %s", next.version);
+    } else {
+      next.version = getNextVersion(branch, type, next.channel, lastRelease, logger);
+    }
+
+    // rest fields
     next.gitTag = makeTag(tagFormat, next.version, next.channel);
     next.name = makeTag(tagFormat, next.version);
 
+    // validate
     if (lastRelease.channel == next.channel)
       if (lt(next.version, lastRelease.version)) {
         logger.error("excluding release since next version", next.version,

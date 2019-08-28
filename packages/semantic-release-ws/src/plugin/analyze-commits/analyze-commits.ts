@@ -5,7 +5,9 @@ import {
   getTags,
   initializeCommitsFiles,
   ownCommits,
+  PluginsFunction,
   ReleaseType,
+  semverToReleaseType,
 } from "@wrench/semantic-release";
 import { Workspace, WsConfiguration } from "../../types";
 import { callWorkspacesOf, createWorkspaceLogger, WorkspacesHooks } from "../../util";
@@ -45,6 +47,16 @@ const hooks: WorkspacesHooks<"analyzeCommits"> = {
     w.commits = ownCommits(w.commits, w.cwd);
   },
 
+  callWorkspace(plugin: PluginsFunction<"analyzeCommits">, context: AnalyzeCommitsContext, workspace: Workspace, owner: AnalyzeCommitsContext) {
+    const {logger} = context;
+    const {version} = workspace.options;
+    if (version != null) {
+      logger.info("skipping commits analysis since next version defined explicitly:", version);
+      return semverToReleaseType(version) || "manual" as ReleaseType;
+    }
+    return plugin(context);
+  },
+
   postProcessWorkspace(workspace: Workspace, type: ReleaseType, owner: AnalyzeCommitsContext) {
     const logger = createWorkspaceLogger(workspace, owner);
     workspace.nextRelease = resolveNextRelease(workspace, type, logger);
@@ -54,8 +66,8 @@ const hooks: WorkspacesHooks<"analyzeCommits"> = {
   processWorkspacesOutputs(releaseTypes: ReleaseType[]): ReleaseType {
     // use only patch release type to increment global version
     // as it's used only to avoid analyzing whole repository history
-    const major = mostSignificantReleaseType(releaseTypes);
-    return major ? "patch" : undefined;
+    if (releaseTypes.some(isManual) || mostSignificantReleaseType(releaseTypes))
+      return "patch";
   },
 
   /** @inheritdoc */
@@ -78,4 +90,8 @@ function hashEqual(this: string, commit: Commit) {
 
 function nameEqual(this: string, branch: Branch) {
   return branch.name === this;
+}
+
+function isManual(value: string): boolean {
+  return value === "manual";
 }

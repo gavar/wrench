@@ -6,7 +6,7 @@ const $ = require("semantic-release/lib/get-next-version");
 export function getNextVersion(branch: Branch,
                                type: ReleaseType,
                                channel: string,
-                               lastRelease: Release,
+                               lastRelease: Pick<Release, "version" | "channel">,
                                logger: Signale): string {
   return $({branch, nextRelease: {type, channel}, lastRelease, logger});
 }

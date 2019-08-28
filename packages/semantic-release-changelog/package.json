@@ -1,0 +1,77 @@
+{
+  "name": "@wrench/semantic-release-changelog",
+  "version": "1.0.0-beta.0",
+  "description": "Semantic Release changelog plugin resenting changelog file to last release",
+  "keywords": [
+    "changelog",
+    "conventional-changelog",
+    "conventional-commits",
+    "github",
+    "merge",
+    "pre-release",
+    "prerelease",
+    "publish",
+    "release",
+    "release-note-generator",
+    "semantic-release",
+    "version"
+  ],
+  "homepage": "https://github.com/gavar/wrench/tree/master/semantic-release-changelog#readme",
+  "bugs": {
+    "url": "https://github.com/gavar/wrench/labels/semantic-release-changelog"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gavar/wrench",
+    "directory": "packages/semantic-release-changelog"
+  },
+  "license": "ISC",
+  "author": {
+    "name": "Max Stankevich",
+    "email": "max.stankevich.me@gmail.com",
+    "url": "https://github.com/gavar"
+  },
+  "files": [
+    "lib",
+    "es"
+  ],
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "yarn clean && roll --preserveModules",
+    "clean": "rimraf tmp out lib es bin *.tgz",
+    "format": "yarn lint --fix",
+    "format:pack": "fixpack && sort-package-json",
+    "lint": "echo no linting yet",
+    "prepack": "yarn build",
+    "prepublishOnly": "yarn test && yarn run lint",
+    "test": "echo no tests yet"
+  },
+  "dependencies": {
+    "@semantic-release/release-notes-generator": "^7.3.0",
+    "@wrench/semantic-release": "^1.0.0-beta",
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.138"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "copycat": {
+    "author": "../..",
+    "license": "../..",
+    "repository": "../..",
+    "publishConfig": "../..",
+    "dependencies": {
+      "@wrench/semantic-release": "../semantic-release",
+      "lodash": "semantic-release"
+    }
+  },
+  "release": true,
+  "standard-version": {
+    "extends": "@wrench/standard-version-config",
+    "tag-prefix": "v/semantic-release-changelog/"
+  }
+}

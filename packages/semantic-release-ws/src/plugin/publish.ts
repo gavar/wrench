@@ -1,7 +1,6 @@
-import { PublishContext, push, Release } from "@wrench/semantic-release";
+import { getGitHead, PublishContext, push, Release } from "@wrench/semantic-release";
 import { CommonOptions, Workspace, WsConfiguration } from "../types";
 import { callWorkspacesOf, createWorkspaceLogger, WorkspacesHooks } from "../util";
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 import { tagWorkspace, warnNoGitPush } from "./common";
 
 export async function publish(input: WsConfiguration, context: PublishContext) {
@@ -9,6 +8,12 @@ export async function publish(input: WsConfiguration, context: PublishContext) {
 }
 
 const hooks: WorkspacesHooks<"publish"> = {
+  async preProcessWorkspaces(workspaces: Workspace[], owner: PublishContext) {
+    // HEAD may change since `semantic-release` commit and push changes just before release
+    const head = await getGitHead(owner);
+    for (const workspace of workspaces)
+      workspace.nextRelease.gitHead = head;
+  },
 
   async postProcessWorkspace(workspace: Workspace, output: never, owner: PublishContext) {
     await tagWorkspace(workspace, owner);

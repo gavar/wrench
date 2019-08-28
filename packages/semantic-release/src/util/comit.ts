@@ -1,3 +1,4 @@
+import { relative } from "path";
 import { Commit } from "../types";
 import { git } from "./git";
 
@@ -34,9 +35,37 @@ export function commitSet<K extends keyof CommitProps>(commit: Commit, key: K, v
   commitCache[commit.hash][key] = value;
 }
 
+/**
+ * Run {@link updateCommitFiles} for those commit that haven't got files yet.
+ * @param commits - commits to check.
+ */
+export async function initializeCommitsFiles(commits: Commit[]) {
+  commits = commits.filter(x => !commitGet(x, "files"));
+  await Promise.all(commits.map(updateCommitFiles));
+}
+
 /** Resolve commit files from GIT log. */
 export async function updateCommitFiles(commit: Commit): Promise<string[]> {
   const files = await git.filesByCommit(commit.hash);
   commitSet(commit, "files", files);
   return files;
+}
+
+/**
+ * Pick only those commits that relates to provided context.
+ * @param commits - list of all commits.
+ * @param path - path to directory to use as commit filter.
+ */
+export function ownCommits(commits: Commit[], path: string): Commit[] {
+  const rel = relative(process.cwd(), path).split("\\").join("/");
+  return commits.filter(isOwnCommit, `${rel}/`);
+}
+
+function isOwnCommit(this: string, commit: Commit): boolean {
+  const files = commitGet(commit, "files");
+  return !!files.find(startsWith, this);
+}
+
+function startsWith(this: string, file: string): boolean {
+  return file.startsWith(this);
 }

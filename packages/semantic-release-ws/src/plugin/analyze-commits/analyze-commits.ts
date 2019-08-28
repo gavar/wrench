@@ -1,17 +1,16 @@
-import { each } from "@emulsy/async";
 import {
   AnalyzeCommitsContext,
   Branch,
   Commit,
   getTags,
+  initializeCommitsFiles,
+  ownCommits,
   ReleaseType,
-  updateCommitFiles,
 } from "@wrench/semantic-release";
 import { Workspace, WsConfiguration } from "../../types";
 import { callWorkspacesOf, createWorkspaceLogger, WorkspacesHooks } from "../../util";
 import { resolveNextRelease } from "../common";
 import { mostSignificantReleaseType } from "./most-significant-release-type";
-import { ownCommits } from "./own-commits";
 import { resolveLastRelease } from "./resolve-last-release";
 import { showReleaseTypesSummary } from "./show-release-types-summary";
 
@@ -19,7 +18,7 @@ const SHOW_SUMMARY = false;
 
 export async function analyzeCommits(config: WsConfiguration, context: AnalyzeCommitsContext): Promise<ReleaseType> {
   context.logger.start("resolving commit files");
-  await each(context.commits, updateCommitFiles);
+  await initializeCommitsFiles(context.commits);
   return callWorkspacesOf("analyzeCommits", context, hooks);
 }
 

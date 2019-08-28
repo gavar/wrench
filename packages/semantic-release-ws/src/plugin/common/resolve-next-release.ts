@@ -4,7 +4,7 @@ import { lt, valid } from "semver";
 import { Signale } from "signale";
 import { Workspace } from "../../types";
 
-const mute = {log: noop} as Signale;
+const stub = {log: noop} as Signale;
 
 export function resolveNextRelease({branch, options: {tagFormat, version}, lastRelease}: Workspace, type: ReleaseType, logger: Signale): Release {
   type = semverToReleaseType(version) || type || void 0;
@@ -19,7 +19,7 @@ export function resolveNextRelease({branch, options: {tagFormat, version}, lastR
     // resolve next version
     if (version) {
       if (branch.type === "prerelease") {
-        next.version = getNextVersion(branch, null, next.channel, {...lastRelease, version}, mute);
+        next.version = getNextVersion(branch, null, next.channel, {...lastRelease, version}, stub);
         next.version = next.version.replace("null", version);
       } else {
         next.version = version;

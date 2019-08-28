@@ -8,10 +8,10 @@
     "conventional-commits",
     "github",
     "publish",
+    "regenereate",
     "release",
     "release-note-generator",
-    "semantic-release",
-    "regenereate"
+    "semantic-release"
   ],
   "homepage": "https://github.com/gavar/wrench/tree/master/semantic-release-notes-generator#readme",
   "bugs": {
@@ -46,10 +46,15 @@
     "test": "echo no tests yet"
   },
   "dependencies": {
+    "@semantic-release/release-notes-generator": "^7.1.2",
     "@wrench/semantic-release": "^1.0.0-beta",
-    "@semantic-release/release-notes-generator": "^7.1.2"
+    "lodash": "^4.17.4",
+    "semver": "^5.4.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/lodash": "^4.14.138",
+    "@types/semver": "^5.5.0"
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -59,8 +64,10 @@
     "repository": "../..",
     "publishConfig": "../..",
     "dependencies": {
+      "@semantic-release/release-notes-generator": "semantic-release",
       "@wrench/semantic-release": "../semantic-release",
-      "@semantic-release/release-notes-generator": "semantic-release"
+      "lodash": "semantic-release",
+      "semver": "semantic-release"
     }
   },
   "release": true,

@@ -1,11 +1,11 @@
 import { VerifyReleaseContext } from "@wrench/semantic-release";
 import { Workspace, WsConfiguration } from "../../types";
-import { askToContinue, callWorkspacesOf, WorkspacesHooks } from "../../util";
+import { askToContinue, callWorkspacesOf, shouldAskToContinue, WorkspacesHooks } from "../../util";
 import { releaseSummary } from "./release-summary";
 
 export async function verifyRelease(options: WsConfiguration, context: VerifyReleaseContext) {
   const outputs = await callWorkspacesOf("verifyRelease", context, hooks);
-  await askToContinue(options);
+  if (shouldAskToContinue(options)) await askToContinue();
   return outputs;
 }
 

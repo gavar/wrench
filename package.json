@@ -1,6 +1,6 @@
 {
   "name": "wrench",
-  "version": "0.0.0-dev",
+  "version": "0.0.0",
   "private": true,
   "description": "Wrench is a toolset that provides various build tools for NodeJS, NPM and related libraries",
   "repository": {

@@ -37,8 +37,8 @@ export function npm(options?: NodeJsPresetOptions): Partial<NodeJsPresetConfig> 
     tarballDir: "out",
     plugins: [
       "@semantic-release/commit-analyzer",
-      "@semantic-release/release-notes-generator",
-      "@semantic-release/changelog",
+      "@wrench/semantic-release-notes-generator",
+      "@wrench/semantic-release-changelog",
       "@wrench/semantic-release-npm",
     ],
     ...conf.workspace,

@@ -12,7 +12,6 @@ export function resolveLastRelease(branch: Branch, tagFormat: string, pack: Pack
     release.version = pack.version;
     release.channel = getReleaseChannel(release.version);
     release.name = makeTag(tagFormat, release.version, release.channel);
-    release.gitTag = release.gitTag || makeTag(tagFormat, release.version, release.channel);
   }
 
   return release;

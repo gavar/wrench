@@ -8,7 +8,7 @@ const resolveConfig = require("@semantic-release/git/lib/resolve-config");
 const {filterModifiedFiles, add, commit} = require("@semantic-release/git/lib/git");
 
 export async function prepare(config: GitConfig, context: PrepareContext) {
-  const {env, cwd, options: {dryRun, repositoryUrl}, branch, lastRelease, nextRelease, logger} = context;
+  const {env, cwd, options: {dryRun}, branch, lastRelease, nextRelease, logger} = context;
   const {message, assets} = resolveConfig(config, logger);
 
   if (assets && assets.length > 0) {

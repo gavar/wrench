@@ -14,4 +14,5 @@ export interface Tag {
   version: string;
   channel: string;
   gitTag: string;
+  gitHead: string;
 }

@@ -1,22 +1,31 @@
-# [1.0.0-beta.4](https://github.com/gavar/wrench/compare/v/copycat-package/1.0.0-beta.3@beta...v/copycat-package/1.0.0-beta.4@beta) (2019-08-26)
+# [1.0.0-beta.5](https://github.com/gavar/wrench/compare/v/copycat-package/1.0.0-beta.4@beta...v/copycat-package/1.0.0-beta.5@beta) (2019-08-28)
+
+
+### Bug Fixes
+
+* use caret constraint for packages ([d1dca49](https://github.com/gavar/wrench/commit/d1dca49))
+
+
+
+# [1.0.0-beta.4](https://github.com/gavar/wrench/compare/v/copycat-package/1.0.0-beta.3@beta...v/copycat-package/1.0.0-beta.4@beta) (2019-08-28)
 
 
 ### Bug Fixes
 
 * run `copycat-pack` through `@wrench/executable` ([17faa0a](https://github.com/gavar/wrench/commit/17faa0a))
 
-# [1.0.0-beta.3](https://github.com/gavar/wrench/compare/v/copycat-package/1.0.0-beta.2...v/copycat-package/1.0.0-beta.3@beta) (2019-08-24)
+
+
+# [1.0.0-beta.3](https://github.com/gavar/wrench/compare/v/copycat-package/1.0.0-beta.2@beta...v/copycat-package/1.0.0-beta.3@beta) (2019-08-28)
 
 
 ### Bug Fixes
 
 * import paths ([aac0cb1](https://github.com/gavar/wrench/commit/aac0cb1))
 
-# Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-# 1.0.0-beta.1 (2019-08-09)
+# 1.0.0-beta.1 (2019-08-28)
 
 
 ### Bug Fixes

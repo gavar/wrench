@@ -79,6 +79,13 @@ export interface WorkspaceHooks<S extends Step> {
     workspace: Workspace,
     owner: ContextType[S]): Async;
 
+  callWorkspace?(
+    plugin: PluginsFunction<S>,
+    context: ContextType[S],
+    workspace: Workspace,
+    owner: ContextType[S],
+  ): Async<PluginsReturnType<S>>;
+
   processWorkspaceOutput?(
     output: PluginsReturnType<S>,
     workspace: Workspace,
@@ -108,7 +115,10 @@ export async function callWorkspace<S extends Step>(
   // call workspace plugin
   await execHook(owner, step, "pre");
   const context = createWorkspaceContext(workspace, owner);
-  let output = await (workspace.plugins[step] as PluginsFunction<S>)(context);
+  const plugin = workspace.plugins[step] as PluginsFunction<S>;
+  let output = hooks && hooks.callWorkspace
+    ? await hooks.callWorkspace(plugin, context, workspace, owner)
+    : await plugin(context);
   await execHook(owner, step, "post");
 
   // process output

@@ -1,3 +1,11 @@
+# [1.0.0-beta.6](https://github.com/gavar/wrench/compare/v/semantic-release-ws/1.0.0-beta.5@beta...v/semantic-release-ws/1.0.0-beta.6@beta) (2019-08-29)
+
+
+### Bug Fixes
+
+* do not print workspaces list ([a17a919](https://github.com/gavar/wrench/commit/a17a919))
+* updating workspaces head before publish ([5ee9af0](https://github.com/gavar/wrench/commit/5ee9af0))
+
 # [1.0.0-beta.5](https://github.com/gavar/wrench/compare/v/semantic-release-ws/1.0.0-beta.4@beta...v/semantic-release-ws/1.0.0-beta.5@beta) (2019-08-29)
 
 

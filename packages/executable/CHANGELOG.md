@@ -1,4 +1,4 @@
-# [1.1.0-beta.1](https://github.com/gavar/wrench/compare/v/commit-lint-config/1.0.0...v/commit-lint-config/1.1.0-beta.1@beta) (2019-08-24)
+## 0.0.1 (2019-08-29)
 
 
 ### Bug Fixes

@@ -2,7 +2,9 @@ import { prompt } from "inquirer";
 import { WsConfiguration } from "../types";
 
 export function shouldAskToContinue(options: WsConfiguration): boolean {
-  return !options.confirm && !options.confirm;
+  if (options.ci) return false;
+  if (options.confirm) return false;
+  return true;
 }
 
 export async function askToContinue(message: string = "do you want to continue?"): Promise<void> {

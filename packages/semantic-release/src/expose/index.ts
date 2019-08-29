@@ -1,3 +1,4 @@
+export * from "./definitions";
 export * from "./get-config";
 export * from "./get-last-release";
 export * from "./get-next-version";

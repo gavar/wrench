@@ -75,3 +75,15 @@ export type PluginsReturnType<S extends Step> = Plugins[S] extends (...args: any
 
 /** Defines function signature for particular step of {@link Plugins}. */
 export type PluginsFunction<S extends Step> = (context: ContextType[S]) => Promise<PluginsReturnType<S>>;
+
+export interface PluginDefinition {
+  default?: string[],
+  required?: boolean;
+  dryRun?: boolean;
+  outputValidator?: (output: any) => boolean;
+  pipelineConfig?: Function;
+  preprocess?: Function;
+  postprocess?: Function;
+}
+
+export type PluginDefinitions = Record<Step, PluginDefinition>;

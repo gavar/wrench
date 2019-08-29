@@ -1,6 +1,6 @@
 import { getNextVersion, makeTag, Release, ReleaseType, semverToReleaseType } from "@wrench/semantic-release";
 import { noop } from "lodash";
-import { lt, valid } from "semver";
+import { lte, valid } from "semver";
 import { Signale } from "signale";
 import { Workspace } from "../../types";
 
@@ -35,9 +35,9 @@ export function resolveNextRelease({branch, options: {tagFormat, forceRelease}, 
 
     // validate
     if (lastRelease.channel == next.channel)
-      if (lt(next.version, lastRelease.version)) {
+      if (lte(next.version, lastRelease.version)) {
         logger.error("excluding release since next version", next.version,
-          "is less than last version", lastRelease.version,
+          "is less than or equal to last version", lastRelease.version,
           "on same channel", lastRelease.channel || "",
         );
         next.type = void 0;

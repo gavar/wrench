@@ -57,6 +57,10 @@ export async function callWorkspaces<S extends Step>(
   if (workspaces) workspaces = workspaces.filter(w => shouldCallWorkspace(w, step));
   const length = workspaces && workspaces.length || 0;
 
+  // pre-process hook
+  if (hooks && hooks.preProcessWorkspaces)
+    await hooks.preProcessWorkspaces(workspaces, owner);
+
   // process workspaces
   const outputs = new Array(length);
   for (let i = 0; i < length; i++)

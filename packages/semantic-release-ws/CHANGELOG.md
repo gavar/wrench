@@ -1,3 +1,10 @@
+# [1.0.0-beta.7](https://github.com/gavar/wrench/compare/v/semantic-release-ws/1.0.0-beta.6@beta...v/semantic-release-ws/1.0.0-beta.7@beta) (2019-08-29)
+
+
+### Bug Fixes
+
+* shouldAskToContinue ([4f6e679](https://github.com/gavar/wrench/commit/4f6e679))
+
 # [1.0.0-beta.6](https://github.com/gavar/wrench/compare/v/semantic-release-ws/1.0.0-beta.5@beta...v/semantic-release-ws/1.0.0-beta.6@beta) (2019-08-29)
 
 

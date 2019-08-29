@@ -33,6 +33,7 @@
   "scripts": {
     "build": "exit 0",
     "clean": "rimraf tmp out lib es bin *.tgz",
+    "prepack": "copycat-pack",
     "format:pack": "fixpack && sort-package-json"
   },
   "dependencies": {

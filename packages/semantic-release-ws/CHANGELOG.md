@@ -1,3 +1,11 @@
+# [1.0.0-beta.5](https://github.com/gavar/wrench/compare/v/semantic-release-ws/1.0.0-beta.4@beta...v/semantic-release-ws/1.0.0-beta.5@beta) (2019-08-29)
+
+
+### Bug Fixes
+
+* missing invoke of `preProcessWorkspaces` hook ([fcb3c11](https://github.com/gavar/wrench/commit/fcb3c11))
+* rename `version` option to `forceRelease` to avoid conflict with CLI ([46eed1b](https://github.com/gavar/wrench/commit/46eed1b))
+
 # [1.0.0-beta.4](https://github.com/gavar/wrench/compare/v/semantic-release-ws/1.0.0-beta.3@beta...v/semantic-release-ws/1.0.0-beta.4@beta) (2019-08-28)
 
 

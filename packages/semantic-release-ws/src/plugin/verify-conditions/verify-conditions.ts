@@ -13,7 +13,7 @@ export async function verifyConditions(config: WsConfiguration, context: VerifyC
   const workspaces = await resolveWorkspaces(config, context);
   projects[cwd] = {cwd, workspaces};
 
-  if (workspaces.length) logger.info("workspaces:", workspaces.map(x => x.name));
+  if (workspaces.length) logger.info(workspaces.length, "workspaces found for publishing");
   else return void logger.warn("no workspaces eligible for publishing found");
   await configureWorkspaces(config, context, workspaces);
 

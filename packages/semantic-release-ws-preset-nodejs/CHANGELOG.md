@@ -1,27 +1,11 @@
-# [1.0.0-beta.4](https://github.com/gavar/wrench/compare/v/semantic-release-ws-preset-nodejs/1.0.0-beta.3@beta...v/semantic-release-ws-preset-nodejs/1.0.0-beta.4@beta) (2019-08-28)
-
-
-### Bug Fixes
-
-* use own plugins instead of [@semantic-release](https://github.com/semantic-release) ([1dc489b](https://github.com/gavar/wrench/commit/1dc489b))
-
-
-
-# [1.0.0-beta.3](https://github.com/gavar/wrench/compare/v/semantic-release-ws-preset-nodejs/1.0.0-beta.2@beta...v/semantic-release-ws-preset-nodejs/1.0.0-beta.3@beta) (2019-08-28)
-
-
-### Bug Fixes
-
-* missing `default.js` ([b6c9521](https://github.com/gavar/wrench/commit/b6c9521))
-
-
-
-# 1.0.0-beta.0 (2019-08-28)
+## 0.0.1 (2019-08-29)
 
 
 ### Bug Fixes
 
 * enable git / npmPublish by default ([149cb91](https://github.com/gavar/wrench/commit/149cb91))
+* missing `default.js` ([b6c9521](https://github.com/gavar/wrench/commit/b6c9521))
+* use own plugins instead of [@semantic-release](https://github.com/semantic-release) ([1dc489b](https://github.com/gavar/wrench/commit/1dc489b))
 
 
 ### Features

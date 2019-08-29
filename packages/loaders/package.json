@@ -1,6 +1,6 @@
 {
   "name": "@wrench/loaders",
-  "version": "1.0.0-beta.1",
+  "version": "0.0.1",
   "description": "Prepare a node environment to require files with different extensions.",
   "keywords": [
     "extension",

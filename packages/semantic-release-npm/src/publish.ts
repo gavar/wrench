@@ -27,7 +27,7 @@ export async function publish(config: NpmConfig, context: PublishContext) {
   return execute(path, dryRun, config.access, pack, context);
 }
 
-export async function execute(path: string, dryRun: boolean, access: string, pack: Package, context: PublishContext) {
+async function execute(path: string, dryRun: boolean, access: string, pack: Package, context: PublishContext) {
   const {cwd, env, stdout, stderr, nextRelease: {version, channel}, logger} = context;
   if (pack.private !== true) {
     const registry = getRegistry(pack, context);

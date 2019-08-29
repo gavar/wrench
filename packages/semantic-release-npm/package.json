@@ -45,7 +45,8 @@
   "dependencies": {
     "@semantic-release/npm": "^5.2.0-beta.5",
     "@wrench/semantic-release": "^1.0.0-beta",
-    "execa": "^1.0.0"
+    "execa": "^1.0.0",
+    "fs-extra": "^8.1.0"
   },
   "devDependencies": {},
   "publishConfig": {
@@ -59,7 +60,8 @@
     "dependencies": {
       "@semantic-release/npm": "semantic-release",
       "@wrench/semantic-release": "../semantic-release",
-      "execa": "semantic-release"
+      "execa": "semantic-release",
+      "fs-extra": "../.."
     }
   },
   "release": true,

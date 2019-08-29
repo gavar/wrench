@@ -10,7 +10,8 @@ export async function publish(input: WsConfiguration, context: PublishContext) {
 const hooks: WorkspacesHooks<"publish"> = {
   async preProcessWorkspaces(workspaces: Workspace[], owner: PublishContext) {
     // HEAD may change since `semantic-release` commit and push changes just before release
-    const head = await getGitHead(owner);
+    const {cwd, env} = owner;
+    const head = await getGitHead({cwd, env});
     for (const workspace of workspaces)
       workspace.nextRelease.gitHead = head;
   },

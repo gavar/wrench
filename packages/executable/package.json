@@ -53,6 +53,6 @@
   "release": true,
   "standard-version": {
     "extends": "@wrench/standard-version-config",
-    "tag-prefix": "v/commit-lint-config/"
+    "tag-prefix": "v/executable/"
   }
 }

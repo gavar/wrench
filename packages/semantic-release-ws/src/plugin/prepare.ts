@@ -6,7 +6,11 @@ import { askToContinue, callWorkspacesOf, shouldAskToContinue } from "../util";
 export async function prepare(config: WsConfiguration, context: PrepareContext) {
   const {logger} = context;
   const {dryRun} = context.options;
+
+  await callWorkspacesOf("version", context);
+  await callWorkspacesOf("pack", context);
   const outputs = await callWorkspacesOf("prepare", context);
+
   if (!dryRun && shouldAskToContinue(config)) {
     logger.complete("prepare is complete");
     logger.pending("!!! please make sure to check files before publishing !!!");

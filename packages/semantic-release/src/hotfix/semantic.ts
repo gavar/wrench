@@ -1,10 +1,18 @@
+import { PluginDefinition, PluginDefinitions } from "../types";
+
+export function semanticHotfix(importer: NodeRequire = require) {
+  const PLUGINS_DEFINITIONS: PluginDefinitions = importer("semantic-release/lib/definitions/plugins");
+  allowPublishReleaseArray(PLUGINS_DEFINITIONS.publish);
+  PLUGINS_DEFINITIONS.version = createVersionHook();
+  PLUGINS_DEFINITIONS.pack = createPackHook();
+}
+
 /**
  * Semantic Release throws an error when `publish` step returns an array.
  * This hotfix hijacks validation of the return object since each workspace
  * have its own release resulting in array of releases from a single step.
  */
-export function allowPublishReleaseArray(importer: NodeRequire = require) {
-  const {publish} = importer("semantic-release/lib/definitions/plugins");
+export function allowPublishReleaseArray(publish: PluginDefinition) {
   const {outputValidator} = publish;
   const config = publish.pipelineConfig();
 
@@ -32,5 +40,19 @@ export function allowPublishReleaseArray(importer: NodeRequire = require) {
           : config.transform.call(this, release, ...args);
       },
     };
+  };
+}
+
+export function createVersionHook(): PluginDefinition {
+  return {
+    dryRun: true,
+    required: false,
+  };
+}
+
+export function createPackHook(): PluginDefinition {
+  return {
+    dryRun: true,
+    required: false,
   };
 }

@@ -21,6 +21,8 @@ export type Step =
   | "generateNotes"
   | "addChannel"
   | "prepare"
+  | "version"
+  | "pack"
   | "publish"
   | "success"
   | "fail"
@@ -36,6 +38,8 @@ export interface ContextType {
   generateNotes: GenerateNotesContext;
   addChannel: PrepareContext;
   prepare: PrepareContext;
+  version: PrepareContext;
+  pack: PrepareContext;
   publish: PublishContext;
   success: SuccessContext;
   fail: Context;
@@ -49,6 +53,8 @@ export interface Plugin<T = unknown> {
   generateNotes(config: T, context: GenerateNotesContext): Promise<string>;
   addChannel(config: T, context: PrepareContext): Promise<unknown>;
   prepare(config: T, context: PrepareContext): Promise<void>;
+  version(config: T, context: PrepareContext): Promise<void>;
+  pack(config: T, context: PrepareContext): Promise<void>;
   publish(config: T, context: PublishContext): Promise<void | null | false | Partial<Release>>;
   success(config: T, context: SuccessContext): Promise<void>;
   fail(config: T, context: Context): Promise<void>;
@@ -65,6 +71,8 @@ export interface Plugins {
   generateNotes(context: GenerateNotesContext): Promise<string>;
   addChannel(context: PrepareContext): Promise<unknown>;
   prepare(context: PrepareContext): Promise<void>;
+  version(context: PrepareContext): Promise<void>;
+  pack(context: PrepareContext): Promise<void>;
   publish(context: PublishContext): Promise<Release[]>;
   success(context: SuccessContext): Promise<void>;
   fail(context: Context): Promise<void>;

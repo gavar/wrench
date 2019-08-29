@@ -1,6 +1,6 @@
 import { Module } from "module";
 import { join } from "path";
-import { allowPublishReleaseArray } from "./semantic";
+import { semanticHotfix } from "./semantic";
 import { signale } from "./signale";
 
 export function hotfix(cwd?: string) {
@@ -11,5 +11,5 @@ export function hotfix(cwd?: string) {
   }
 
   signale.hotfix(importer);
-  allowPublishReleaseArray(importer);
+  semanticHotfix(importer);
 }

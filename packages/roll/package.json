@@ -50,8 +50,8 @@
     "test": "echo no tests yet"
   },
   "dependencies": {
-    "@wrench/executable": "^1.1.0-beta",
-    "@wrench/roll-typescript": "^1.0.0-beta",
+    "@wrench/executable": "^0.0.1",
+    "@wrench/roll-typescript": "^0.0.1",
     "colors": "^1.3.0",
     "lodash": "^4.14",
     "rollup": "^1.19.2",

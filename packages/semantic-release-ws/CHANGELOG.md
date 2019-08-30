@@ -1,3 +1,10 @@
+## [0.0.3](https://github.com/gavar/wrench/compare/v/semantic-release-ws/0.0.2...v/semantic-release-ws/0.0.3) (2019-08-30)
+
+
+### Bug Fixes
+
+* call `version` and `pack` only for workspaces having next release ([1ada131](https://github.com/gavar/wrench/commit/1ada131))
+
 ## [0.0.2](https://github.com/gavar/wrench/compare/v/semantic-release-ws/0.0.1...v/semantic-release-ws/0.0.2) (2019-08-30)
 
 

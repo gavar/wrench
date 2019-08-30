@@ -1,3 +1,10 @@
+## [0.0.3](https://github.com/gavar/wrench/compare/v/executable/0.0.2...v/executable/0.0.3) (2019-08-30)
+
+
+### Bug Fixes
+
+* loader dependency ([34208b6](https://github.com/gavar/wrench/commit/34208b6))
+
 ## [0.0.2](https://github.com/gavar/wrench/compare/v/executable/0.0.1...v/executable/0.0.2) (2019-08-30)
 
 

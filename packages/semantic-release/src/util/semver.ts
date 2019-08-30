@@ -1,31 +1,4 @@
-import { prerelease, ReleaseType } from "semver";
-import { ReleaseType as SemanticReleaseType } from "../types";
-
-const releaseTypes: Record<ReleaseType, SemanticReleaseType> = {
-  major: "major",
-  minor: "minor",
-  patch: "patch",
-  premajor: "major",
-  preminor: "minor",
-  prepatch: "patch",
-  prerelease: "patch",
-};
-
-/**
- * Convert value to a release type if possible.
- * @param value - value to convert.
- */
-export function asReleaseType(value: string | ReleaseType): SemanticReleaseType | undefined {
-  return releaseTypes[value as ReleaseType];
-}
-
-/**
- * Check if provided value is a semver release type.
- * @param value - value to check.
- */
-export function isSemverReleaseType(value: string | ReleaseType): value is ReleaseType {
-  return value && releaseTypes.hasOwnProperty(value);
-}
+import { prerelease } from "semver";
 
 /**
  * Get first prerelease component from the version.

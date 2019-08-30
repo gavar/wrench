@@ -31,7 +31,7 @@ const hooks: WorkspacesHooks<"analyzeCommits"> = {
     w.commits = owner.commits;
     w.branches = await getTags(cwd, env, tagFormat, owner.branches);
     w.branch = w.branches.find(x => x.name === owner.branch.name);
-    w.lastRelease = resolveLastRelease(w.branch, tagFormat, w.package);
+    w.lastRelease = resolveLastRelease(w.branch, tagFormat, w.pack);
 
     // should analyze only commits since last release
     if (w.lastRelease.gitHead) {

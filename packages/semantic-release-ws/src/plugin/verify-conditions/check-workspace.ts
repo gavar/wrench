@@ -20,11 +20,11 @@ export async function checkWorkspace(workspace: Workspace): Promise<true | strin
 }
 
 export function isPrivate(workspace: Workspace): boolean {
-  return workspace.package && workspace.package.private;
+  return workspace.pack && workspace.pack.private;
 }
 
 export function isReleaseFalse(workspace: Workspace): boolean {
-  return workspace.package.release === false;
+  return workspace.pack.release === false;
 }
 
 export async function isNotOwnReleaseConfig(workspace: Workspace): Promise<boolean> {

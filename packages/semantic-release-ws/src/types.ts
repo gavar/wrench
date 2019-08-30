@@ -55,7 +55,7 @@ export interface Workspace {
   name: string;
 
   /** Workspace package information. */
-  package: Package;
+  pack: Package;
 
   /** Options provided by the workspace `.releaserc` config. */
   options: CommonOptions;

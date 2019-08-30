@@ -20,7 +20,7 @@ export function resolveNextRelease(workspace: Workspace, type: ReleaseType, logg
       ? manual
         ? getManualVersion(branch, manual)
         : getNextVersion(branch, lastRelease, next, stub)
-      : workspace.package.version;
+      : workspace.pack.version;
 
     // rest fields
     next.gitTag = makeTag(tagFormat, next.version, next.channel);

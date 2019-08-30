@@ -24,7 +24,7 @@ export function verifyNoUnknownPackages(packages: WorkspacePackages, workspaces:
 
 export function verifyPackageConfiguration(packages: WorkspacePackages, workspace: Workspace): void {
   const {name} = workspace;
-  if (name in packages && !("release" in workspace.package))
+  if (name in packages && !("release" in workspace.pack))
     throw new SemanticReleaseError(
       `package '${name}' explicitly defines configuration, but does not provide 'release' property\n
       set '"release" : true', so semantic-release won't try to recursively load monorepo configuration upwards`,

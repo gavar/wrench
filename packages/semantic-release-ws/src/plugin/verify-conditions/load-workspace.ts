@@ -11,5 +11,5 @@ export async function loadWorkspace(name: string, location: string, owner: Conte
 
 async function loadPackage(workspace: Workspace): Promise<void> {
   const file = join(workspace.cwd, "package.json");
-  workspace.package = await packageByPath(file);
+  workspace.pack = await packageByPath(file);
 }

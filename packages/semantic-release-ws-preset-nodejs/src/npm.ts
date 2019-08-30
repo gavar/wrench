@@ -1,21 +1,29 @@
+import { ChangelogConfig } from "@wrench/semantic-release-changelog";
 import { GitConfig } from "@wrench/semantic-release-git";
+import { NotesGeneratorConfig } from "@wrench/semantic-release-notes-generator";
 import { NpmConfig } from "@wrench/semantic-release-npm";
 import { WsConfiguration } from "@wrench/semantic-release-ws";
 
-export interface NodeJsPresetOptions {
-  base?: Partial<NodeJsPresetConfig>;
+type Props =
+  & GitConfig
+  & NotesGeneratorConfig
+  & ChangelogConfig
+  & NpmConfig
+  ;
+
+export type PresetConfiguration = WsConfiguration<Props>;
+export interface PresetOptions {
+  base?: Partial<PresetConfiguration>;
 }
 
-export type NodeJsPresetConfig = WsConfiguration<NpmConfig & GitConfig>;
-
-export function npm(options?: NodeJsPresetOptions): Partial<NodeJsPresetConfig> {
+export function npm(options?: PresetOptions): Partial<PresetConfiguration> {
   // defaults
   options = {
     base: {workspace: {}},
     ...options,
   };
 
-  const conf: Partial<NodeJsPresetConfig> = {
+  const conf: Partial<PresetConfiguration> = {
     git: true,
     npmPublish: true,
     assets: [[

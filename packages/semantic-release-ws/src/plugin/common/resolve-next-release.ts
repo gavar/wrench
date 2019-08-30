@@ -1,4 +1,4 @@
-import { getNextVersion, makeTag, Release, ReleaseType, semverToReleaseType } from "@wrench/semantic-release";
+import { getNextVersion, makeTag, Release, ReleaseType, asReleaseType } from "@wrench/semantic-release";
 import { noop } from "lodash";
 import { lte, valid } from "semver";
 import { Signale } from "signale";
@@ -7,7 +7,7 @@ import { Workspace } from "../../types";
 const stub = {log: noop} as Signale;
 
 export function resolveNextRelease({branch, options: {tagFormat, forceRelease}, lastRelease}: Workspace, type: ReleaseType, logger: Signale): Release {
-  type = semverToReleaseType(forceRelease) || type || void 0;
+  type = asReleaseType(forceRelease) || type || void 0;
   const version = valid(forceRelease);
 
   const next = {

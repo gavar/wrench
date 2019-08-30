@@ -5,7 +5,7 @@ import {
   ownCommits,
   PluginsFunction,
   ReleaseType,
-  semverToReleaseType,
+  asReleaseType,
 } from "@wrench/semantic-release";
 import { Workspace, WsConfiguration } from "../../types";
 import { callWorkspacesOf, createWorkspaceLogger, WorkspacesHooks } from "../../util";
@@ -49,7 +49,7 @@ const hooks: WorkspacesHooks<"analyzeCommits"> = {
     const version = workspace.options.forceRelease;
     if (version != null) {
       logger.info("skipping commits analysis since next version defined explicitly:", version);
-      return semverToReleaseType(version) || "manual" as ReleaseType;
+      return asReleaseType(version) || "manual" as ReleaseType;
     }
     return plugin(context);
   },

@@ -1,4 +1,3 @@
-import { ReleaseType as SemVerReleaseType } from "semver";
 import { Branch, Commit, LastRelease, Options, Package, Plugins, Release, ReleaseNotes, ReleaseType, Step } from "@wrench/semantic-release";
 
 export interface CommonOptions extends Options {
@@ -7,9 +6,6 @@ export interface CommonOptions extends Options {
    * @default true
    */
   git: boolean;
-
-  /** Explicitly define next version or release type, skipping commits history analysis. */
-  forceRelease: string | SemVerReleaseType;
 
   /**
    * Commands to execute along with a step.
@@ -23,6 +19,9 @@ export interface CommonOptions extends Options {
    * @see {@link https://github.com/conventional-changelog/conventional-changelog conventional-changelog}
    */
   preset: "angular" | "atom" | "codemirror" | "ember" | "eslint" | "express" | "jquery" | "jshint";
+
+  /** Explicitly define next version or release type, skipping commits history analysis. */
+  forceRelease: string | ReleaseType;
 }
 
 export type WorkspaceExecHookType = "pre" | "post";

@@ -12,10 +12,10 @@ const releaseTypes: Record<ReleaseType, SemanticReleaseType> = {
 };
 
 /**
- * Convert semantic release type from semver release type.
+ * Convert value to a release type if possible.
  * @param value - value to convert.
  */
-export function semverToReleaseType(value: string | ReleaseType): SemanticReleaseType | undefined {
+export function asReleaseType(value: string | ReleaseType): SemanticReleaseType | undefined {
   return releaseTypes[value as ReleaseType];
 }
 

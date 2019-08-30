@@ -1,10 +1,11 @@
-import { Branch, getLastRelease, getReleaseChannel, makeTag, Package, Release } from "@wrench/semantic-release";
+import { Branch, getLastRelease, getReleaseChannel, makeTag, Package } from "@wrench/semantic-release";
+import { LastRelease } from "@wrench/semantic-release/src";
 
 /**
  * Resolve last release information for the provided context.
  * Fallbacks to package version if no related tag found.
  */
-export function resolveLastRelease(branch: Branch, tagFormat: string, pack: Package): Release {
+export function resolveLastRelease(branch: Branch, tagFormat: string, pack: Package): LastRelease {
   const release = getLastRelease(branch, tagFormat);
 
   // use version from package

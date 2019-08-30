@@ -1,5 +1,5 @@
-import { Branch, Commit, Options, Package, Plugins, Release, ReleaseNotes, Step } from "@wrench/semantic-release";
 import { ReleaseType as SemVerReleaseType } from "semver";
+import { Branch, Commit, LastRelease, Options, Package, Plugins, Release, ReleaseNotes, ReleaseType, Step } from "@wrench/semantic-release";
 
 export interface CommonOptions extends Options {
   /**
@@ -83,7 +83,7 @@ export interface Workspace {
    * Last release of this workspace.
    * @see AnalyzeCommitsContext#lastRelease
    */
-  lastRelease: Release;
+  lastRelease: LastRelease;
 
   /**
    * Next release of this workspace.

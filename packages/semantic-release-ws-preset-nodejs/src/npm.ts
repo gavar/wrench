@@ -23,7 +23,7 @@ export function npm(options?: NodeJsPresetOptions): Partial<NodeJsPresetConfig> 
       "**/CHANGELOG.md",
       "!**/node_modules/**",
     ]],
-    tagFormat: "v/release/${version}",
+    tagFormat: "#/${version}",
     plugins: [
       "@wrench/semantic-release-ws",
       "@wrench/semantic-release-git",

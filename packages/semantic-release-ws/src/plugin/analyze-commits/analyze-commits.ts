@@ -1,11 +1,11 @@
 import {
   AnalyzeCommitsContext,
+  asReleaseType,
   getTags,
   initializeCommitsFiles,
   ownCommits,
   PluginsFunction,
   ReleaseType,
-  asReleaseType,
 } from "@wrench/semantic-release";
 import { Workspace, WsConfiguration } from "../../types";
 import { callWorkspacesOf, createWorkspaceLogger, WorkspacesHooks } from "../../util";

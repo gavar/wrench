@@ -1,4 +1,15 @@
-import { Branch, Commit, LastRelease, Options, Package, Plugins, Release, ReleaseNotes, ReleaseType, Step } from "@wrench/semantic-release";
+import {
+  Branch,
+  Commit,
+  LastRelease,
+  Options,
+  Package,
+  Plugins,
+  Release,
+  ReleaseNotes,
+  ReleaseType,
+  Step,
+} from "@wrench/semantic-release";
 
 export interface CommonOptions extends Options {
   /**

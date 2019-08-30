@@ -8,9 +8,9 @@ const TS_NODE_LOADER = ["ts-node", {
     compilerOptions: {
       module: "commonjs",
     },
-  }
+  },
 }];
 
 module.exports = {
-  TS_NODE_LOADER
+  TS_NODE_LOADER,
 };

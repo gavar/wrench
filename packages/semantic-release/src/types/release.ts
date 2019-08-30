@@ -8,7 +8,7 @@ export interface LastRelease {
   gitTag: string;
 }
 
-export interface Release extends LastRelease{
+export interface Release extends LastRelease {
   type: ReleaseType;
   url: string;
 }

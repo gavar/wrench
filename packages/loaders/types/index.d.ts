@@ -7,14 +7,12 @@
 //   (loader: T, ext: string): void;
 // }
 
-
 export type Loader = string;
 export type LoaderWithProps<P = any> = [Loader, LoaderProps?];
 export type LoaderProps<P = any> = {
   func?: string,
   args?: P
 };
-
 
 export type LoaderOption = Loader | LoaderWithProps
 

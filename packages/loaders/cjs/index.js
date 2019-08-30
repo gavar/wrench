@@ -1,4 +1,4 @@
 module.exports = {
-    ...require("./registry"),
-    ...require("./register"),
-}
+  ...require("./registry"),
+  ...require("./register"),
+};

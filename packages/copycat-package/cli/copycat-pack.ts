@@ -1,5 +1,5 @@
-import glob from "glob";
 import { copycatPackages } from "@wrench/copycat-package";
+import glob from "glob";
 import { parse } from "./parse";
 
 const props = parse();

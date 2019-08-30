@@ -6,6 +6,6 @@
     "declaration": false,
     "declarationMap": false,
     "importHelpers": false,
-    "module": "commonjs",
+    "module": "commonjs"
   }
 }

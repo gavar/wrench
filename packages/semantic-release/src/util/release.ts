@@ -6,7 +6,6 @@ const releaseTypes: Record<ReleaseType, ReleaseType> = {
   patch: "patch",
 };
 
-
 /**
  * Convert value to a release type if possible.
  * @param value - value to convert.

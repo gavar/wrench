@@ -31,9 +31,9 @@
   "main": "index.js",
   "scripts": {
     "build": "exit 0",
-    "prepack": "copycat-pack",
     "clean": "rimraf tmp out *.tgz",
-    "format:pack": "fixpack && sort-package-json"
+    "format:pack": "fixpack && sort-package-json",
+    "prepack": "copycat-pack"
   },
   "dependencies": {
     "@wrench/loaders": "^0.0.3"

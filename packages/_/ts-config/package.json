@@ -28,8 +28,8 @@
   "scripts": {
     "build": "exit 0",
     "clean": "rimraf tmp out lib es bin *.tgz",
-    "prepack": "copycat-pack",
-    "format:pack": "fixpack && sort-package-json"
+    "format:pack": "fixpack && sort-package-json",
+    "prepack": "copycat-pack"
   },
   "devDependencies": {},
   "publishConfig": {

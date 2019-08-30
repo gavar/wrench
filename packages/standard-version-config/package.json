@@ -26,9 +26,9 @@
   ],
   "scripts": {
     "build": "exit 0",
-    "prepack": "copycat-pack",
     "clean": "rimraf tmp out lib es bin *.tgz",
-    "format:pack": "fixpack && sort-package-json"
+    "format:pack": "fixpack && sort-package-json",
+    "prepack": "copycat-pack"
   },
   "dependencies": {
     "standard-version": ">=7.0.0"

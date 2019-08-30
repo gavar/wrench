@@ -1,3 +1,10 @@
+## [0.0.3](https://github.com/gavar/wrench/compare/v/ywl/0.0.2...v/ywl/0.0.3) (2019-08-30)
+
+
+### Bug Fixes
+
+* update dependency version ([15a780a](https://github.com/gavar/wrench/commit/15a780a))
+
 ## [0.0.2](https://github.com/gavar/wrench/compare/v/ywl/0.0.1...v/ywl/0.0.2) (2019-08-30)
 
 

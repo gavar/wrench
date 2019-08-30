@@ -173,6 +173,8 @@ export function shouldCallWorkspace(w: Workspace, step: Step) {
       // required to resolve release type for workspaces
       break;
     case "generateNotes":
+    case "version":
+    case "pack":
     case "prepare":
     case "publish":
     case "success":

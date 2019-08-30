@@ -7,6 +7,7 @@ const TS_NODE_LOADER = ["ts-node", {
   args: {
     compilerOptions: {
       module: "commonjs",
+      noEmitHelpers: false,
     },
   },
 }];

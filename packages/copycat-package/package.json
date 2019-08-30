@@ -1,6 +1,6 @@
 {
   "name": "@wrench/copycat-package",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "CLI tool allows to inherit properties from other packages",
   "keywords": [
     "common",

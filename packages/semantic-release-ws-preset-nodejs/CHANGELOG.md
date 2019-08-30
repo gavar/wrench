@@ -1,4 +1,15 @@
-## 0.0.1 (2019-08-29)
+## [0.0.2](https://github.com/gavar/wrench/compare/v/semantic-release-ws-preset-nodejs/0.0.1...v/semantic-release-ws-preset-nodejs/0.0.2) (2019-08-30)
+
+
+### Bug Fixes
+
+* add missing config types ([46d786d](https://github.com/gavar/wrench/commit/46d786d))
+* rename root pointer tag format ([caf766b](https://github.com/gavar/wrench/commit/caf766b))
+* update dependencies ([956658c](https://github.com/gavar/wrench/commit/956658c))
+
+
+
+## 0.0.1 (2019-08-30)
 
 
 ### Bug Fixes

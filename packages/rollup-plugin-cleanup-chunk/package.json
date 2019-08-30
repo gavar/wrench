@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-cleanup-chunk",
-  "version": "1.0.1-beta.1",
+  "version": "0.0.2",
   "description": "Extension of `rollup-plugin-cleanup` which allows to clean code in `renderChunk` hook",
   "keywords": [
     "cleanup",

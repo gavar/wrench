@@ -1,6 +1,6 @@
 {
   "name": "@wrench/commitlint-config",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "conventional configuration for linting commits",
   "keywords": [
     "changelog",

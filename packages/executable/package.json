@@ -1,6 +1,6 @@
 {
   "name": "@wrench/executable",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "NodeJS executable wrapper registering loaders and source maps support",
   "keywords": [
     "bin",
@@ -36,7 +36,7 @@
     "format:pack": "fixpack && sort-package-json"
   },
   "dependencies": {
-    "@wrench/loaders": "^0.0.1"
+    "@wrench/loaders": "^0.0.2"
   },
   "devDependencies": {},
   "publishConfig": {

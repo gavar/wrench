@@ -1,4 +1,23 @@
-## 0.0.1 (2019-08-29)
+## [0.0.2](https://github.com/gavar/wrench/compare/v/semantic-release/0.0.1...v/semantic-release/0.0.2) (2019-08-30)
+
+
+### Bug Fixes
+
+* `forceRelease` option type definition ([84f137f](https://github.com/gavar/wrench/commit/84f137f))
+* last / next release resolution ([f1885fe](https://github.com/gavar/wrench/commit/f1885fe))
+* split semver / release utils ([1606d1e](https://github.com/gavar/wrench/commit/1606d1e))
+
+
+### Features
+
+* expose plugin definitions ([df1778c](https://github.com/gavar/wrench/commit/df1778c))
+* introduce `LastRelease` type ([a82085b](https://github.com/gavar/wrench/commit/a82085b))
+* introduce `version` and `pack` hooks as part of `prepare` ([778e0ae](https://github.com/gavar/wrench/commit/778e0ae))
+* more git utils ([f30b6db](https://github.com/gavar/wrench/commit/f30b6db))
+
+
+
+## 0.0.1 (2019-08-30)
 
 
 ### Bug Fixes

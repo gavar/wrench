@@ -1,6 +1,6 @@
 {
   "name": "@wrench/semantic-release",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Semantic Release types & tools",
   "keywords": [
     "automation",

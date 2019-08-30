@@ -1,6 +1,6 @@
 {
   "name": "@wrench/semantic-release-git",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Semantic Release plugin making @semantic-release/git friendly to workspaces",
   "keywords": [
     "changelog",
@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "@semantic-release/git": "^7.0.16",
-    "@wrench/semantic-release": "^0.0.1",
+    "@wrench/semantic-release": "^0.0.2",
     "lodash": "^4.17.4",
     "signale": "^1.2.1"
   },

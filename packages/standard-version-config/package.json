@@ -1,6 +1,6 @@
 {
   "name": "@wrench/standard-version-config",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "description": "common configuration for standard-version",
   "keywords": [
     "config",

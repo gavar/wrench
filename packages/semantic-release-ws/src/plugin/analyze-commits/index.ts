@@ -1,4 +1,4 @@
 export * from "./analyze-commits";
-export * from "./most-significant-release-type";
+export * from "./release-type-math";
 export * from "./resolve-last-release";
 export * from "./show-release-types-summary";

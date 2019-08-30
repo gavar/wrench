@@ -10,7 +10,7 @@ import {
 import { Workspace, WsConfiguration } from "../../types";
 import { callWorkspacesOf, createWorkspaceLogger, WorkspacesHooks } from "../../util";
 import { resolveNextRelease } from "../common";
-import { mostSignificantReleaseType } from "./most-significant-release-type";
+import { selectMaxReleaseType, selectMinReleaseType } from "./release-type-math";
 import { resolveLastRelease } from "./resolve-last-release";
 import { showReleaseTypesSummary } from "./show-release-types-summary";
 
@@ -63,7 +63,7 @@ const hooks: WorkspacesHooks<"analyzeCommits"> = {
   processWorkspacesOutputs(releaseTypes: ReleaseType[]): ReleaseType {
     // use only patch release type to increment global version
     // as it's used only to avoid analyzing whole repository history
-    if (releaseTypes.some(isManual) || mostSignificantReleaseType(releaseTypes))
+    if (releaseTypes.some(isManual) || selectMaxReleaseType(releaseTypes))
       return "patch";
   },
 

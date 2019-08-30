@@ -60,6 +60,20 @@ const hooks: WorkspacesHooks<"analyzeCommits"> = {
   },
 
   /** @inheritdoc */
+  processWorkspaceOutput(releaseType: ReleaseType, workspace: Workspace, owner: AnalyzeCommitsContext): ReleaseType {
+    // const {maxReleaseType} = workspace.options;
+    if (releaseType && !isManual(releaseType)) {
+      const min = selectMinReleaseType([releaseType, workspace.options.reduceReleaseType]);
+      if (min !== releaseType) {
+        const logger = createWorkspaceLogger(workspace, owner);
+        logger.warn(`reducing '${releaseType}' release type since it's limited to be as maximum '${min}'`);
+        releaseType = min;
+      }
+    }
+    return releaseType;
+  },
+
+  /** @inheritdoc */
   processWorkspacesOutputs(releaseTypes: ReleaseType[]): ReleaseType {
     // use only patch release type to increment global version
     // as it's used only to avoid analyzing whole repository history

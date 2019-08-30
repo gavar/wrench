@@ -22,6 +22,9 @@ export interface CommonOptions extends Options {
 
   /** Explicitly define next version or release type, skipping commits history analysis. */
   forceRelease: string | ReleaseType;
+
+  /** Reduce release type be not greater than the given value. */
+  reduceReleaseType: ReleaseType;
 }
 
 export type WorkspaceExecHookType = "pre" | "post";

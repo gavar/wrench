@@ -1,4 +1,13 @@
-import { asReleaseType, Branch, getNextVersion, makeTag, Release, ReleaseType } from "@wrench/semantic-release";
+import {
+  asReleaseType,
+  Branch,
+  getNextVersion,
+  LastRelease,
+  makeTag,
+  Package,
+  Release,
+  ReleaseType,
+} from "@wrench/semantic-release";
 import { noop } from "lodash";
 import { lte, parse, valid } from "semver";
 import { Signale } from "signale";
@@ -15,14 +24,7 @@ export function resolveNextRelease(workspace: Workspace, type: ReleaseType, logg
   } as Release;
 
   if (next.type) {
-    const manual = valid(forceRelease);
-    next.version = lastRelease && lastRelease.version
-      ? manual
-        ? getManualVersion(branch, manual)
-        : getNextVersion(branch, lastRelease, next, stub)
-      : workspace.pack.version;
-
-    // rest fields
+    next.version = resolveNextVersion(branch, lastRelease, next, valid(forceRelease), workspace.pack);
     next.gitTag = makeTag(tagFormat, next.version, next.channel);
     next.name = makeTag(tagFormat, next.version);
 
@@ -41,6 +43,19 @@ export function resolveNextRelease(workspace: Workspace, type: ReleaseType, logg
     logger.log("The next release version is %s", next.version);
 
   return next;
+}
+
+function resolveNextVersion(branch: Branch, lastRelease: LastRelease, nextRelease: Release, manual: string, pack: Package) {
+  if (manual)
+    return getManualVersion(branch, manual);
+
+  if (lastRelease && lastRelease.version)
+    return getNextVersion(branch, lastRelease, nextRelease, stub);
+
+  if (pack) {
+    const {major, minor, patch} = parse(pack.version);
+    return [major, minor, patch].join(".");
+  }
 }
 
 function getManualVersion(branch: Branch, version: string) {

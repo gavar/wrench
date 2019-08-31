@@ -1,11 +1,12 @@
 // @ts-check
-require("@wrench/loaders/register");
 require("./boot");
-const {npm} = require("./packages/semantic-release-ws-preset-nodejs");
-module.exports = npm({
-  base: {
-    workspace: {
-      //
-    },
-  },
-});
+const config = {
+  ...require("./packages/semantic-release-ws-preset-nodejs/default"),
+};
+config.workspace = {
+  ...config.workspace,
+};
+config.packages = {
+  ...config.packages,
+};
+module.exports = config;

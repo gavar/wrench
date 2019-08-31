@@ -211,7 +211,12 @@ function resolveVersion(pack: Package, dependency: string): string {
       if (v.prerelease && v.prerelease.length)
         v.prerelease = [v.prerelease[0]];
       v.build = null;
-      return "^" + v.format();
+      const version = v.format();
+      // https://stackoverflow.com/a/33067594/10794742
+      // when you install a package which has 0 as major level, the update will only install new beta/pr level version!
+      return v.major > 0
+        ? `^${version}`
+        : `>=${version} <1.0.0`;
     }
     // get any defined version
     return pack.dependencies && pack.dependencies[dependency]

@@ -1,4 +1,13 @@
-## [0.0.2](https://github.com/gavar/wrench/compare/v/semantic-release/0.0.1...v/semantic-release/0.0.2) (2019-08-30)
+## [0.0.3](https://github.com/gavar/wrench/compare/v/semantic-release/0.0.2...v/semantic-release/0.0.3) (2019-08-31)
+
+
+### Features
+
+* track hotfix files since there might be several semantic-release libs per project ([ee14587](https://github.com/gavar/wrench/commit/ee14587))
+
+
+
+## [0.0.2](https://github.com/gavar/wrench/compare/v/semantic-release/0.0.1...v/semantic-release/0.0.2) (2019-08-31)
 
 
 ### Bug Fixes
@@ -17,7 +26,7 @@
 
 
 
-## 0.0.1 (2019-08-30)
+## 0.0.1 (2019-08-31)
 
 
 ### Bug Fixes

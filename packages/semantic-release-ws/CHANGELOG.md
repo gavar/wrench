@@ -1,11 +1,23 @@
-## [0.0.3](https://github.com/gavar/wrench/compare/v/semantic-release-ws/0.0.2...v/semantic-release-ws/0.0.3) (2019-08-30)
+## [0.0.4](https://github.com/gavar/wrench/compare/v/semantic-release-ws/0.0.3...v/semantic-release-ws/0.0.4) (2019-08-31)
+
+
+### Bug Fixes
+
+* next version resolution ([c9209b5](https://github.com/gavar/wrench/commit/c9209b5))
+* parse version channel when using last release version from package ([5a8f970](https://github.com/gavar/wrench/commit/5a8f970))
+
+
+
+## [0.0.3](https://github.com/gavar/wrench/compare/v/semantic-release-ws/0.0.2...v/semantic-release-ws/0.0.3) (2019-08-31)
 
 
 ### Bug Fixes
 
 * call `version` and `pack` only for workspaces having next release ([1ada131](https://github.com/gavar/wrench/commit/1ada131))
 
-## [0.0.2](https://github.com/gavar/wrench/compare/v/semantic-release-ws/0.0.1...v/semantic-release-ws/0.0.2) (2019-08-30)
+
+
+## [0.0.2](https://github.com/gavar/wrench/compare/v/semantic-release-ws/0.0.1...v/semantic-release-ws/0.0.2) (2019-08-31)
 
 
 ### Bug Fixes
@@ -26,7 +38,7 @@
 
 
 
-## 0.0.1 (2019-08-30)
+## 0.0.1 (2019-08-31)
 
 
 ### Bug Fixes

@@ -1,3 +1,5 @@
+import { trackHotfix } from "./track";
+
 type Signale = typeof import("signale");
 
 export namespace signale {
@@ -6,8 +8,11 @@ export namespace signale {
    * @see scope
    */
   export function hotfix(importer: NodeRequire = require): void {
-    const {Signale} = importer("signale");
-    Signale.prototype.scope = scope(Signale.prototype.scope);
+    const path = importer.resolve("signale");
+    if (trackHotfix(path)) {
+      const {Signale} = importer(path);
+      Signale.prototype.scope = scope(Signale.prototype.scope);
+    }
   }
 
   /** Flattens input names of {@link Signale#scope} to avoid throwing error while formatting scope name. */

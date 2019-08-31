@@ -1,10 +1,14 @@
 import { PluginDefinition, PluginDefinitions } from "../types";
+import { trackHotfix } from "./track";
 
 export function semanticHotfix(importer: NodeRequire = require) {
-  const PLUGINS_DEFINITIONS: PluginDefinitions = importer("semantic-release/lib/definitions/plugins");
-  allowPublishReleaseArray(PLUGINS_DEFINITIONS.publish);
-  PLUGINS_DEFINITIONS.version = createVersionHook();
-  PLUGINS_DEFINITIONS.pack = createPackHook();
+  const path = importer.resolve("semantic-release/lib/definitions/plugins");
+  if (trackHotfix(path)) {
+    const PLUGINS_DEFINITIONS: PluginDefinitions = importer(path);
+    allowPublishReleaseArray(PLUGINS_DEFINITIONS.publish);
+    PLUGINS_DEFINITIONS.version = createVersionHook();
+    PLUGINS_DEFINITIONS.pack = createPackHook();
+  }
 }
 
 /**

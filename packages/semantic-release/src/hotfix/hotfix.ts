@@ -4,12 +4,13 @@ import { semanticHotfix } from "./semantic";
 import { signale } from "./signale";
 
 export function hotfix(cwd?: string) {
-  let importer = require;
+  signale.hotfix(require);
+  semanticHotfix(require);
+
   if (cwd) {
     const root = join(cwd, "package.json");
-    importer = Module.createRequire(root);
+    const importer = Module.createRequire(root);
+    signale.hotfix(importer);
+    semanticHotfix(importer);
   }
-
-  signale.hotfix(importer);
-  semanticHotfix(importer);
 }

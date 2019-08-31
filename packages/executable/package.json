@@ -36,7 +36,7 @@
     "prepack": "copycat-pack"
   },
   "dependencies": {
-    "@wrench/loaders": "^0.0.3"
+    "@wrench/loaders": ">=0.0.3 <1.0.0"
   },
   "devDependencies": {},
   "publishConfig": {

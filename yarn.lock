@@ -148,26 +148,26 @@
   dependencies:
     find-up "^4.0.0"
 
-"@emulsy/async@beta":
-  version "1.0.0-beta.0"
-  resolved "https://registry.yarnpkg.com/@emulsy/async/-/async-1.0.0-beta.0.tgz#fcaa53c316de704d8f8153689804cf76aaf81574"
-  integrity sha512-uU9sxIGbMNlO/l0qtfyr1MM4kADvdifdplDHXgjcFMrNqC36bFYVxR+VfdbLCvz9Xd8oADeLp19gFxL3gkyKsA==
+"@emulsy/async@<1.0.0":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@emulsy/async/-/async-0.0.1.tgz#d1ad8898c5ff5a9e6e7777d40ffab73331886868"
+  integrity sha512-N5agVYLOjZ3/9FWmEITZcCdM7/XtREfL2pNSIxAOkY7kzwHUj9Qvurj2/U1o8YdWXIOcMqtRgW9aU0JdgV2Gug==
   dependencies:
-    "@emulsy/util" ">=1.0.0-beta"
+    "@emulsy/util" ">=0.0.1 <1.0.0"
     lodash "^4.17.13"
     tstt "^1.0.4"
 
-"@emulsy/lang@>=1.0.0-beta":
+"@emulsy/lang@^1.0.0-beta":
   version "1.0.0-beta.0"
   resolved "https://registry.yarnpkg.com/@emulsy/lang/-/lang-1.0.0-beta.0.tgz#fd7e0346be65017bdd395decaaf25b141e1ea748"
   integrity sha512-MSRSHTYnTOwFSB8rTFmrUw8FuCfh4h1i90q4rGgHpiFv1yL3vqdQRcTG15auR1EsE3KOqhSqtrUiJvdadvdikg==
 
-"@emulsy/util@>=1.0.0-beta":
-  version "1.0.0-beta.0"
-  resolved "https://registry.yarnpkg.com/@emulsy/util/-/util-1.0.0-beta.0.tgz#289e09a38e5cc3b4a510a291ad82e2705c695f50"
-  integrity sha512-+2K3qwT7RSi/XCou0kuc6vByZ647Jo8i/EpLsdixHKGF6yIWQ477w1GQgy/QcYVnomIQzoFUzjx8aZaOccBuGg==
+"@emulsy/util@>=0.0.1 <1.0.0":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@emulsy/util/-/util-0.0.1.tgz#09fe6af7afe2ae3a843b24133a3a61f48ecd76db"
+  integrity sha512-sYidcAdnqiY3GoT4H3jQWVcwWQZ5Up1Helmc1HlKUB2FZZQRrKGdeRdykLxpEuoMW6RW1jWZEZhY5620AzeC1g==
   dependencies:
-    "@emulsy/lang" ">=1.0.0-beta"
+    "@emulsy/lang" "^1.0.0-beta"
     lodash "^4.17.13"
 
 "@marionebl/sander@^0.6.0":

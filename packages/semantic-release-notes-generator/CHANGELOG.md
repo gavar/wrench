@@ -1,3 +1,10 @@
+## [0.0.3](https://github.com/gavar/wrench/compare/v/semantic-release-notes-generator/0.0.2...v/semantic-release-notes-generator/0.0.3) (2019-08-31)
+
+
+### Bug Fixes
+
+* constraints for dependencies with major version less than 1 ([0a500e9](https://github.com/gavar/wrench/commit/0a500e9))
+
 ## [0.0.2](https://github.com/gavar/wrench/compare/v/semantic-release-notes-generator/0.0.1...v/semantic-release-notes-generator/0.0.2) (2019-08-30)
 
 

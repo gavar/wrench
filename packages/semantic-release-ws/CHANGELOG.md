@@ -1,3 +1,10 @@
+## [0.0.5](https://github.com/gavar/wrench/compare/v/semantic-release-ws/0.0.4...v/semantic-release-ws/0.0.5) (2019-08-31)
+
+
+### Bug Fixes
+
+* constraints for dependencies with major version less than 1 ([0a500e9](https://github.com/gavar/wrench/commit/0a500e9))
+
 ## [0.0.4](https://github.com/gavar/wrench/compare/v/semantic-release-ws/0.0.3...v/semantic-release-ws/0.0.4) (2019-08-31)
 
 

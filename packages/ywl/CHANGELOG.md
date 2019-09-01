@@ -1,3 +1,10 @@
+## [0.0.5](https://github.com/gavar/wrench/compare/v/ywl/0.0.4...v/ywl/0.0.5) (2019-09-01)
+
+
+### Features
+
+* unlink command ([6d23a6d](https://github.com/gavar/wrench/commit/6d23a6d))
+
 ## [0.0.4](https://github.com/gavar/wrench/compare/v/ywl/0.0.3...v/ywl/0.0.4) (2019-08-31)
 
 

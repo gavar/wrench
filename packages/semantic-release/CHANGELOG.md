@@ -1,3 +1,10 @@
+## [0.0.4](https://github.com/gavar/wrench/compare/v/semantic-release/0.0.3...v/semantic-release/0.0.4) (2019-09-01)
+
+
+### Bug Fixes
+
+* use release version of `[@emulsy](https://github.com/emulsy)` ([688af88](https://github.com/gavar/wrench/commit/688af88))
+
 ## [0.0.3](https://github.com/gavar/wrench/compare/v/semantic-release/0.0.2...v/semantic-release/0.0.3) (2019-08-31)
 
 

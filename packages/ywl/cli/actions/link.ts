@@ -81,11 +81,11 @@ export const link: CommandModule<YwlProps, LinkProps> = {
 const AR = grey("->");
 const AL = grey("<-");
 
-async function updateSymlink(link: string, conf: YarnConfigCurrent, props: LinkProps): Promise<void> {
+async function updateSymlink(name: string, conf: YarnConfigCurrent, props: LinkProps): Promise<void> {
   const cwd = process.cwd();
   const run = !props.dryRun;
-  const target = resolve(conf.linkFolder, link);
-  const path = resolve(props.root, props.out, link);
+  const target = resolve(conf.linkFolder, name);
+  const path = resolve(props.root, props.out, name);
 
   const [a, b] = await Promise.all([
     existsSync(path) ? realpath(path) : "",
@@ -93,7 +93,7 @@ async function updateSymlink(link: string, conf: YarnConfigCurrent, props: LinkP
   ]);
 
   if (a === b) {
-    console.log(grey("~"), cyan(link),
+    console.log(grey("~"), cyan(name),
       AR, grey(relative(cwd, path)),
       AR, grey(a),
       AL, grey(target));
@@ -101,7 +101,7 @@ async function updateSymlink(link: string, conf: YarnConfigCurrent, props: LinkP
   }
 
   if (a) {
-    console.log(red("-"), cyan(link),
+    console.log(red("-"), cyan(name),
       AR, grey(relative(cwd, a)),
       AL, grey(target));
     run && await unlink(path);
@@ -109,7 +109,7 @@ async function updateSymlink(link: string, conf: YarnConfigCurrent, props: LinkP
     run && await ensureDir(dirname(path));
   }
 
-  console.log(green("+"), cyan(link),
+  console.log(green("+"), cyan(name),
     AR, grey(relative(cwd, path)),
     AR, grey(relative(cwd, b)),
     AL, grey(target));

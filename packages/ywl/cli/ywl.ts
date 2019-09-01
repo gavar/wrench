@@ -1,6 +1,6 @@
 import { yarnWorkspaceRoot } from "@wrench/ywl";
 import yargs, { Argv } from "yargs";
-import { link } from "./actions";
+import { link, unlink } from "./actions";
 import { YwlProps } from "./types";
 
 void async function () {
@@ -14,6 +14,7 @@ void async function () {
       args.pack = pack;
     })
     .command(link)
+    .command(unlink)
     .argv;
 }();
 

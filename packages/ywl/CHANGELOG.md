@@ -1,3 +1,10 @@
+## [0.0.6](https://github.com/gavar/wrench/compare/v/ywl/0.0.5...v/ywl/0.0.6) (2019-09-02)
+
+
+### Features
+
+* allow to include unlisted links ([9f63a08](https://github.com/gavar/wrench/commit/9f63a08))
+
 ## [0.0.5](https://github.com/gavar/wrench/compare/v/ywl/0.0.4...v/ywl/0.0.5) (2019-09-01)
 
 

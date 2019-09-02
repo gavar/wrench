@@ -73,10 +73,11 @@ export const link: CommandModule<YwlProps, LinkProps> = {
     } else {
       const graph = createDependencyGraph(dirs, props);
       const flat = flattenDependencyGraph(graph, props);
-      const externals = toUniqExternalNames(flat, own);
-      const names = pattern && pattern.length ? match(externals, pattern) : externals;
-      links = intersection(names, conf.linkedModules).sort();
+      links = toUniqExternalNames(flat, own);
     }
+
+    if (pattern && pattern.length) links = match(links, pattern);
+    links = intersection(links, conf.linkedModules).sort();
 
     // clear previous links
     if (props.clean)

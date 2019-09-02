@@ -36,6 +36,9 @@ export interface LinkProps extends YwlProps {
 
   /** Whether to include dev dependencies. */
   dev: boolean;
+
+  /** Whether to allow to include links not listed in dependencies. */
+  unlisted: boolean;
 }
 
 export const link: CommandModule<YwlProps, LinkProps> = {
@@ -47,6 +50,7 @@ export const link: CommandModule<YwlProps, LinkProps> = {
     return yargs
       .positional("pattern", {type: "string", array: true, default: []})
       .option("dev", {type: "boolean", default: true})
+      .option("unlisted", {type: "boolean", default: false})
       .option("clean", {type: "boolean", default: false})
       .option("depth", {type: "number", default: 5})
       .option("dryRun", {type: "boolean"})
@@ -63,11 +67,16 @@ export const link: CommandModule<YwlProps, LinkProps> = {
     ]);
 
     const dirs = Object.values(own);
-    const graph = createDependencyGraph(dirs, props);
-    const flat = flattenDependencyGraph(graph, props);
-    const externals = toUniqExternalNames(flat, own);
-    const names = pattern && pattern.length ? match(externals, pattern) : externals;
-    const links = intersection(names, conf.linkedModules).sort();
+    let links: string[];
+    if (props.unlisted) {
+      links = conf.linkedModules;
+    } else {
+      const graph = createDependencyGraph(dirs, props);
+      const flat = flattenDependencyGraph(graph, props);
+      const externals = toUniqExternalNames(flat, own);
+      const names = pattern && pattern.length ? match(externals, pattern) : externals;
+      links = intersection(names, conf.linkedModules).sort();
+    }
 
     // clear previous links
     if (props.clean)

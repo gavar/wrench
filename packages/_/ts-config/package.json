@@ -23,7 +23,8 @@
     "url": "https://github.com/gavar"
   },
   "files": [
-    "tsconfig.json"
+    "tsconfig.json",
+    "*.tsconfig.json"
   ],
   "scripts": {
     "build": "exit 0",

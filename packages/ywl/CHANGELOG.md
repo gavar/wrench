@@ -1,3 +1,10 @@
+## [0.0.7](https://github.com/gavar/wrench/compare/v/ywl/0.0.6...v/ywl/0.0.7) (2019-09-02)
+
+
+### Bug Fixes
+
+* apply filtering for unlisted links ([ebdbefd](https://github.com/gavar/wrench/commit/ebdbefd))
+
 ## [0.0.6](https://github.com/gavar/wrench/compare/v/ywl/0.0.5...v/ywl/0.0.6) (2019-09-02)
 
 

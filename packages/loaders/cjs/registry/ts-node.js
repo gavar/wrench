@@ -6,6 +6,8 @@ const TS_NODE_LOADER = ["ts-node", {
   func: "register",
   args: {
     compilerOptions: {
+      declaration: false,
+      declarationMap: false,
       module: "commonjs",
       noEmitHelpers: false,
     },

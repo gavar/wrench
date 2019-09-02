@@ -1,3 +1,10 @@
+## [0.0.4](https://github.com/gavar/wrench/compare/v/loaders/0.0.3...v/loaders/0.0.4) (2019-09-02)
+
+
+### Bug Fixes
+
+* disable declarations for `ts-node` ([8ab127b](https://github.com/gavar/wrench/commit/8ab127b))
+
 ## [0.0.3](https://github.com/gavar/wrench/compare/v/loaders/0.0.2...v/loaders/0.0.3) (2019-08-30)
 
 

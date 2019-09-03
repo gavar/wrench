@@ -19,39 +19,39 @@
 
 const {cyan, grey, yellow} = require("colors");
 const {Module} = require("module");
-const {join} = require("path");
 
 const LR = grey("<<");
 const PREFIX = grey("[@wrench/loader]:");
+
+/** @type {any | NodeModule} */
+const owner = module;
 
 /**
  * @param {LoaderRegistry} registry
  * @param {string} cwd
  */
 function register(registry, cwd = process.cwd()) {
-  const importer = Module.createRequire(join(cwd, "package.json"));
   for (const ext of Object.keys(registry))
     if (!warnHookPresent(ext, Module._extensions[ext])) {
       const loaders = arrifyLoaderOption(registry[ext]);
-      if (ext === "*") loaders.forEach(loader => load(importer, loader, ext));
-      else Module._extensions[ext] = createTransform(importer, ext, loaders);
+      if (ext === "*") loaders.forEach(loader => load(owner, loader, ext));
+      else Module._extensions[ext] = createTransform(ext, loaders);
     }
 }
 
 /**
  *
- * @param {NodeRequire} importer
  * @param {string} ext
  * @param {LoaderOption[]} loaders
  * @returns {RequireHook & RequireHookProps}
  */
-function createTransform(importer, ext, loaders) {
+function createTransform(ext, loaders) {
   /**
    * @type {RequireHook & RequireHookProps}
-   * @param {NodeModule} m
+   * @param {NodeModule} parent
    * @param {string} filename
    */
-  const hook = function (m, filename) {
+  const hook = function (parent, filename) {
     if (hook.done) return;
     hook.done = true;
 
@@ -61,25 +61,25 @@ function createTransform(importer, ext, loaders) {
 
     // initialize loaders
     for (const loader of loaders)
-      load(importer, loader, ext);
+      load(parent, loader, ext);
 
     // call loader to transform current file
     const loader = Module._extensions[ext];
-    if (loader) loader(m, filename);
+    if (loader) loader(parent, filename);
     else console.warn(PREFIX, yellow(`no require hook installed for ${ext}`));
   };
-  hook.owner = module;
+  hook.owner = owner;
   return hook;
 }
 
 /**
- * @param {NodeRequire} importer
+ * @param {NodeModule} parent
  * @param {LoaderOption} loader
  * @param {string} ext
  */
-function load(importer, loader, ext) {
+function load(parent, loader, ext) {
   const [id, prop, args] = normalizeLoaderOption(loader);
-  const path = tryResolve(importer, id);
+  const path = tryResolve(parent, id);
   if (path) {
     // check already visited
     if (!visit(path, prop, args))
@@ -87,11 +87,11 @@ function load(importer, loader, ext) {
 
     // import loader
     console.log(PREFIX, cyan(id), LR, grey(path));
-    const m = require(path);
+    const exports = parent.require(path);
 
     // check loader function
     if (prop) {
-      const f = m[prop];
+      const f = exports[prop];
       if (typeof f !== "function")
         return console.warn(PREFIX, yellow(`unable to install ${id} = '${prop}' is not a function`));
 
@@ -148,7 +148,7 @@ function isArrayDiff(a, b) {
  * @returns {boolean}
  */
 function warnHookPresent(ext, hook) {
-  if (hook && hook.owner !== module) {
+  if (hook && hook.owner !== owner) {
     console.warn(PREFIX, `skip registering hook for '${ext}' - already registered externally`);
     return true;
   }
@@ -227,16 +227,12 @@ function isObject(v) {
 }
 
 /**
- * @param {NodeRequire} importer
+ * @param {NodeModule} parent
  * @param {string} id
  * @returns {string}
  */
-function tryResolve(importer, id) {
-  try {
-    return importer.resolve(id);
-  } catch (e) {
-    return "";
-  }
+function tryResolve(parent, id) {
+  return Module._resolveFilename(id, parent, false);
 }
 
 module.exports = {

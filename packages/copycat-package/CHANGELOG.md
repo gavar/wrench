@@ -1,3 +1,10 @@
+## [0.0.4](https://github.com/gavar/wrench/compare/v/copycat-package/0.0.3...v/copycat-package/0.0.4) (2019-09-03)
+
+
+### Features
+
+* allow to import from self ([9f71fa9](https://github.com/gavar/wrench/commit/9f71fa9))
+
 ## [0.0.3](https://github.com/gavar/wrench/compare/v/copycat-package/0.0.2...v/copycat-package/0.0.3) (2019-08-31)
 
 

@@ -165,14 +165,26 @@ function repositoryToObject(repository: string | PackageRepository): PackageRepo
 }
 
 function resolve(importer: NodeRequire, registry: PackRegistry, id: string): PackNode {
-  // append `package.json` if required
-  if (!path.extname(id))
-    id = path.join(id, "package.json");
-
-  const filename = importer.resolve(id);
+  const filename = resolveFileName(importer, id);
   const node = registry[filename] = registry[filename] || createNode(filename);
   visit(node, registry);
   return node;
+}
+
+function resolveFileName(importer: NodeRequire, id: string): string {
+  let p = id || ".";
+  p = p.split("\\").join("/");
+  p = p.split("/").filter(Boolean).join("/");
+
+  if (!path.extname(p))
+    p = [p, "package.json"].join("/");
+
+  try {
+    return importer.resolve(p);
+  } catch (e) {
+    console.error(red("unable resolve module path:"), cyan(id));
+    throw e;
+  }
 }
 
 function resolveValue(importer: NodeRequire, registry: PackRegistry, from: string, path: string | string[]) {

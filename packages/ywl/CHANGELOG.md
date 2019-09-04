@@ -1,3 +1,10 @@
+## [0.0.8](https://github.com/gavar/wrench/compare/v/ywl/0.0.7...v/ywl/0.0.8) (2019-09-04)
+
+
+### Features
+
+* hook to hijack module imports to avoid resolving symlinks to real path ([f7ea9d1](https://github.com/gavar/wrench/commit/f7ea9d1))
+
 ## [0.0.7](https://github.com/gavar/wrench/compare/v/ywl/0.0.6...v/ywl/0.0.7) (2019-09-02)
 
 

@@ -14,7 +14,11 @@ function args() {
   /** @type {Options} */
   const options = {
     // no reason to ignore as it should only resolve to ts files
-    ignore: [],
+    ignore: [
+      // @ts-ignore
+      // ignore only js / jsx files inside node_modules, since it may contain symlinks with .ts files
+      /\/node_modules\/(.*?)\.jsx?/
+    ],
     compilerOptions: {
       declaration: false,
       declarationMap: false,

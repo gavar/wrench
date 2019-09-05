@@ -4,8 +4,8 @@
     "baseUrl": ".",
     "outDir": "out",
     "typeRoots": [
-      "@types",
-      "node_modules/@types"
+      "./@types",
+      "./node_modules/@types"
     ]
   },
   "exclude": [

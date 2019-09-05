@@ -15,6 +15,7 @@
     "noEmitHelpers": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
+    "preserveSymlinks": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,

@@ -1,3 +1,17 @@
 {
-  "extends": "./packages/_/ts-config/tsconfig.json"
+  "extends": "./packages/ts-config/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "out",
+    "typeRoots": [
+      "@types",
+      "node_modules/@types"
+    ]
+  },
+  "exclude": [
+    "**/#*", // all files where names starts with #
+    "**/out", // all 'out' directories
+    "**/tmp", // all 'tmp' directories
+    "**/node_modules" // node_modules
+  ]
 }

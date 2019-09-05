@@ -37,10 +37,10 @@
     "access": "public"
   },
   "copycat": {
-    "author": "../../..",
-    "license": "../../..",
-    "repository": "../../..",
-    "publishConfig": "../../.."
+    "author": "../..",
+    "license": "../..",
+    "repository": "../..",
+    "publishConfig": "../.."
   },
   "release": true,
   "standard-version": {

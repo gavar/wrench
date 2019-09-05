@@ -2,7 +2,6 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "alwaysStrict": true,
-    "baseUrl": "../../..",
     "declaration": true,
     "declarationMap": true,
     "esModuleInterop": true,
@@ -16,25 +15,12 @@
     "noEmitHelpers": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
-    "outDir": "../../../out",
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
     "strictBindCallApply": true,
     "strictNullChecks": false,
-    "target": "es6",
-    "typeRoots": [
-      "../../../@types",
-      "../../../node_modules/@types"
-    ]
-  },
-  "exclude": [
-    "../../../**/#*", // all files where names starts with #
-    "../../../**/out", // all 'out' directories
-    "../../../**/tmp", // all 'tmp' directories
-    "../../../**/lib", // all 'lib' directories
-    "../../../**/dist", // all 'dist' directories
-    "../../../**/node_modules" // node_modules
-  ]
+    "target": "es6"
+  }
 }

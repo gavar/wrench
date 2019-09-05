@@ -4,6 +4,7 @@ import { promisify } from "util";
 const exec = promisify(cp.exec);
 
 export interface YarnConfigCurrent {
+  registryFolders: string[];
   linkedModules: string[];
   linkFolder: string;
 }

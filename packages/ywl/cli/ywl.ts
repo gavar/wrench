@@ -7,7 +7,7 @@ void async function () {
   const [root, pack] = await yarnWorkspaceRoot(process.cwd());
   if (!root) throw new Error("unable to find workspace root");
   (yargs as Argv<YwlProps>)(process.argv.slice(2), root)
-    .option("out", {type: "string", default: ".ywl"})
+    .scriptName("ywl")
     .pkgConf("ywl", root)
     .middleware(args => {
       args.root = root;

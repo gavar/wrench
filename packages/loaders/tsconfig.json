@@ -2,10 +2,12 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "allowJs": true,
+    "baseUrl": ".",
     "checkJs": true,
     "declaration": false,
     "declarationMap": false,
     "importHelpers": false,
-    "module": "commonjs"
+    "module": "commonjs",
+    "outDir": "out"
   }
 }

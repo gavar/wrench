@@ -4,33 +4,31 @@
 /** @type {import("../../types").LoaderWithProps<Options>} */
 const TS_NODE_LOADER = ["ts-node", {
   func: "register",
-  args: args(),
+  args,
 }];
 
 /**
+ * @param {Options} options
  * @returns {Options}
  */
-function args() {
+function args(options) {
   /** @type {Options} */
-  const options = {
-    // no reason to ignore as it should only resolve to ts files
-    ignore: [
+  const defaults = {};
+
+  if (!process.env.TS_NODE_IGNORE)
+    defaults.ignore = [
       // @ts-ignore
       // ignore only js / jsx files inside node_modules, since it may contain symlinks with .ts files
-      /\/node_modules\/(.*?)\.jsx?/
-    ],
-    compilerOptions: {
-      declaration: false,
-      declarationMap: false,
+      /\/node_modules\/(.*?)\.jsx?/,
+    ];
+
+  if (!process.env.TS_NODE_COMPILER_OPTIONS)
+    defaults.compilerOptions = {
       module: "commonjs",
       noEmitHelpers: false,
-    },
-  };
+    };
 
-  if (process.env.TS_NODE_IGNORE) delete options.ignore;
-  if (process.env.TS_NODE_SKIP_IGNORE) delete options.ignore;
-  if (process.env.TS_NODE_COMPILER_OPTIONS) delete options.compilerOptions;
-  return options;
+  return Object.assign(defaults, options);
 }
 
 module.exports = {

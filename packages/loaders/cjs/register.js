@@ -19,6 +19,8 @@
 
 const {cyan, grey, yellow} = require("colors");
 const {Module} = require("module");
+const findUp = require("./find-up");
+const fs = require("fs");
 
 const LR = grey("<<");
 const PREFIX = grey("[@wrench/loader]:");
@@ -78,7 +80,7 @@ function createTransform(ext, loaders) {
  * @param {string} ext
  */
 function load(parent, loader, ext) {
-  const [id, prop, args] = normalizeLoaderOption(loader);
+  let [id, prop, args] = normalizeLoaderOption(loader);
   const path = tryResolve(parent, id);
   if (path) {
     // check already visited
@@ -95,14 +97,25 @@ function load(parent, loader, ext) {
       if (typeof f !== "function")
         return console.warn(PREFIX, yellow(`unable to install ${id} = '${prop}' is not a function`));
 
-      // invoke without args
-      if (args == null)
-        return f();
+      // parse config from package.json
+      let config;
+      const packPath = findUp("package.json");
+      if (packPath) {
+        const text = fs.readFileSync(packPath).toString();
+        const pack = JSON.parse(text);
+        config = pack[id];
+      }
 
-      // invoke with args
+      // resolve args
+      args = typeof args === "function"
+        ? args(config || {}) || config
+        : Object.assign({}, args, config);
+
+      // invoke
       return Array.isArray(args)
         ? f(...args)
-        : f(args);
+        : args != null ? f(args)
+          : f();
     }
   }
 }

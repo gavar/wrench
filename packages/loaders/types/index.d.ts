@@ -11,10 +11,11 @@ export type Loader = string;
 export type LoaderWithProps<P = any> = [Loader, LoaderProps?];
 export type LoaderProps<P = any> = {
   func?: string,
-  args?: P
+  args?: P | LoaderArgsProvider<P>
 };
 
 export type LoaderOption = Loader | LoaderWithProps
+export type LoaderArgsProvider = () => P;
 
 export interface LoaderRegistry {
   /** Loaders to install on start. */

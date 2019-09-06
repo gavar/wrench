@@ -26,7 +26,7 @@
     "format:pack": "fixpack && sort-package-json && yarn wsrun -c format:pack",
     "release": "yarn clean && semantic-release --no-ci",
     "sync:pack": "copycat-pack -r && typesync && yarn && yarn format:pack",
-    "wsrun": "wsrun --stages -p @wrench/* rollup-*"
+    "wsrun": "wsrun --stages --fast-exit -p @wrench/* rollup-*"
   },
   "husky": {
     "hooks": {

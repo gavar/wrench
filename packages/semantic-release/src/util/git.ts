@@ -1,7 +1,5 @@
-import { exec, ExecOptions } from "child_process";
-import { promisify } from "util";
-
-const execAsync = promisify(exec);
+import { ExecOptions } from "child_process";
+import { asExecOptions, execAsync } from "./exec";
 
 export namespace git {
   /**
@@ -23,7 +21,30 @@ export interface GitTagsProps {
   sort?: string;
 }
 
+export async function gitTagsRefs(options?: ExecOptions): Promise<Record<string, string>> {
+  options = asExecOptions(options);
+  const command = "git show-ref --tags --dereference";
+  const {stdout} = await execAsync(command, options);
+
+  // 0000000000000000000000000000000000000000 refs/tags/your/tag/name/0.0.0^{}
+  const regex = /^(\w+)\srefs\/tags\/(.+)\^/gim;
+  const refs: Record<string, string> = {};
+  let r: RegExpExecArray;
+  while ((r = regex.exec(stdout)))
+    refs[r[2]] = r[1];
+
+  return refs;
+}
+
+export async function gitBranchTags(branch: string, options?: ExecOptions): Promise<string[]> {
+  options = asExecOptions(options);
+  const command = `git tag --merged ${branch}`;
+  const {stdout} = await execAsync(command, options);
+  return stdout.split("\n");
+}
+
 export async function gitTags({sort}: GitTagsProps = {}, options?: ExecOptions): Promise<string[]> {
+  options = asExecOptions(options);
   const args = ["git", "tag"];
   if (sort) args.push(`--sort=${sort.toLowerCase()}`);
   const {stdout} = await execAsync(args.join(" "), options);
@@ -31,6 +52,7 @@ export async function gitTags({sort}: GitTagsProps = {}, options?: ExecOptions):
 }
 
 export async function gitLogTagsOrder(options?: ExecOptions): Promise<Record<string, number>> {
+  options = asExecOptions(options);
   const command = `git log --no-walk --tags --pretty="%D" --decorate=full`;
   const {stdout} = await execAsync(command, options);
 

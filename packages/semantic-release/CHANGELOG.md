@@ -1,3 +1,11 @@
+## [0.0.5](https://github.com/gavar/wrench/compare/v/semantic-release/0.0.4...v/semantic-release/0.0.5) (2019-09-06)
+
+
+### Features
+
+* exec utils ([d9014e5](https://github.com/gavar/wrench/commit/d9014e5))
+* tag parsing utils ([ea2d6b4](https://github.com/gavar/wrench/commit/ea2d6b4))
+
 ## [0.0.4](https://github.com/gavar/wrench/compare/v/semantic-release/0.0.3...v/semantic-release/0.0.4) (2019-09-01)
 
 

@@ -1,3 +1,15 @@
+## [0.0.5](https://github.com/gavar/wrench/compare/v/ts-config/0.0.4...v/ts-config/0.0.5) (2019-09-06)
+
+
+### Bug Fixes
+
+* enable preserveSymlinks ([ece8525](https://github.com/gavar/wrench/commit/ece8525))
+
+
+### Features
+
+* config for compiling js via typescript ([a1ab923](https://github.com/gavar/wrench/commit/a1ab923))
+
 ## [0.0.4](https://github.com/gavar/wrench/compare/v/ts-config/0.0.3...v/ts-config/0.0.4) (2019-09-02)
 
 

@@ -1,3 +1,15 @@
+## [0.0.6](https://github.com/gavar/wrench/compare/v/loaders/0.0.5...v/loaders/0.0.6) (2019-09-06)
+
+
+### Bug Fixes
+
+* `ts-node` config ([bc32844](https://github.com/gavar/wrench/commit/bc32844))
+
+
+### Features
+
+* allow to override loader options in package.json ([a724d78](https://github.com/gavar/wrench/commit/a724d78))
+
 ## [0.0.5](https://github.com/gavar/wrench/compare/v/loaders/0.0.4...v/loaders/0.0.5) (2019-09-04)
 
 

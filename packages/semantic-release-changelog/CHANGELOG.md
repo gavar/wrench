@@ -1,3 +1,10 @@
+## [0.0.5](https://github.com/gavar/wrench/compare/v/semantic-release-changelog/0.0.4...v/semantic-release-changelog/0.0.5) (2019-09-06)
+
+
+### Bug Fixes
+
+* catch git checkout errors ([3d391dd](https://github.com/gavar/wrench/commit/3d391dd))
+
 ## [0.0.4](https://github.com/gavar/wrench/compare/v/semantic-release-changelog/0.0.3...v/semantic-release-changelog/0.0.4) (2019-08-31)
 
 

@@ -1,3 +1,10 @@
+## [0.0.7](https://github.com/gavar/wrench/compare/v/semantic-release-ws/0.0.6...v/semantic-release-ws/0.0.7) (2019-09-06)
+
+
+### Bug Fixes
+
+* prefetch tags on initialization to speedup commits analysis ([135bc8b](https://github.com/gavar/wrench/commit/135bc8b))
+
 ## [0.0.6](https://github.com/gavar/wrench/compare/v/semantic-release-ws/0.0.5...v/semantic-release-ws/0.0.6) (2019-09-01)
 
 

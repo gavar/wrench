@@ -6,7 +6,7 @@ import {
   yarnWorkspacesInfo,
 } from "@wrench/ywl";
 import { cyan, green, grey, magenta, red } from "colors";
-import { ensureDir, existsSync, realpath, symlink, unlink } from "fs-extra";
+import { ensureDir, existsSync, realpath, symlink, remove } from "fs-extra";
 import { intersection, reject, uniq } from "lodash";
 import match from "micromatch";
 import { dirname, relative, resolve } from "path";
@@ -110,7 +110,7 @@ async function updateSymlink(name: string, conf: YarnConfigCurrent, props: LinkP
     console.log(red("-"), cyan(name),
       AR, grey(relative(cwd, a)),
     );
-    run && await unlink(path);
+    run && await remove(path);
   } else {
     run && await ensureDir(dirname(path));
   }

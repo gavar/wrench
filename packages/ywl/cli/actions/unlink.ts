@@ -136,7 +136,7 @@ async function remove(cwd: string, link: Link, dry: boolean): Promise<void> {
   );
 
   if (!dry)
-    await fse.unlink(path);
+    await fse.remove(path);
 }
 
 /**

@@ -1,12 +1,13 @@
 import {
   AnalyzeCommitsContext,
   asReleaseType,
-  getTags,
   initializeCommitsFiles,
   ownCommits,
+  parseTags,
   PluginsFunction,
   ReleaseType,
 } from "@wrench/semantic-release";
+import { projectByContext } from "../../process";
 import { Workspace, WsConfiguration } from "../../types";
 import { callWorkspacesOf, createWorkspaceLogger, WorkspacesHooks } from "../../util";
 import { resolveNextRelease } from "../common";
@@ -24,13 +25,13 @@ export async function analyzeCommits(config: WsConfiguration, context: AnalyzeCo
 
 const hooks: WorkspacesHooks<"analyzeCommits"> = {
   preProcessWorkspace: async function (w: Workspace, owner: AnalyzeCommitsContext) {
-    const {env, cwd} = owner;
     const {tagFormat} = w.options;
+    const {tagsRefs, branchTags} = projectByContext(owner);
 
     // update last release
     w.commits = owner.commits;
-    w.branches = await getTags(cwd, env, tagFormat, owner.branches);
-    w.branch = w.branches.find(x => x.name === owner.branch.name);
+    w.branches = null;
+    w.branch = {...owner.branch, tags: parseTags(branchTags, tagFormat, tagsRefs)};
     w.lastRelease = resolveLastRelease(w.branch, tagFormat, w.pack);
 
     // should analyze only commits since last release

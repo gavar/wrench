@@ -112,6 +112,12 @@ export interface Project {
 
   /** List of project workspaces. */
   workspaces: Workspace[];
+
+  /** Map where key is a tag name and value is its commit hash. */
+  tagsRefs: Record<string, string>;
+
+  /** Tags of the current branch. */
+  branchTags: string[];
 }
 
 /**

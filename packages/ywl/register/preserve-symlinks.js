@@ -1,5 +1,4 @@
 // @ts-check
-/// <reference types="node" />
 /** @typedef {typeof NodeJS.Module} ModuleType */
 /** @typedef {import("resolve").SyncOpts} SyncOpts */
 

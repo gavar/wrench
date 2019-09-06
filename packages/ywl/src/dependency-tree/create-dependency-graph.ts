@@ -1,8 +1,9 @@
 import { readFileSync } from "fs";
-import { Module } from "module";
 import { join, resolve } from "path";
 import { DependencyGroup, Package } from "../types";
 import { DependencyNode } from "./types";
+
+const {Module} = require("module");
 
 type PackRegistry = Record<string, PackEntry>;
 

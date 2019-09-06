@@ -1,4 +1,5 @@
 export * from "./commit";
+export * from "./exec";
 export * from "./git";
 export * from "./package";
 export * from "./release";

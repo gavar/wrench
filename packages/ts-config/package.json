@@ -26,6 +26,7 @@
     "tsconfig.json",
     "*.tsconfig.json"
   ],
+  "main": "tsconfig.json",
   "scripts": {
     "build": "exit 0",
     "clean": "rimraf tmp out lib es bin *.tgz",
@@ -46,5 +47,8 @@
   "standard-version": {
     "extends": "@wrench/standard-version-config",
     "tag-prefix": "v/ts-config/"
+  },
+  "ts-node": {
+    "project": "../../tsconfig.json"
   }
 }

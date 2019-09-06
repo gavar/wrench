@@ -1,4 +1,4 @@
 // DO NOT USE THIS FILE
 // FOR DEVELOPMENT ONLY
-/// <reference path="../../@types/node/index.d.ts" />
+/// <reference types="node" />
 export * from "./src";

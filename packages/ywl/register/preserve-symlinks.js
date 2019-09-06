@@ -1,5 +1,5 @@
 // @ts-check
-/// <reference path="../../../@types/node/index.d.ts" />
+/// <reference types="node" />
 /** @typedef {typeof NodeJS.Module} ModuleType */
 /** @typedef {import("resolve").SyncOpts} SyncOpts */
 

@@ -1,4 +1,4 @@
 // DO NOT USE THIS FILE
 // FOR DEVELOPMENT ONLY
-/// <reference path="../../@types/@semantic-release/index.d.ts" />
+/// <reference types="semantic-release" />
 export * from "./src/plugin";

@@ -1,6 +1,7 @@
 import {
   AnalyzeCommitsContext,
   asReleaseType,
+  getCommits,
   initializeCommitsFiles,
   ownCommits,
   parseTags,
@@ -25,6 +26,8 @@ export async function analyzeCommits(config: WsConfiguration, context: AnalyzeCo
 
 const hooks: WorkspacesHooks<"analyzeCommits"> = {
   preProcessWorkspace: async function (w: Workspace, owner: AnalyzeCommitsContext) {
+    const {cwd} = w;
+    const {env} = owner;
     const {tagFormat} = w.options;
     const {tagsRefs, branchTags} = projectByContext(owner);
 
@@ -36,6 +39,8 @@ const hooks: WorkspacesHooks<"analyzeCommits"> = {
 
     // should analyze only commits since last release
     if (w.lastRelease.gitHead) {
+      w.commits = await getCommits(w.lastRelease.gitHead, "HEAD", {cwd, env}) || [];
+      await initializeCommitsFiles(w.commits);
       // workspace tag may be excluded by global release tag, so check it's there
       const last = w.commits.findIndex(x => x.hash === w.lastRelease.gitHead) + 1;
       if (last > 0) w.commits = w.commits.slice(0, last);

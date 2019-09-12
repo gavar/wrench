@@ -1,3 +1,10 @@
+## [0.0.8](https://github.com/gavar/wrench/compare/v/semantic-release-ws/0.0.7...v/semantic-release-ws/0.0.8) (2019-09-12)
+
+
+### Bug Fixes
+
+* analyze commits since last package release, not only last master release ([808c6e6](https://github.com/gavar/wrench/commit/808c6e6))
+
 ## [0.0.7](https://github.com/gavar/wrench/compare/v/semantic-release-ws/0.0.6...v/semantic-release-ws/0.0.7) (2019-09-06)
 
 

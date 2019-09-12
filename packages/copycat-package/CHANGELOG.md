@@ -1,4 +1,4 @@
-## [0.0.4](https://github.com/gavar/wrench/compare/v/copycat-package/0.0.3...v/copycat-package/0.0.4) (2019-09-03)
+## [0.0.4](https://github.com/gavar/wrench/compare/v/copycat-package/0.0.3...v/copycat-package/0.0.4) (2019-09-12)
 
 
 ### Features

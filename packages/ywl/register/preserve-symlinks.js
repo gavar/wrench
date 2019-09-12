@@ -8,13 +8,13 @@
  */
 
 /**
-* @typedef {SyncOpts} SyncOptions
-* @prop {string} filename
-*/
+ * @typedef {SyncOpts} SyncOptions
+ * @prop {string} filename
+ */
 
-const { sync } = require("resolve");
-const { Module } = require("module");
-const { _resolveFilename } = Module;
+const {sync} = require("resolve");
+const {Module} = require("module");
+const {_resolveFilename, _findPath} = Module;
 
 /** @type {string[]} */
 let $paths;
@@ -30,9 +30,8 @@ const options = {
 };
 
 /**
- * 
- * @param {string} request 
- * @param {string[]} paths 
+ * @param {string} request
+ * @param {string[]} paths
  * @param {boolean} main
  * @returns {string}
  */
@@ -45,10 +44,9 @@ function findPath(request, paths, main) {
 }
 
 /**
- * 
- * @param {string} request 
- * @param {NodeModule} parent 
- * @param {boolean} main 
+ * @param {string} request
+ * @param {NodeModule} parent
+ * @param {boolean} main
  * @returns {string}
  */
 function resolveFileName(request, parent, main) {

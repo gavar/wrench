@@ -51,5 +51,3 @@ function resolveStandardVersionConfig(workspace: Workspace): Arguments<StandardV
     .config(config)
     .argv;
 }
-
-

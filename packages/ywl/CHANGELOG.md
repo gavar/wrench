@@ -1,3 +1,15 @@
+## [0.0.10](https://github.com/gavar/wrench/compare/v/ywl/0.0.9...v/ywl/0.0.10) (2019-09-12)
+
+
+### Bug Fixes
+
+* fallback to own node_modules when unable to find module in cwd ([7871838](https://github.com/gavar/wrench/commit/7871838))
+
+
+### Features
+
+* recover functionality to store symlinks in dedicated directory ([09e9689](https://github.com/gavar/wrench/commit/09e9689))
+
 ## [0.0.9](https://github.com/gavar/wrench/compare/v/ywl/0.0.8...v/ywl/0.0.9) (2019-09-06)
 
 

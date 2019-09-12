@@ -40,7 +40,7 @@ function findPath(request, paths, main) {
   options.filename = $parent.id;
   options.basedir = $parent.path;
   options.extensions = Object.keys(Module._extensions);
-  return sync(request, options);
+  return sync(request, options) || _findPath(request, paths, main);
 }
 
 /**

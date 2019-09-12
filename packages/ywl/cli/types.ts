@@ -6,4 +6,10 @@ export interface YwlProps {
 
   /** Package contents of the `package.json` located in {@link root}. */
   pack: Package;
+
+  /**
+   * Directory for storing symlinks.
+   * @default .ywl
+   */
+  workspaceRegistry: string;
 }

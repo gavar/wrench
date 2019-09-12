@@ -6,7 +6,7 @@ import {
   yarnWorkspacesInfo,
 } from "@wrench/ywl";
 import { cyan, green, grey, magenta, red } from "colors";
-import { ensureDir, existsSync, realpath, symlink, remove } from "fs-extra";
+import { ensureDir, existsSync, realpath, remove, symlink } from "fs-extra";
 import { intersection, reject, uniq } from "lodash";
 import match from "micromatch";
 import { dirname, relative, resolve } from "path";
@@ -90,8 +90,7 @@ async function updateSymlink(name: string, conf: YarnConfigCurrent, props: LinkP
   const cwd = process.cwd();
   const run = !props.dry;
   const target = resolve(conf.linkFolder, name);
-  const [out] = conf.registryFolders;
-  const path = resolve(props.root, out, name);
+  const path = resolve(props.root, props.workspaceRegistry, name);
 
   const [a, b] = await Promise.all([
     existsSync(path) ? realpath(path) : "",
@@ -132,8 +131,11 @@ async function resolveWorkspaces(root: string): Promise<Record<string, string>> 
   root = resolve(root);
   const packages: Record<string, string> = {};
   const info = await yarnWorkspacesInfo();
-  for (const [name, w] of Object.entries(info))
-    packages[name] = resolve(root, w.location);
+  for (const [name, w] of Object.entries(info)) {
+    const path = resolve(root, w.location);
+    if (isParentOf(root, path))
+      packages[name] = path;
+  }
   return packages;
 }
 

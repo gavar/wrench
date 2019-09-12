@@ -9,6 +9,7 @@ void async function () {
   (yargs as Argv<YwlProps>)(process.argv.slice(2), root)
     .scriptName("ywl")
     .pkgConf("ywl", root)
+    .option("workspaceRegistry", {default: ".ywl"})
     .middleware(args => {
       args.root = root;
       args.pack = pack;

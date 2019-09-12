@@ -2,6 +2,7 @@ import { yarnConfigCurrent, YarnConfigCurrent } from "@wrench/ywl";
 import { cyan, grey, magenta, red } from "colors";
 import { existsSync } from "fs";
 import fse from "fs-extra";
+import { uniq } from "lodash";
 import match from "micromatch";
 import { join, relative, resolve } from "path";
 import { CommandModule } from "yargs";
@@ -34,7 +35,7 @@ export const unlink: CommandModule<YwlProps, UnlinkProps> = {
   },
 
   async handler(props: UnlinkProps): Promise<void> {
-    const {pattern} = props;
+    const {pattern, workspaceRegistry} = props;
     const cwd = process.cwd();
     const root = resolve(props.root);
     const conf = await yarnConfigCurrent();
@@ -42,11 +43,25 @@ export const unlink: CommandModule<YwlProps, UnlinkProps> = {
     console.log(grey(`yarn links folder: ${conf.linkFolder}`));
 
     // resolve package names
-    let names = await scanPackageNames(registryPath);
-    if (pattern && pattern.length) names = match(names, pattern);
+    let names = uniq((await Promise.all([
+      await scanPackageNames(registryPath),
+      await scanPackageNames(workspaceRegistry),
+    ])).flat());
+
+    // apply filter
+    if (pattern && pattern.length)
+      names = match(names, pattern);
+
+    // prepare context
+    const context: LinkResolutionContext = {
+      cwd,
+      root,
+      registryPath,
+      workspaceRegistry,
+      linksPath: conf.linkFolder,
+    };
 
     // select packages that are symlinks
-    const context: LinkResolutionContext = {cwd, root, registryPath, linksPath: conf.linkFolder};
     const links = (await resolveLinks(names, context)).sort(byNameAsc);
     if (links.length < 1)
       return console.log(magenta("no links found for removal"));
@@ -89,6 +104,9 @@ interface LinkResolutionContext {
    * @see YarnConfigCurrent.registryFolders
    */
   registryPath: string;
+
+  /** Directory for storing symlinks. */
+  workspaceRegistry: string;
 }
 
 async function resolveLinks(names: string[], context: LinkResolutionContext): Promise<Link[]> {
@@ -97,9 +115,10 @@ async function resolveLinks(names: string[], context: LinkResolutionContext): Pr
 }
 
 async function resolveLinkCandidates(name: string, context: LinkResolutionContext): Promise<Link[]> {
-  const {cwd, root, linksPath, registryPath} = context;
+  const {cwd, root, linksPath, registryPath, workspaceRegistry} = context;
   return Promise.all([
     resolveLink(resolve(root, registryPath), name, linksPath),
+    resolveLink(resolve(root, workspaceRegistry), name, linksPath),
     cwd !== root && resolveLink(resolve(cwd, registryPath), name, linksPath),
   ]);
 }

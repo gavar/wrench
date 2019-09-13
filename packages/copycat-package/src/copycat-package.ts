@@ -18,7 +18,7 @@ export interface PackNode {
   /** Package contents, which may have modifications. */
   pack: Package;
   /** Properties to process. */
-  props: CopycatPackageProps;
+  props?: CopycatPackageProps;
   /** Path to a package file. */
   filename: string;
   /** Whether package was already visited or not. */
@@ -38,8 +38,8 @@ export interface CopycatPackagesOptions {
  */
 export function copycatPackages(filenames: string[], options?: Partial<CopycatPackagesOptions>) {
   // initialize registry
-  const registry: PackRegistry = keyBy(filenames.map(createNode), "filename");
-  const nodes = Object.values(registry);
+  const nodes = filenames.map(filename => createNode(filename));
+  const registry: PackRegistry = keyBy(nodes, "filename");
 
   // visit nodes
   for (const node of nodes)
@@ -53,19 +53,17 @@ export function copycatPackages(filenames: string[], options?: Partial<CopycatPa
 /**
  * Create new instance of the {@link PackNode}.
  * @param filename - path to a package.
+ * @param omitProps - whether to omit copycat props from config.
+ * Handy when parsing node modules, as package may be published along with copycat config.
  */
-function createNode(filename: string): PackNode {
+function createNode(filename: string, omitProps?: boolean): PackNode {
   filename = path.resolve(filename);
   const raw = fs.readFileSync(filename).toString();
   const pack = JSON.parse(raw) as CopycatPackage;
   const importer = Module.createRequire(filename);
-  return {
-    filename,
-    pack,
-    props: pack.copycat,
-    importer,
-    raw,
-  };
+  const node: PackNode = {filename, pack, importer, raw};
+  if (!omitProps) node.props = pack.copycat;
+  return node;
 }
 
 /**
@@ -166,7 +164,7 @@ function repositoryToObject(repository: string | PackageRepository): PackageRepo
 
 function resolve(importer: NodeRequire, registry: PackRegistry, id: string): PackNode {
   const filename = resolveFileName(importer, id);
-  const node = registry[filename] = registry[filename] || createNode(filename);
+  const node = registry[filename] = registry[filename] || createNode(filename, true);
   visit(node, registry);
   return node;
 }

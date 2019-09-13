@@ -1,3 +1,10 @@
+## [0.0.5](https://github.com/gavar/wrench/compare/v/copycat-package/0.0.4...v/copycat-package/0.0.5) (2019-09-13)
+
+
+### Bug Fixes
+
+* avoid parsing `copycat` props child packages ([e583c31](https://github.com/gavar/wrench/commit/e583c31))
+
 ## [0.0.4](https://github.com/gavar/wrench/compare/v/copycat-package/0.0.3...v/copycat-package/0.0.4) (2019-09-12)
 
 

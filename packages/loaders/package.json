@@ -28,6 +28,7 @@
   },
   "files": [
     "register.js",
+    "register",
     "cjs"
   ],
   "main": "cjs/index.js",

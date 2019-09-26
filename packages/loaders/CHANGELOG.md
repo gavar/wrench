@@ -1,3 +1,15 @@
+## [0.0.7](https://github.com/gavar/wrench/compare/v/loaders/0.0.6...v/loaders/0.0.7) (2019-09-26)
+
+
+### Bug Fixes
+
+* array args for registering function ([f43bd5d](https://github.com/gavar/wrench/commit/f43bd5d))
+
+
+### Features
+
+* loader JSON5 ([c8a650b](https://github.com/gavar/wrench/commit/c8a650b))
+
 ## [0.0.6](https://github.com/gavar/wrench/compare/v/loaders/0.0.5...v/loaders/0.0.6) (2019-09-06)
 
 

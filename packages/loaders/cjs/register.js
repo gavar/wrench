@@ -109,7 +109,8 @@ function load(parent, loader, ext) {
       // resolve args
       args = typeof args === "function"
         ? args(config || {}) || config
-        : Object.assign({}, args, config);
+        : Array.isArray(args) ? Array.from(args)
+          : Object.assign({}, args, config);
 
       // invoke
       return Array.isArray(args)

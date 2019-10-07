@@ -9,7 +9,8 @@ const {Module} = require("module");
 
 void function () {
   // find rollup executable
-  const importer = Module.createRequire(process.cwd());
+  const from = path.resolve("package.json");
+  const importer = Module.createRequire(from);
   const packPath = importer.resolve("rollup/package.json");
   const pack = require(packPath);
   const binPath = path.join(packPath, "..", pack.bin.rollup);

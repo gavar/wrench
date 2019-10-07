@@ -1,12 +1,14 @@
-import { pick } from "lodash";
-import { InputOptions } from "rollup";
+import { RollupConfig } from "./types";
+
+const {mergeOptions} = require("rollup/dist/shared");
 
 /**
  * Parse input properties from `rollup` raw cli arguments.
- * @param cli - raw cli arguments.
+ * @param command - raw cli arguments.
  */
-export function parseCLI(cli: Record<string, unknown>): InputOptions {
-  return pick(cli,
-    "preserveModules",
-  ) as any;
+export function parseCommand(command: Record<string, unknown>): RollupConfig {
+  const {inputOptions, outputOptions} = mergeOptions({command});
+  const config: RollupConfig = Object.assign({}, inputOptions);
+  config.output = outputOptions;
+  return config;
 }

@@ -42,8 +42,8 @@ export function createBinConfig(file: BinFile, info: PackInfo, context: Context)
     input: file.input,
     preserveModules: modular,
     output: output(file.input, file.output, modular, {
+      ...context.output,
       format: "cjs",
-      sourcemap: true,
       esModule: false, // NodeJS does not require to define __esModule
       preferConst: true, // NodeJS supports `const` since early versions
       strict: false, // NodeJS modules are strict by default,
@@ -54,7 +54,8 @@ export function createBinConfig(file: BinFile, info: PackInfo, context: Context)
       typescript({
         external,
         baseCompilerOptions: {
-          rootDirs: [dirname(file.input)].filter(identity),
+          declarationMap: !!context.output.sourcemap,
+          rootDirs: [dirname(file.input)].filter(Boolean),
         },
       }),
       cleanup(context.cleanup),

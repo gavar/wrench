@@ -147,4 +147,7 @@ export interface Context {
 
   /** Shared options for `rollup-plugin-cleanup-chunk`. */
   cleanup?: import("rollup-plugin-cleanup-chunk").Options;
+
+  /** Base output options. */
+  output: OutputOptions;
 }

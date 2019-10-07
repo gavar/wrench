@@ -1,7 +1,7 @@
 import { typescript, typescriptDts } from "@wrench/roll-typescript";
 import { builtinModules } from "module";
 import path from "path";
-import { OutputOptions } from "rollup";
+import { InputOptions, OutputOptions } from "rollup";
 import cleanup from "rollup-plugin-cleanup-chunk";
 import clear from "rollup-plugin-clear";
 import { CompilerOptions } from "typescript";
@@ -12,7 +12,6 @@ import {
   dirname,
   extname,
   isSubPathOfWorkingDirectory,
-  merge,
   output,
   resolve,
   slash,
@@ -26,19 +25,21 @@ export interface PackInfo {
 /**
  * Create {@link RollupConfig} to bundle a NodeJS library.
  * @param path - path to a `package.json` file.
- * @param base - base configurations to extend.
+ * @param input - base input options.
+ * @param output - base output options.
  */
-export function nodejs(path?: string, base?: RollupConfig): RollupConfig[];
+export function nodejs(path?: string, input?: InputOptions, output?: OutputOptions): RollupConfig[];
 
 /**
  * Create {@link RollupConfig} to bundle a NodeJS library.
  * @param info - `package.json` location and content.
- * @param base - base configurations to extend.
+ * @param input - base input options.
+ * @param output - base output options.
  */
-export function nodejs(info: PackInfo, base?: RollupConfig): RollupConfig[];
+export function nodejs(info: PackInfo, input?: InputOptions, output?: OutputOptions): RollupConfig[];
 
 /** @internal */
-export function nodejs(info: string | PackInfo, base: RollupConfig = {}): RollupConfig[] {
+export function nodejs(info: string | PackInfo, $input?: InputOptions, $output?: OutputOptions): RollupConfig[] {
   // resolve
   info = normalizePackInfo(info);
 
@@ -66,11 +67,24 @@ export function nodejs(info: string | PackInfo, base: RollupConfig = {}): Rollup
     pack.peerDependencies && Object.keys(pack.peerDependencies),
   ].filter(Boolean).flat();
 
-  const modular = base.preserveModules;
+  // default input options
+  $input = clean({
+    ...$input,
+  });
+
+  // default output options
+  $output = clean({
+    sourcemap: false,
+    ...$output,
+  });
+
+  const modular = !!$input.preserveModules;
+  const sourcemap = !!$output.sourcemap;
   const context: Context = {
     modular,
     directories: dir,
     external,
+    output: $output,
     cleanup: {
       transform: false,
       renderChunk: true,
@@ -84,8 +98,8 @@ export function nodejs(info: string | PackInfo, base: RollupConfig = {}): Rollup
 
   /** CommonJS bundle output options. */
   const cjs = output(input, pack.main, modular, {
+    ...$output,
     format: "cjs",
-    sourcemap: true,
     esModule: false, // NodeJS does not require to define __esModule
     preferConst: true, // NodeJS supports `const` since early versions
     strict: false, // NodeJS modules are strict by default
@@ -93,12 +107,13 @@ export function nodejs(info: string | PackInfo, base: RollupConfig = {}): Rollup
 
   /** ECMAScript bundle output options. */
   const esm: OutputOptions = pack.module && output(input, pack.module, modular, {
+    ...$output,
     format: "esm",
-    sourcemap: true,
   });
 
   /** TypeScript compiler options.  */
   const compilerOptions: CompilerOptions = {
+    declarationMap: sourcemap,
     outDir: path.join(dir.tmp, ".ts"),
     declarationDir: path.join(dir.tmp, ".dts"),
     rootDir: dir.src,
@@ -130,7 +145,8 @@ export function nodejs(info: string | PackInfo, base: RollupConfig = {}): Rollup
   }
 
   /** Generate bundles from input. */
-  const tsConfig = merge(base, {
+  const tsConfig: RollupConfig = {
+    ...$input,
     input,
     output: [cjs, esm].filter(Boolean),
     external,
@@ -150,7 +166,7 @@ export function nodejs(info: string | PackInfo, base: RollupConfig = {}): Rollup
       }),
       cleanup(context.cleanup),
     ],
-  });
+  };
 
   /** Generates bundle for each executable script. */
   const binConfigs = collectBinFiles(pack, context, pack.roll)
@@ -178,3 +194,15 @@ function normalizePackInfo(info: string | PackInfo): PackInfo {
   };
 }
 
+function clean<T>(object: T): T {
+  for (const key in object)
+    if (isEmptyOrUndefined(object[key]))
+      delete object[key];
+  return object;
+}
+
+function isEmptyOrUndefined(item: any): boolean {
+  if (item && typeof item === "object")
+    return Object.keys(item).length < 1;
+  return item === void 0;
+}

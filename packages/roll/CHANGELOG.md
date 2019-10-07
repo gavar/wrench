@@ -1,3 +1,12 @@
+## [0.0.5](https://github.com/gavar/wrench/compare/v/roll/0.0.4...v/roll/0.0.5) (2019-10-07)
+
+
+### Bug Fixes
+
+* better parsing of cli arguments ([b3b0fca](https://github.com/gavar/wrench/commit/b3b0fca))
+* don't need lodash ([ddb87da](https://github.com/gavar/wrench/commit/ddb87da))
+* resolving rollup binary location ([a6d1fef](https://github.com/gavar/wrench/commit/a6d1fef))
+
 ## [0.0.4](https://github.com/gavar/wrench/compare/v/roll/0.0.3...v/roll/0.0.4) (2019-08-31)
 
 

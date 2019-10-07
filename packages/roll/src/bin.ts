@@ -1,7 +1,6 @@
 import typescript from "@wrench/roll-typescript";
 import { cyan } from "colors";
 import fs from "fs";
-import { get, identity } from "lodash";
 import path from "path";
 import { InputOptions, Plugin } from "rollup";
 import cleanup from "rollup-plugin-cleanup-chunk";
@@ -70,8 +69,14 @@ export function createBinConfig(file: BinFile, info: PackInfo, context: Context)
  * @param options - bundling options.
  */
 export function collectBinFiles(pack: Package, context: Context, options?: BundleOptions): BinFile[] {
+  // defaults
+  options = {
+    bin: BinType.exec,
+    ...options,
+  };
+
   const dir = context.directories;
-  const type = get(options, "bin", BinType.exec);
+  const type = options.bin;
 
   if (type) {
     // check for `bin` scripts in `package.json`
@@ -121,7 +126,7 @@ function externalDirsOf(root: string, pack: Package): string[] {
     root,
     pack.directories.lib,
     pack.directories.src,
-  ].filter(identity)
+  ].filter(Boolean)
     .map(x => path.resolve(root, x));
 }
 

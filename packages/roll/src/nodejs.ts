@@ -1,5 +1,4 @@
 import { typescript, typescriptDts } from "@wrench/roll-typescript";
-import { identity } from "lodash";
 import { builtinModules } from "module";
 import path from "path";
 import { OutputOptions } from "rollup";
@@ -65,7 +64,7 @@ export function nodejs(info: string | PackInfo, base: RollupConfig = {}): Rollup
     builtinModules,
     pack.dependencies && Object.keys(pack.dependencies),
     pack.peerDependencies && Object.keys(pack.peerDependencies),
-  ].filter(identity).flat();
+  ].filter(Boolean).flat();
 
   const modular = base.preserveModules;
   const context: Context = {
@@ -133,7 +132,7 @@ export function nodejs(info: string | PackInfo, base: RollupConfig = {}): Rollup
   /** Generate bundles from input. */
   const tsConfig = merge(base, {
     input,
-    output: [cjs, esm].filter(identity),
+    output: [cjs, esm].filter(Boolean),
     external,
     plugins: [
       clear({
@@ -162,7 +161,7 @@ export function nodejs(info: string | PackInfo, base: RollupConfig = {}): Rollup
     tsConfig,
     // dtsConfig,
     ...binConfigs,
-  ].filter(identity);
+  ].filter(Boolean);
 }
 
 function isSafeToDelete(p: string) {

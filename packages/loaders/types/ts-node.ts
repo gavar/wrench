@@ -1,4 +1,4 @@
-import { CompilerOptions } from "typescript";
+import {CompilerOptions} from "typescript";
 
 /** Registration options for `ts-node` module. */
 export type Options = import("ts-node").Options & {

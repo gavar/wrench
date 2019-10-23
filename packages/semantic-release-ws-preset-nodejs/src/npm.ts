@@ -12,6 +12,7 @@ type Props =
   ;
 
 export type PresetConfiguration = WsConfiguration<Props>;
+
 export interface PresetOptions {
   base?: Partial<PresetConfiguration>;
 }

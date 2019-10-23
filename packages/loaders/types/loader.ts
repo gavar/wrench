@@ -11,6 +11,7 @@ export type LoaderArgsProvider<P> = () => P;
 export interface LoaderRegistry {
   /** Loaders to install on start. */
   "*": LoaderOption | LoaderOption[];
+
   /** Loaders to install when importing file with particular extension. */
   [ext: string]: LoaderOption | LoaderOption[];
 }

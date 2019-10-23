@@ -59,7 +59,9 @@
     "@wrench/semantic-release-ws": ">=0.0.9 <1.0.0",
     "semantic-release": "16.0.0-beta.22"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/semantic-release": "15.13.1"
+  },
   "publishConfig": {
     "access": "public"
   },

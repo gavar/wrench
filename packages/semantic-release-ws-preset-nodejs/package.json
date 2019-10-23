@@ -56,7 +56,8 @@
     "@wrench/semantic-release-git": ">=0.0.4 <1.0.0",
     "@wrench/semantic-release-notes-generator": ">=0.0.4 <1.0.0",
     "@wrench/semantic-release-npm": ">=0.0.5 <1.0.0",
-    "@wrench/semantic-release-ws": ">=0.0.9 <1.0.0"
+    "@wrench/semantic-release-ws": ">=0.0.9 <1.0.0",
+    "semantic-release": "16.0.0-beta.22"
   },
   "devDependencies": {},
   "publishConfig": {

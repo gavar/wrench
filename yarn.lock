@@ -5409,7 +5409,7 @@ safe-regex@^1.1.0:
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-semantic-release@^16.0.0-beta:
+semantic-release@16.0.0-beta.22, semantic-release@^16.0.0-beta:
   version "16.0.0-beta.22"
   resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-16.0.0-beta.22.tgz#d0b0b28da7c055a4f8665779b2b468b34d74b363"
   integrity sha512-E4RAIlXdPcqJPRms3UkzpdlBhN3Fa5RPoO13sFlMijlNqwAelmowtcc6Ik4IgJUJHQ+7G6ESKxfZ6y9qSs1nNw==

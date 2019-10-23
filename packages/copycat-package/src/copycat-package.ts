@@ -57,13 +57,18 @@ export function copycatPackages(filenames: string[], options?: Partial<CopycatPa
  * Handy when parsing node modules, as package may be published along with copycat config.
  */
 function createNode(filename: string, omitProps?: boolean): PackNode {
-  filename = path.resolve(filename);
-  const raw = fs.readFileSync(filename).toString();
-  const pack = JSON.parse(raw) as CopycatPackage;
-  const importer = Module.createRequire(filename);
-  const node: PackNode = {filename, pack, importer, raw};
-  if (!omitProps) node.props = pack.copycat;
-  return node;
+  try {
+    filename = path.resolve(filename);
+    const raw = fs.readFileSync(filename).toString();
+    const pack = JSON.parse(raw) as CopycatPackage;
+    const importer = Module.createRequire(filename);
+    const node: PackNode = {filename, pack, importer, raw};
+    if (!omitProps) node.props = pack.copycat;
+    return node;
+  } catch (e) {
+    console.error("error while parsing file:", filename);
+    throw e;
+  }
 }
 
 /**

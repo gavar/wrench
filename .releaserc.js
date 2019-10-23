@@ -3,6 +3,7 @@ require("./boot");
 /** @type {WsConfiguration} */
 const config = {
   ...require("./packages/semantic-release-ws-preset-nodejs/default"),
+  reduceReleaseType: "patch",
 };
 config.workspace = {
   ...config.workspace,

@@ -1,3 +1,10 @@
+## [0.0.7](https://github.com/gavar/wrench/compare/v/copycat-package/0.0.6...v/copycat-package/0.0.7) (2019-10-23)
+
+
+### Bug Fixes
+
+* print name of the file if parsing error ([bfd5f8d](https://github.com/gavar/wrench/commit/bfd5f8d))
+
 ## [0.0.6](https://github.com/gavar/wrench/compare/v/copycat-package/0.0.5...v/copycat-package/0.0.6) (2019-10-23)
 
 

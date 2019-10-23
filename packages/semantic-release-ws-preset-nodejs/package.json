@@ -52,11 +52,11 @@
   "dependencies": {
     "@semantic-release/commit-analyzer": "^7.0.0-beta.1",
     "@wrench/loaders": ">=0.0.8 <1.0.0",
-    "@wrench/semantic-release-changelog": ">=0.0.5 <1.0.0",
-    "@wrench/semantic-release-git": ">=0.0.3 <1.0.0",
-    "@wrench/semantic-release-notes-generator": ">=0.0.3 <1.0.0",
+    "@wrench/semantic-release-changelog": ">=0.0.6 <1.0.0",
+    "@wrench/semantic-release-git": ">=0.0.4 <1.0.0",
+    "@wrench/semantic-release-notes-generator": ">=0.0.4 <1.0.0",
     "@wrench/semantic-release-npm": ">=0.0.5 <1.0.0",
-    "@wrench/semantic-release-ws": ">=0.0.8 <1.0.0"
+    "@wrench/semantic-release-ws": ">=0.0.9 <1.0.0"
   },
   "devDependencies": {},
   "publishConfig": {

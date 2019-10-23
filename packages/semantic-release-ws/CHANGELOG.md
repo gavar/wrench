@@ -1,3 +1,10 @@
+## [0.0.9](https://github.com/gavar/wrench/compare/v/semantic-release-ws/0.0.8...v/semantic-release-ws/0.0.9) (2019-10-23)
+
+
+### Bug Fixes
+
+* update dependency versions ([07b5c72](https://github.com/gavar/wrench/commit/07b5c72))
+
 ## [0.0.8](https://github.com/gavar/wrench/compare/v/semantic-release-ws/0.0.7...v/semantic-release-ws/0.0.8) (2019-09-12)
 
 

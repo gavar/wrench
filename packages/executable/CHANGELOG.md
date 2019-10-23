@@ -1,3 +1,10 @@
+## [0.0.5](https://github.com/gavar/wrench/compare/v/executable/0.0.4...v/executable/0.0.5) (2019-10-23)
+
+
+### Bug Fixes
+
+* update dependency versions ([07b5c72](https://github.com/gavar/wrench/commit/07b5c72))
+
 ## [0.0.4](https://github.com/gavar/wrench/compare/v/executable/0.0.3...v/executable/0.0.4) (2019-08-31)
 
 

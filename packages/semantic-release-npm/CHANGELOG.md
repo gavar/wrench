@@ -1,3 +1,10 @@
+## [0.0.5](https://github.com/gavar/wrench/compare/v/semantic-release-npm/0.0.4...v/semantic-release-npm/0.0.5) (2019-10-23)
+
+
+### Bug Fixes
+
+* declaration of missing types ([9571585](https://github.com/gavar/wrench/commit/9571585))
+
 ## [0.0.4](https://github.com/gavar/wrench/compare/v/semantic-release-npm/0.0.3...v/semantic-release-npm/0.0.4) (2019-08-31)
 
 

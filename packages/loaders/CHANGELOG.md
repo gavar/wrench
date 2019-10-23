@@ -1,3 +1,10 @@
+## [0.0.8](https://github.com/gavar/wrench/compare/v/loaders/0.0.7...v/loaders/0.0.8) (2019-10-23)
+
+
+### Bug Fixes
+
+* type definitions ([a3b0ece](https://github.com/gavar/wrench/commit/a3b0ece))
+
 ## [0.0.7](https://github.com/gavar/wrench/compare/v/loaders/0.0.6...v/loaders/0.0.7) (2019-09-26)
 
 

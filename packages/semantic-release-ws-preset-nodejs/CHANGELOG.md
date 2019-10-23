@@ -1,9 +1,11 @@
-## [0.0.7](https://github.com/gavar/wrench/compare/v/semantic-release-ws-preset-nodejs/0.0.6...v/semantic-release-ws-preset-nodejs/0.0.7) (2019-10-23)
+## [0.0.8](https://github.com/gavar/wrench/compare/v/semantic-release-ws-preset-nodejs/0.0.7...v/semantic-release-ws-preset-nodejs/0.0.8) (2019-10-23)
 
 
 ### Bug Fixes
 
 * update dependency versions ([07b5c72](https://github.com/gavar/wrench/commit/07b5c72))
+
+## [0.0.7](https://github.com/gavar/wrench/compare/v/semantic-release-ws-preset-nodejs/0.0.6...v/semantic-release-ws-preset-nodejs/0.0.7) (2019-10-23)
 
 ## [0.0.6](https://github.com/gavar/wrench/compare/v/semantic-release-ws-preset-nodejs/0.0.5...v/semantic-release-ws-preset-nodejs/0.0.6) (2019-08-31)
 

@@ -69,6 +69,7 @@
     "repository": "../..",
     "publishConfig": "../..",
     "dependencies": {
+      "semantic-release": "../..",
       "@semantic-release/commit-analyzer": "semantic-release",
       "@wrench/loaders": "../loaders",
       "@wrench/semantic-release-git": "../semantic-release-git",

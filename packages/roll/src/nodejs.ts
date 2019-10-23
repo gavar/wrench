@@ -1,5 +1,5 @@
 import { typescript, typescriptDts } from "@wrench/roll-typescript";
-import { builtinModules } from "module";
+import Module from "module";
 import path from "path";
 import { InputOptions, OutputOptions } from "rollup";
 import cleanup from "rollup-plugin-cleanup-chunk";
@@ -62,7 +62,7 @@ export function nodejs(info: string | PackInfo, $input?: InputOptions, $output?:
   const input = resolve(pack.esnext ? "" : dir.src, rel);
 
   const external: string[] = [
-    builtinModules,
+    Module.builtinModules,
     pack.dependencies && Object.keys(pack.dependencies),
     pack.peerDependencies && Object.keys(pack.peerDependencies),
   ].filter(Boolean).flat();

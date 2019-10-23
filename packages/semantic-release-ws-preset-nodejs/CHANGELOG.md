@@ -1,3 +1,5 @@
+## [0.0.7](https://github.com/gavar/wrench/compare/v/semantic-release-ws-preset-nodejs/0.0.6...v/semantic-release-ws-preset-nodejs/0.0.7) (2019-10-23)
+
 ## [0.0.6](https://github.com/gavar/wrench/compare/v/semantic-release-ws-preset-nodejs/0.0.5...v/semantic-release-ws-preset-nodejs/0.0.6) (2019-08-31)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@wrench/semantic-release-npm",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Semantic Release plugin making @semantic-release/npm friendly to workspaces",
   "keywords": [
     "npm",
@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "@semantic-release/npm": "^6.0.0-beta.2",
-    "@wrench/semantic-release": ">=0.0.6 <1.0.0",
+    "@wrench/semantic-release": ">=0.0.7 <1.0.0",
     "execa": "^1.0.0",
     "fs-extra": "^8.1.0",
     "rc": "^1.2.8"

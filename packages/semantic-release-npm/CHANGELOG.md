@@ -1,3 +1,11 @@
+## [0.0.6](https://github.com/gavar/wrench/compare/v/semantic-release-npm/0.0.5...v/semantic-release-npm/0.0.6) (2019-10-23)
+
+
+### Bug Fixes
+
+* @semantic-release/npm version ([0bf78e8](https://github.com/gavar/wrench/commit/0bf78e85efbddde203fafbd04f06e40d7466fd97))
+* conditions verification ([eb2a942](https://github.com/gavar/wrench/commit/eb2a942afea6b3daf57664fd78cbf18ad706a441))
+
 ## [0.0.5](https://github.com/gavar/wrench/compare/v/semantic-release-npm/0.0.4...v/semantic-release-npm/0.0.5) (2019-10-23)
 
 

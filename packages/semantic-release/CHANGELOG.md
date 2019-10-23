@@ -1,3 +1,10 @@
+## [0.0.7](https://github.com/gavar/wrench/compare/v/semantic-release/0.0.6...v/semantic-release/0.0.7) (2019-10-23)
+
+
+### Bug Fixes
+
+* use particular version of `semantic-release` ([2290727](https://github.com/gavar/wrench/commit/2290727a5002e8760c714acad056597bfd181f74))
+
 ## [0.0.6](https://github.com/gavar/wrench/compare/v/semantic-release/0.0.5...v/semantic-release/0.0.6) (2019-10-23)
 
 

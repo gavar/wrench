@@ -2,11 +2,7 @@
   "extends": "./packages/ts-config/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "outDir": "out",
-    "typeRoots": [
-      "./@types",
-      "./node_modules/@types"
-    ]
+    "outDir": "out"
   },
   "exclude": [
     "**/#*", // all files where names starts with #

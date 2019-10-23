@@ -31,7 +31,8 @@
     "bin",
     "es",
     "lib",
-    "preset"
+    "preset",
+    "declare"
   ],
   "main": "lib/index.js",
   "module": "es/index.js",

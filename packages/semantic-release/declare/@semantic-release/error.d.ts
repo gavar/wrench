@@ -1,5 +1,5 @@
 declare module "@semantic-release/error" {
-  declare class SemanticReleaseError extends Error {
+  class SemanticReleaseError extends Error {
     name: string;
     message: string;
     code: string;

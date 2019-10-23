@@ -29,8 +29,9 @@
     "url": "https://github.com/gavar"
   },
   "files": [
-    "lib",
     "es",
+    "lib",
+    "declare",
     "register-hotfix.js"
   ],
   "main": "lib/index.js",

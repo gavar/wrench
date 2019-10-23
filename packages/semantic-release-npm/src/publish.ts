@@ -1,9 +1,9 @@
-import { verifyConditions } from "@semantic-release/npm";
 import { Package, PublishContext } from "@wrench/semantic-release";
 import execa from "execa";
 import { join } from "path";
 import { readPack, resolveTarballName } from "./common";
 import { NpmConfig } from "./types";
+import { verifyConditions } from "./verify-conditions";
 
 const getChannel = require("@semantic-release/npm/lib/get-channel");
 const getRegistry = require("@semantic-release/npm/lib/get-registry");

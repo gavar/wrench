@@ -1,3 +1,10 @@
+## [0.0.9](https://github.com/gavar/wrench/compare/v/semantic-release-ws-preset-nodejs/0.0.8...v/semantic-release-ws-preset-nodejs/0.0.9) (2019-10-23)
+
+
+### Bug Fixes
+
+* lock version of `semantic-release` to 16.0.0-beta.22 ([ba245c0](https://github.com/gavar/wrench/commit/ba245c0))
+
 ## [0.0.8](https://github.com/gavar/wrench/compare/v/semantic-release-ws-preset-nodejs/0.0.7...v/semantic-release-ws-preset-nodejs/0.0.8) (2019-10-23)
 
 

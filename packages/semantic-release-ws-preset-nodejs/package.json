@@ -1,6 +1,6 @@
 {
   "name": "@wrench/semantic-release-ws-preset-nodejs",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Configuration preset for releasing NodeJS monorepo via semantic-release",
   "keywords": [
     "automation",

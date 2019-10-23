@@ -1,3 +1,10 @@
+## [0.0.8](https://github.com/gavar/wrench/compare/v/copycat-package/0.0.7...v/copycat-package/0.0.8) (2019-10-23)
+
+
+### Bug Fixes
+
+* allow package name to have dots in a name ([c659a66](https://github.com/gavar/wrench/commit/c659a66))
+
 ## [0.0.7](https://github.com/gavar/wrench/compare/v/copycat-package/0.0.6...v/copycat-package/0.0.7) (2019-10-23)
 
 

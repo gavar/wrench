@@ -66,7 +66,7 @@ function createNode(filename: string, omitProps?: boolean): PackNode {
     if (!omitProps) node.props = pack.copycat;
     return node;
   } catch (e) {
-    console.error("error while parsing file:", filename);
+    console.error(red("error while parsing file:"), filename);
     throw e;
   }
 }
@@ -179,15 +179,15 @@ function resolveFileName(importer: NodeRequire, id: string): string {
   p = p.split("\\").join("/");
   p = p.split("/").filter(Boolean).join("/");
 
-  if (!path.extname(p))
-    p = [p, "package.json"].join("/");
-
-  try {
-    return importer.resolve(p);
-  } catch (e) {
-    console.error(red("unable resolve module path:"), cyan(id));
-    throw e;
+  let error: Error;
+  const paths = [path.join(p, "package.json"), p];
+  for (p of paths) {
+    try { return importer.resolve(p); } //
+    catch (e) { error = e; }
   }
+
+  console.error(red("unable resolve module path:"), cyan(id));
+  throw error;
 }
 
 function resolveValue(importer: NodeRequire, registry: PackRegistry, from: string, path: string | string[]) {

@@ -6,7 +6,7 @@ export type LoaderProps<P = any> = {
 };
 
 export type LoaderOption = Loader | LoaderWithProps
-export type LoaderArgsProvider = () => P;
+export type LoaderArgsProvider<P> = () => P;
 
 export interface LoaderRegistry {
   /** Loaders to install on start. */

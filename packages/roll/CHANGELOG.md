@@ -1,3 +1,5 @@
+## [0.0.7](https://github.com/gavar/wrench/compare/v/roll/0.0.6...v/roll/0.0.7) (2019-10-29)
+
 ## [0.0.6](https://github.com/gavar/wrench/compare/v/roll/0.0.5...v/roll/0.0.6) (2019-10-23)
 
 

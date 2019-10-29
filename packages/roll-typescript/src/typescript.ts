@@ -14,6 +14,7 @@ import {
 } from "rollup";
 import { Bundle, CompilerOptions, Program, SourceFile, TransformationContext, Transformer } from "typescript";
 import { bundleDts } from "./bundle-dts";
+import { DtsPretty } from "./dts";
 import {
   addFileNames,
   collectDependencies,
@@ -91,6 +92,7 @@ export function typescript(options?: TypeScriptOptions): Plugin {
   let modular: boolean;
 
   let project: Project;
+  let dtsPretty: DtsPretty;
   let compilerOptions: CompilerOptions;
 
   let inputs: Set<string>;
@@ -122,6 +124,7 @@ export function typescript(options?: TypeScriptOptions): Plugin {
 
       // fork with ESNext target for fast transformations
       project = lazy(this, "esnext", forkESNext, project);
+      dtsPretty = lazy(this, "dts-pretty", dtsPrettyFactory);
 
       // rollup may exclude `index` files, so make sure to forcibly include them
       if (modular)
@@ -206,8 +209,14 @@ export function typescript(options?: TypeScriptOptions): Plugin {
           js.text = [(await output.banner), js.text].join(host.getNewLine());
 
         // write declarations
-        if (dts) writeOutputFile(project, dts);
-        if (dtsmap) writeOutputFile(project, dtsmap);
+        if (dts) {
+          // TODO: do not format if breaking sourcemaps
+          dts.text = dtsPretty.format(dts.text, dts.name);
+          writeOutputFile(project, dts);
+        }
+
+        if (dtsmap)
+          writeOutputFile(project, dtsmap);
 
         return {
           code: js.text,
@@ -296,4 +305,8 @@ function isEmptyCode(code: string) {
 
 function checkProgramDirty<T extends ProjectHost>(this: T) {
   this.checkProgramDirty();
+}
+
+function dtsPrettyFactory() {
+  return new DtsPretty();
 }

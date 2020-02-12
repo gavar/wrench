@@ -37,7 +37,7 @@
     "ywl": "bin/ywl.js"
   },
   "scripts": {
-    "build": "yarn clean && roll --preserveModules",
+    "build": "yarn clean && roll",
     "clean": "rimraf tmp out lib es bin/lib *.tgz",
     "format": "yarn lint --fix",
     "format:pack": "fixpack && sort-package-json",

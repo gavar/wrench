@@ -38,7 +38,7 @@
   "module": "es/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "build": "yarn clean && roll --preserveModules",
+    "build": "yarn clean && roll",
     "clean": "rimraf tmp out lib es bin *.tgz",
     "format": "yarn lint --fix",
     "format:pack": "fixpack && sort-package-json",

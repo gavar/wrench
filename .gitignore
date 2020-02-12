@@ -213,7 +213,12 @@ typings/
 ### Project ###
 # all files name starting with '#'
 \#*
-es/
+.ywl
 lib/
 tmp/
-.ywl
+# build results
+es/
+esm5/
+fesm5/
+esm2015/
+fesm2015/

@@ -1,3 +1,16 @@
+## [0.0.8](https://github.com/gavar/wrench/compare/v/roll/0.0.7...v/roll/0.0.8) (2020-02-12)
+
+
+### Bug Fixes
+
+* setting script target only if provided ([1d9433c](https://github.com/gavar/wrench/commit/1d9433c251d2defefcc5366e585faea381226f3d))
+
+
+### Features
+
+* build modular by default ([4da73b3](https://github.com/gavar/wrench/commit/4da73b3a1fb2377ac8ed0b55f671b1397d775593))
+* support esm5 / fesm5 / esm2015 / fesm2015 pacakge fields defined by Angular Package Format ([794c8f1](https://github.com/gavar/wrench/commit/794c8f1f406899cd70755c2f40db2ff9da4c4ca0))
+
 ## [0.0.7](https://github.com/gavar/wrench/compare/v/roll/0.0.6...v/roll/0.0.7) (2019-10-29)
 
 ## [0.0.6](https://github.com/gavar/wrench/compare/v/roll/0.0.5...v/roll/0.0.6) (2019-10-23)

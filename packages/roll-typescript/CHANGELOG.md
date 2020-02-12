@@ -1,3 +1,10 @@
+## [0.0.4](https://github.com/gavar/wrench/compare/v/roll-typescript/0.0.3...v/roll-typescript/0.0.4) (2020-02-12)
+
+
+### Bug Fixes
+
+* do not use fork of ESNext since it may break original script target ([fad76e2](https://github.com/gavar/wrench/commit/fad76e2974add650b081ddcc688b1a3fd593e0fa))
+
 ## [0.0.3](https://github.com/gavar/wrench/compare/v/roll-typescript/0.0.2...v/roll-typescript/0.0.3) (2019-10-29)
 
 

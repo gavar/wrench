@@ -122,8 +122,6 @@ export function typescript(options?: TypeScriptOptions): Plugin {
       shouldBundleDts = !!(!modular && project.options.declarationDir && options.types);
       compilerOptions = project.options;
 
-      // fork with ESNext target for fast transformations
-      project = lazy(this, "esnext", forkESNext, project);
       dtsPretty = lazy(this, "dts-pretty", dtsPrettyFactory);
 
       // rollup may exclude `index` files, so make sure to forcibly include them

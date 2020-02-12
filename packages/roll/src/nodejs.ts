@@ -186,7 +186,7 @@ export function nodejs(info: string | PackInfo, $input?: InputOptions, $output?:
     ...binConfigs,
   ].filter(Boolean);
 
-  function ts(target: ScriptTarget | null, modular: boolean, ...output: OutputOptions[]): RollupConfig {
+  function ts(target: ScriptTarget, modular: boolean, ...output: OutputOptions[]): RollupConfig {
     output = output.filter(Boolean);
     return output.length && {
       ...$input,
@@ -203,16 +203,17 @@ export function nodejs(info: string | PackInfo, $input?: InputOptions, $output?:
         }),
         typescript({
           external,
-          compilerOptions: {
-            ...compilerOptions,
-            target: target || compilerOptions.target,
-          },
+          compilerOptions: withTarget(compilerOptions, target),
           types: !modular && pack.types,
         }),
         cleanup(context.cleanup),
       ],
     };
   }
+}
+
+function withTarget(options: CompilerOptions, target: ScriptTarget) {
+  return target != null ? {...options, target} : options;
 }
 
 function isSafeToDelete(p: string) {

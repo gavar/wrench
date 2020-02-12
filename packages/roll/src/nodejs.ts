@@ -78,7 +78,7 @@ export function nodejs(info: string | PackInfo, $input?: InputOptions, $output?:
     ...$output,
   });
 
-  const modular = !!$input.preserveModules;
+  const modular = $input.preserveModules != null ? $input.preserveModules : true;
   const sourcemap = !!$output.sourcemap;
   const context: Context = {
     modular,

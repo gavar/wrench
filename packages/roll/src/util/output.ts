@@ -10,9 +10,11 @@ import { extname, slash } from "./path";
  * @param options - output options.
  */
 export function output(input: string, output: string, modular: boolean, options: OutputOptions): OutputOptions {
-  if (modular) options.dir = resolveDir(input, output);
-  else options.file = output;
-  return options;
+  if (output) {
+    if (modular) options.dir = resolveDir(input, output);
+    else options.file = output;
+    return options;
+  }
 }
 
 function resolveDir(input: string, output: string) {

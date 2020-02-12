@@ -1,4 +1,5 @@
 import { InputOptions, ModuleFormat, OutputOptions, RollupOptions } from "rollup";
+import { ScriptTarget } from "typescript";
 
 /**
  * Defines strategy of how to build package executables.
@@ -33,12 +34,40 @@ export interface Package {
 
   /**
    * Entry point for ECMA script modules.
-   * Defines the output path for {@link ModuleFormat es} bundle.
+   * Defines the output path for {@link ModuleFormat ES} bundle.
    * {@link ModuleFormat ES} bundle won't be generated if this field is empty.
    * NodeJS automatically picks this entry point when `--experimental-modules`.
    * @see https://github.com/rollup/rollup/wiki/pkg.module
    */
   module?: string;
+
+  /**
+   * Entry point for the unflattened ESM + ES5 defined by Angular Package Format.
+   * Defines the output path for {@link ModuleFormat ES} bundle using {@link ScriptTarget ES5} target.
+   * @see https://docs.google.com/document/d/1CZC2rcpxffTDfRDs6p1cfbmKNLA6x5O-NtkJglDaBVs/preview#heading=h.of267ihir9wt
+   */
+  esm5?: string
+
+  /**
+   * Entry point for the unflattened ESM + ES2015 defined by Angular Package Format.
+   * Defines the output path for {@link ModuleFormat ES} bundle using {@link ScriptTarget ES2015} target.
+   * @see https://docs.google.com/document/d/1CZC2rcpxffTDfRDs6p1cfbmKNLA6x5O-NtkJglDaBVs/preview#heading=h.of267ihir9wt
+   */
+  esm2015?: string
+
+  /**
+   * Entry point for the flattened ESM + ES5 defined by Angular Package Format.
+   * Defines the output path for {@link ModuleFormat ES} bundle using {@link ScriptTarget ES5} target.
+   * @see https://docs.google.com/document/d/1CZC2rcpxffTDfRDs6p1cfbmKNLA6x5O-NtkJglDaBVs/preview#heading=h.of267ihir9wt
+   */
+  fesm5?: string
+
+  /**
+   * Entry point for the flattened ESM + ES2015 defined by Angular Package Format.
+   * Defines the output path for {@link ModuleFormat ES} bundle using {@link ScriptTarget ES2015} target.
+   * @see https://docs.google.com/document/d/1CZC2rcpxffTDfRDs6p1cfbmKNLA6x5O-NtkJglDaBVs/preview#heading=h.of267ihir9wt
+   */
+  fesm2015?: string
 
   /**
    * A module ID with untranspiled code that is the primary to your program.

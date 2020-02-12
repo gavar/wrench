@@ -4,7 +4,7 @@ import path from "path";
 import { InputOptions, OutputOptions } from "rollup";
 import cleanup from "rollup-plugin-cleanup-chunk";
 import clear from "rollup-plugin-clear";
-import { CompilerOptions } from "typescript";
+import { CompilerOptions, ScriptTarget } from "typescript";
 import { collectBinFiles, createBinConfig } from "./bin";
 import { Context, Package, RollupConfig } from "./types";
 import {
@@ -96,8 +96,8 @@ export function nodejs(info: string | PackInfo, $input?: InputOptions, $output?:
     },
   };
 
-  /** CommonJS bundle output options. */
-  const cjs = output(input, pack.main, modular, {
+  /** Primary bundle output options. */
+  const main = output(input, pack.main, modular, {
     ...$output,
     format: "cjs",
     esModule: false, // NodeJS does not require to define __esModule
@@ -106,7 +106,27 @@ export function nodejs(info: string | PackInfo, $input?: InputOptions, $output?:
   });
 
   /** ECMAScript bundle output options. */
-  const esm: OutputOptions = pack.module && output(input, pack.module, modular, {
+  const esm: OutputOptions = output(input, pack.module, modular, {
+    ...$output,
+    format: "esm",
+  });
+
+  const esm5: OutputOptions = output(input, pack.esm5, true, {
+    ...$output,
+    format: "esm",
+  });
+
+  const esm2015: OutputOptions = output(input, pack.esm2015, true, {
+    ...$output,
+    format: "esm",
+  });
+
+  const fesm5: OutputOptions = output(input, pack.fesm5, false, {
+    ...$output,
+    format: "esm",
+  });
+
+  const fesm2015: OutputOptions = output(input, pack.fesm2015, false, {
     ...$output,
     format: "esm",
   });
@@ -145,28 +165,11 @@ export function nodejs(info: string | PackInfo, $input?: InputOptions, $output?:
   }
 
   /** Generate bundles from input. */
-  const tsConfig: RollupConfig = {
-    ...$input,
-    input,
-    output: [cjs, esm].filter(Boolean),
-    external,
-    plugins: [
-      clear({
-        targets: [
-          dir.tmp,
-          dirname(pack.main) || pack.main,
-          dirname(pack.types) || pack.types,
-          dirname(pack.module) || pack.module,
-        ].filter(isSafeToDelete),
-      }),
-      typescript({
-        external,
-        compilerOptions,
-        types: !modular && pack.types,
-      }),
-      cleanup(context.cleanup),
-    ],
-  };
+  const mainConfig = ts(null, modular, main, esm);
+  const esm5Config = ts(1, true, esm5);
+  const fesm5Config = ts(1, false, fesm5);
+  const esm2015Config = ts(2, true, esm2015);
+  const fesm2015Config = ts(2, false, fesm2015);
 
   /** Generates bundle for each executable script. */
   const binConfigs = collectBinFiles(pack, context, pack.roll)
@@ -174,10 +177,42 @@ export function nodejs(info: string | PackInfo, $input?: InputOptions, $output?:
 
   // `rollup` will run this configurations in sequence
   return [
-    tsConfig,
-    // dtsConfig,
+    mainConfig,
+    dtsConfig,
+    esm5Config,
+    esm2015Config,
+    fesm5Config,
+    fesm2015Config,
     ...binConfigs,
   ].filter(Boolean);
+
+  function ts(target: ScriptTarget | null, modular: boolean, ...output: OutputOptions[]): RollupConfig {
+    output = output.filter(Boolean);
+    return output.length && {
+      ...$input,
+      input,
+      output,
+      external,
+      preserveModules: modular,
+      plugins: [
+        clear({
+          targets: [
+            dir.tmp,
+            output.map(x => x.dir || x.file),
+          ].flat().filter(isSafeToDelete),
+        }),
+        typescript({
+          external,
+          compilerOptions: {
+            ...compilerOptions,
+            target: target || compilerOptions.target,
+          },
+          types: !modular && pack.types,
+        }),
+        cleanup(context.cleanup),
+      ],
+    };
+  }
 }
 
 function isSafeToDelete(p: string) {

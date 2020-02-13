@@ -4,16 +4,21 @@ import { extname, slash } from "./path";
 
 /**
  * Create output options.
+ * Does nothing if provided output path already exists in existing outputs.
  * @param input - input file name.
  * @param output - output file name.
  * @param modular - whether project is {@link InputOptions.preserveModules modular}.
  * @param options - output options.
+ * @param outputs - set of existing output paths (optional).
  */
-export function output(input: string, output: string, modular: boolean, options: OutputOptions): OutputOptions {
+export function output(input: string, output: string, modular: boolean, outputs: Set<string>, options: OutputOptions): OutputOptions {
   if (output) {
-    if (modular) options.dir = resolveDir(input, output);
-    else options.file = output;
-    return options;
+    if (outputs == null || !outputs.has(output)) {
+      if (outputs != null) outputs.add(output);
+      if (modular) options.dir = resolveDir(input, output);
+      else options.file = output;
+      return options;
+    }
   }
 }
 

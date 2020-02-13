@@ -41,7 +41,7 @@ export function createBinConfig(file: BinFile, info: PackInfo, context: Context)
   return {
     input: file.input,
     preserveModules: modular,
-    output: output(file.input, file.output, modular, {
+    output: output(file.input, file.output, modular, null, {
       ...context.output,
       format: "cjs",
       esModule: false, // NodeJS does not require to define __esModule

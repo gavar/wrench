@@ -28,6 +28,7 @@ export interface Package {
   /**
    * Primary entry point of the package.
    * Defines the output path for {@link ModuleFormat cjs} bundle.
+   * @example "./lib/index.js"
    * @see https://docs.npmjs.com/files/package.json#main
    */
   main: string;
@@ -37,13 +38,25 @@ export interface Package {
    * Defines the output path for {@link ModuleFormat ES} bundle.
    * {@link ModuleFormat ES} bundle won't be generated if this field is empty.
    * NodeJS automatically picks this entry point when `--experimental-modules`.
+   * Angular Package Format define it as entry point of {@link ModuleFormat ES} bundle using {@link ScriptTarget ES5} target.
+   * @example "./esm5/index.js"
    * @see https://github.com/rollup/rollup/wiki/pkg.module
+   * @see https://docs.google.com/document/d/1CZC2rcpxffTDfRDs6p1cfbmKNLA6x5O-NtkJglDaBVs/preview#heading=h.of267ihir9wt
    */
   module?: string;
 
   /**
+   * Entry point for the unflattened ESM + ES2015 defined by Angular Package Format.
+   * Defines the output path for {@link ModuleFormat ES} bundle using {@link ScriptTarget ES2015} target.
+   * @example "./esm2015/index.js"
+   * @see https://docs.google.com/document/d/1CZC2rcpxffTDfRDs6p1cfbmKNLA6x5O-NtkJglDaBVs/preview#heading=h.of267ihir9wt
+   */
+  es2015?: string;
+
+  /**
    * Entry point for the unflattened ESM + ES5 defined by Angular Package Format.
    * Defines the output path for {@link ModuleFormat ES} bundle using {@link ScriptTarget ES5} target.
+   * @example "./esm5/index.js"
    * @see https://docs.google.com/document/d/1CZC2rcpxffTDfRDs6p1cfbmKNLA6x5O-NtkJglDaBVs/preview#heading=h.of267ihir9wt
    */
   esm5?: string
@@ -51,6 +64,7 @@ export interface Package {
   /**
    * Entry point for the unflattened ESM + ES2015 defined by Angular Package Format.
    * Defines the output path for {@link ModuleFormat ES} bundle using {@link ScriptTarget ES2015} target.
+   * @example "./esm2015/index.js"
    * @see https://docs.google.com/document/d/1CZC2rcpxffTDfRDs6p1cfbmKNLA6x5O-NtkJglDaBVs/preview#heading=h.of267ihir9wt
    */
   esm2015?: string
@@ -58,6 +72,7 @@ export interface Package {
   /**
    * Entry point for the flattened ESM + ES5 defined by Angular Package Format.
    * Defines the output path for {@link ModuleFormat ES} bundle using {@link ScriptTarget ES5} target.
+   * @example "./fesm5/index.js"
    * @see https://docs.google.com/document/d/1CZC2rcpxffTDfRDs6p1cfbmKNLA6x5O-NtkJglDaBVs/preview#heading=h.of267ihir9wt
    */
   fesm5?: string
@@ -65,6 +80,7 @@ export interface Package {
   /**
    * Entry point for the flattened ESM + ES2015 defined by Angular Package Format.
    * Defines the output path for {@link ModuleFormat ES} bundle using {@link ScriptTarget ES2015} target.
+   * @example "./fesm2015/index.js"
    * @see https://docs.google.com/document/d/1CZC2rcpxffTDfRDs6p1cfbmKNLA6x5O-NtkJglDaBVs/preview#heading=h.of267ihir9wt
    */
   fesm2015?: string

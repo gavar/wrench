@@ -96,8 +96,10 @@ export function nodejs(info: string | PackInfo, $input?: InputOptions, $output?:
     },
   };
 
+  const outputs = new Set<string>();
+
   /** Primary bundle output options. */
-  const main = output(input, pack.main, modular, {
+  const main = output(input, pack.main, modular, outputs, {
     ...$output,
     format: "cjs",
     esModule: false, // NodeJS does not require to define __esModule
@@ -106,27 +108,32 @@ export function nodejs(info: string | PackInfo, $input?: InputOptions, $output?:
   });
 
   /** ECMAScript bundle output options. */
-  const esm: OutputOptions = output(input, pack.module, modular, {
+  const module$: OutputOptions = output(input, pack.module, true, outputs, {
     ...$output,
     format: "esm",
   });
 
-  const esm5: OutputOptions = output(input, pack.esm5, true, {
+  const es2015: OutputOptions = output(input, pack.es2015, true, outputs, {
     ...$output,
     format: "esm",
   });
 
-  const esm2015: OutputOptions = output(input, pack.esm2015, true, {
+  const esm5: OutputOptions = output(input, pack.esm5, true, outputs, {
     ...$output,
     format: "esm",
   });
 
-  const fesm5: OutputOptions = output(input, pack.fesm5, false, {
+  const esm2015: OutputOptions = output(input, pack.esm2015, true, outputs, {
     ...$output,
     format: "esm",
   });
 
-  const fesm2015: OutputOptions = output(input, pack.fesm2015, false, {
+  const fesm5: OutputOptions = output(input, pack.fesm5, false, outputs, {
+    ...$output,
+    format: "esm",
+  });
+
+  const fesm2015: OutputOptions = output(input, pack.fesm2015, false, outputs, {
     ...$output,
     format: "esm",
   });
@@ -164,12 +171,18 @@ export function nodejs(info: string | PackInfo, $input?: InputOptions, $output?:
     };
   }
 
-  /** Generate bundles from input. */
-  const mainConfig = ts(null, modular, main, esm);
-  const esm5Config = ts(1, true, esm5);
-  const fesm5Config = ts(1, false, fesm5);
-  const esm2015Config = ts(2, true, esm2015);
-  const fesm2015Config = ts(2, false, fesm2015);
+  /** Primary bundle. */
+  const mainConfig = ts(null, main);
+
+  /** ES5 bundles. */
+  const esm5Config = ts(1, esm5);
+  const fesm5Config = ts(1, fesm5);
+
+  /** ES2015 bundles. */
+  const moduleConfig = ts(2, module$);
+  const es2015Config = ts(2, es2015);
+  const esm2015Config = ts(2, esm2015);
+  const fesm2015Config = ts(2, fesm2015);
 
   /** Generates bundle for each executable script. */
   const binConfigs = collectBinFiles(pack, context, pack.roll)
@@ -177,17 +190,25 @@ export function nodejs(info: string | PackInfo, $input?: InputOptions, $output?:
 
   // `rollup` will run this configurations in sequence
   return [
+    // primary
     mainConfig,
-    dtsConfig,
+    // ES5
     esm5Config,
-    esm2015Config,
     fesm5Config,
+    // ES2015
+    moduleConfig,
+    es2015Config,
+    esm2015Config,
     fesm2015Config,
+    // typings
+    dtsConfig,
+    // executables
     ...binConfigs,
   ].filter(Boolean);
 
-  function ts(target: ScriptTarget, modular: boolean, ...output: OutputOptions[]): RollupConfig {
+  function ts(target: ScriptTarget, ...output: OutputOptions[]): RollupConfig {
     output = output.filter(Boolean);
+    const modular = output.every(x => x.dir);
     return output.length && {
       ...$input,
       input,

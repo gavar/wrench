@@ -1,6 +1,6 @@
 {
   "name": "@wrench/roll",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "conventional tool bundling via `rollup` relying on package.json contents",
   "keywords": [
     "bundler",

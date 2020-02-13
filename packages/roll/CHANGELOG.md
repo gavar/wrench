@@ -1,3 +1,10 @@
+## [0.0.9](https://github.com/gavar/wrench/compare/v/roll/0.0.8...v/roll/0.0.9) (2020-02-13)
+
+
+### Features
+
+* support es2015 and avoid compiling same targets twice ([c9b9429](https://github.com/gavar/wrench/commit/c9b9429df6b7cf6ec689c68c1d9cde3db821d2df))
+
 ## [0.0.8](https://github.com/gavar/wrench/compare/v/roll/0.0.7...v/roll/0.0.8) (2020-02-12)
 
 

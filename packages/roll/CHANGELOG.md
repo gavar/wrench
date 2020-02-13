@@ -1,3 +1,10 @@
+## [0.0.10](https://github.com/gavar/wrench/compare/v/roll/0.0.9...v/roll/0.0.10) (2020-02-13)
+
+
+### Bug Fixes
+
+* compile module to ES5 ([c7a37a1](https://github.com/gavar/wrench/commit/c7a37a1daaa46675d646802802cf40c4c63f9f1d))
+
 ## [0.0.9](https://github.com/gavar/wrench/compare/v/roll/0.0.8...v/roll/0.0.9) (2020-02-13)
 
 

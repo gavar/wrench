@@ -177,9 +177,9 @@ export function nodejs(info: string | PackInfo, $input?: InputOptions, $output?:
   /** ES5 bundles. */
   const esm5Config = ts(1, esm5);
   const fesm5Config = ts(1, fesm5);
+  const moduleConfig = ts(1, module$);
 
   /** ES2015 bundles. */
-  const moduleConfig = ts(2, module$);
   const es2015Config = ts(2, es2015);
   const esm2015Config = ts(2, esm2015);
   const fesm2015Config = ts(2, fesm2015);

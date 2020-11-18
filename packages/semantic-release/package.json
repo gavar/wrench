@@ -62,10 +62,10 @@
     "@types/semver": "^5.5.0",
     "@types/signale": "^1.2.1",
     "execa": "^1.0.0",
-    "semantic-release": "16.0.0-beta.22"
+    "semantic-release": "17.2.3"
   },
   "peerDependencies": {
-    "semantic-release": "16.0.0-beta.22"
+    "semantic-release": "17.2.3"
   },
   "publishConfig": {
     "access": "public"
